@@ -24,11 +24,13 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             $view->headLink()->prependStylesheet('http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css');
             $view->headLink()->prependStylesheet(WEB_ROOT_PATH.'/js/external/google-code-prettify/prettify.css');
             $view->headLink()->prependStylesheet(WEB_ROOT_PATH.'/css/bootstrap.min.css');
+            $view->headLink()->prependStylesheet(WEB_ROOT_PATH.'/css/aso.css');
         } else {
             $view->headLink()->prependStylesheet(WEB_ROOT_PATH.'/css/bootstrap-wyswig-editor.css');
             $view->headLink()->prependStylesheet('http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css');
             $view->headLink()->prependStylesheet(WEB_ROOT_PATH.'/js/external/google-code-prettify/prettify.css');
             $view->headLink()->prependStylesheet(WEB_ROOT_PATH.'/css/bootstrap.css');
+            $view->headLink()->prependStylesheet(WEB_ROOT_PATH.'/css/aso.css');
         }
 
         $view->headLink()->prependStylesheet(WEB_ROOT_PATH.'/css/style_ie6.css', 'screen', 'IE 6');
