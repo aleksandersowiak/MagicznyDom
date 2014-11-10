@@ -1,3 +1,18 @@
+<?php $ms = new Zend_Session_Namespace(SESSION_NAMESPACE);
+?>
+<?php if(isset($this->message)) :?>
+<?php $message = $this->message; ?>
+    <script>
+        $(document).ready(function(){
+            $(".alert-<?=$message[1]?>").delay(5000).toggle(500);
+        });
+    </script>
+    <div class="box-message">
+        <div class="alert alert-<?=$message[1]?>" role="alert">
+            <?=$message[0]?>
+        </div>
+    </div>
+<?php endif;?>
 <div class="navbar-wrapper">
     <nav class="navbar navbar-default navbar-static-top">
         <div class="container">
@@ -12,18 +27,28 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Home</a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Menu item 1</a></li>
-                            <li><a href="#">Menu item 2</a></li>
-                            <li><a href="#">Menu item 3</a></li>
-                            <li><a href="#">Menu item 4</a></li>
-                            <li><a href="#">Menu item 5</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">About</a></li>
+                    <?php   $menu_json = ($this->menu);
+                            $i = 0;
+                            $j = 0;
+                            foreach ($menu_json as $key => $value){
+                    ?>
+                                <li <?=($menu_json[$i]['dropdown'] != null) ? 'class="dropdown"' : ''; ?>>
+                                    <a href=".<?=$menu_json[$i]['link']?>"<?=($menu_json[$i]['dropdown'] != null) ? 'class="dropdown-toggle" data-toggle="dropdown"' : ''?>>
+                                        <?=$menu_json[$i]['name']?><?=($menu_json[$i]['dropdown'] != null) ? '<span class="caret"></span>' : '' ?>
+                                    </a>
+                                    <? if($menu_json[$i]['dropdown'] != null) { ?>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <?php foreach($menu_json[$i]['dropdown'] as $drop_value) {
+                                                echo '<li><a href=".'.$drop_value['drop_link'].'">'.$drop_value['drop_name'].'</a></li>';
+                                                $j++;
+                                            }; ?>
+                                        </ul>
+                                    <?php } ?>
+                                </li>
+                    <?php
+                                $i++;
+                            }
+                    ?>
                 </ul>
                 <div class="nav navbar-nav navbar-right">
                     <form class="navbar-form navbar-left" role="search">
@@ -34,9 +59,13 @@
                     </form>
                     <ul class="nav navbar-nav">
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Account <span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?=(isset($ms->u_name)) ? $ms->u_name : 'Konto'?> <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="#">Login</a></li>
+                                <?php if (isset($ms->u_id)) { ?>
+                                    <li><a href="login/logout">Wyloguj</a></li>
+                                <?php }else{ ?>
+                                <li><a href="#" data-toggle="modal" data-target="#login">Zaloguj</a></li>
+                                <?php } ?>
                             </ul>
                         </li>
                     </ul>

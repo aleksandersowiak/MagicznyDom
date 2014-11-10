@@ -7,8 +7,13 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         Zend_Session::start();
         error_reporting(E_ALL);
     }
+
+    protected function _initConstants() {
+        require_once(APPLICATION_PATH ."/configs/constants.php");
+    }
+
     protected function _initPlaceholders() {
-        define('WEB_ROOT_PATH',       '/MagicznyDom/public');
+
         $this->bootstrap('view');
         $view = $this->getResource('view');
         $view->doctype('XHTML1_STRICT');
@@ -39,6 +44,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             $view->headScript()->appendFile(WEB_ROOT_PATH.'/js/external/google-code-prettify/prettify.js','text/javascript');
             $view->headScript()->appendFile(WEB_ROOT_PATH.'/js/bootstrap-wysiwyg.js','text/javascript');
             $view->headScript()->appendFile(WEB_ROOT_PATH.'/js/wysiwyg-keys.js','text/javascript');
+            $view->headScript()->appendFile(WEB_ROOT_PATH.'/js/scripts.min.js','text/javascript');
         } else {
             $view->headScript()->appendFile(WEB_ROOT_PATH.'/js/bootstrap.js','text/javascript');
             $view->headScript()->appendFile('https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js','text/javascript');
@@ -49,9 +55,10 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             $view->headScript()->appendFile(WEB_ROOT_PATH.'/js/external/google-code-prettify/prettify.js','text/javascript');
             $view->headScript()->appendFile(WEB_ROOT_PATH.'/js/bootstrap-wysiwyg.js','text/javascript');
             $view->headScript()->appendFile(WEB_ROOT_PATH.'/js/wysiwyg-keys.js','text/javascript');
+            $view->headScript()->appendFile(WEB_ROOT_PATH.'/js/scripts.js','text/javascript');
         }
 
-        $view->headScript()->appendFile(WEB_ROOT_PATH.'/locale/locale.js','text/javascript');
+        //$view->headScript()->appendFile(WEB_ROOT_PATH.'/locale/locale.js','text/javascript');
         $view->headTitle('W Moim Magicznym Domu');
         $view->headMeta()->appendHttpEquiv('Content-Type', 'text/html; charset=utf-8');
 
