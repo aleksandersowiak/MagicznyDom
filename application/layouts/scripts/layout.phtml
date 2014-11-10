@@ -10,13 +10,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-<?php $ms = new Zend_Session_Namespace(SESSION_NAMESPACE);
-?>
 <?php if(isset($this->message)) :?>
     <?php $message = $this->message; ?>
     <script>
         $(document).ready(function(){
-            $(".alert-<?=$message[1]?>").delay(5000).toggle(500);
+            $(".alert-<?=$message[1]?>").delay(5000).fadeTo("slow",0);
         });
     </script>
     <div class="box-message">
