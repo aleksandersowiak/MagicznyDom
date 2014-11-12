@@ -72,5 +72,20 @@ class Aso_Controller_Action extends Zend_Controller_Action
     }
 //
 
+    public function messageBox($message, $style) {
+        $array = array( "message"   => $message,
+                        "style"     => $style);
+        return $array;
+    }
 
+    public function restrictText($text,$count) {
+        $countText = strlen($text);
+        if ($countText>=$count) {
+            $cut = substr($text,0,$count);
+            $restrict = $cut."...";
+        }else {
+            $restrict = $text;
+        }
+        return $restrict;
+    }
 }

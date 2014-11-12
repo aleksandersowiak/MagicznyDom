@@ -37,12 +37,12 @@ class LoginController extends Aso_Controller_Action
                             $ms->u_name = $loginRow->name;
                             $ms->u_role = 1;
                             $ms->u_use_id = $loginRow->id;
-                            $msg = array("Zostałeś zalogowany(a) prawidłowo.", "success");
+                            $msg = $this->messageBox("Zostałeś zalogowany(a) prawidłowo.", "success");
                         }else {
-                            $msg = array("Podany użytkownik nie został aktywowany.", "warning");
+                            $msg = $this->messageBox("Podany użytkownik nie został aktywowany.", "warning");
                         }
                     }else {
-                        $msg = array("Uzytkownik nie istnieje. Bądź podane dane są nie prawidłowe.","danger");
+                        $msg = $this->messageBox("Uzytkownik nie istnieje. Bądź podane dane są nie prawidłowe.","danger");
                     }
                 }
             }

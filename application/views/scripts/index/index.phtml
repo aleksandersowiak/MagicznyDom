@@ -1,139 +1,33 @@
-<?php $ms = new Zend_Session_Namespace(SESSION_NAMESPACE); ?>
-<div class="navbar-wrapper">
-    <nav class="navbar navbar-default navbar-static-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">W Moim Magicznym Domu</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <?php   $menu_json = ($this->menu);
-                            $i = 0;
-                            $j = 0;
-                            foreach ($menu_json as $key => $value){
-                    ?>
-                                <li <?=($menu_json[$i]['dropdown'] != null) ? 'class="dropdown"' : ''; ?>>
-                                    <a href=".<?=$menu_json[$i]['link']?>"<?=($menu_json[$i]['dropdown'] != null) ? 'class="dropdown-toggle" data-toggle="dropdown"' : ''?>>
-                                        <?=$menu_json[$i]['name']?><?=($menu_json[$i]['dropdown'] != null) ? '<span class="caret"></span>' : '' ?>
-                                    </a>
-                                    <? if($menu_json[$i]['dropdown'] != null) { ?>
-                                        <ul class="dropdown-menu" role="menu">
-                                            <?php foreach($menu_json[$i]['dropdown'] as $drop_value) {
-                                                echo '<li><a href=".'.$drop_value['drop_link'].'">'.$drop_value['drop_name'].'</a></li>';
-                                                $j++;
-                                            }; ?>
-                                        </ul>
-                                    <?php } ?>
-                                </li>
-                    <?php
-                                $i++;
-                            }
-                    ?>
-                </ul>
-                <div class="nav navbar-nav navbar-right">
-                    <form class="navbar-form navbar-left" role="search">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Search">
-                        </div>
-                        <button type="submit" class="btn btn-default">Submit</button>
-                    </form>
-                    <ul class="nav navbar-nav">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?=(isset($ms->u_name)) ? $ms->u_name : 'Konto'?> <span class="caret"></span></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <?php if (isset($ms->u_id)) { ?>
-                                    <li><a href="login/logout">Wyloguj</a></li>
-                                <?php }else{ ?>
-                                <li><a href="#" data-toggle="modal" data-target="#login">Zaloguj</a></li>
-                                <?php } ?>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </div><!--/.nav-collapse -->
-        </div>
-    </nav>
-</div>
-<div class="container">
-    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-        <ol class="carousel-indicators">
-            <li data-target="#carousel-example-generic" data-slide-to="0" class=""></li>
-            <li data-target="#carousel-example-generic" data-slide-to="1" class="active"></li>
-            <li data-target="#carousel-example-generic" data-slide-to="2" class=""></li>
-        </ol>
-        <div class="carousel-inner" role="listbox">
-            <div class="item">
-                <img data-src="holder.js/1140x300/auto/#777:#555/text:First slide" alt="First slide [1140x300]" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTE0MCIgaGVpZ2h0PSI1MDAiIHZpZXdCb3g9IjAgMCAxMTQwIDUwMCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+PGRlZnMvPjxyZWN0IHdpZHRoPSIxMTQwIiBoZWlnaHQ9IjUwMCIgZmlsbD0iIzc3NyIvPjxnPjx0ZXh0IHg9IjQwMy4xMDkzNzUiIHk9IjI1MCIgc3R5bGU9ImZpbGw6IzU1NTtmb250LXdlaWdodDpib2xkO2ZvbnQtZmFtaWx5OkFyaWFsLCBIZWx2ZXRpY2EsIE9wZW4gU2Fucywgc2Fucy1zZXJpZiwgbW9ub3NwYWNlO2ZvbnQtc2l6ZTo1M3B0O2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPkZpcnN0IHNsaWRlPC90ZXh0PjwvZz48L3N2Zz4=" data-holder-rendered="true">
-                <div class="container">
-                    <div class="carousel-caption">
-                        <h1>One more for good measure.</h1>
-                        <p><a class="btn btn-lg btn-primary" href="#" role="button">Browse gallery</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="item active">
-                <img data-src="holder.js/1140x300/auto/#666:#444/text:Second slide" alt="Second slide [1140x300]" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTE0MCIgaGVpZ2h0PSI1MDAiIHZpZXdCb3g9IjAgMCAxMTQwIDUwMCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+PGRlZnMvPjxyZWN0IHdpZHRoPSIxMTQwIiBoZWlnaHQ9IjUwMCIgZmlsbD0iIzY2NiIvPjxnPjx0ZXh0IHg9IjM1Mi4wNjI1IiB5PSIyNTAiIHN0eWxlPSJmaWxsOiM0NDQ7Zm9udC13ZWlnaHQ6Ym9sZDtmb250LWZhbWlseTpBcmlhbCwgSGVsdmV0aWNhLCBPcGVuIFNhbnMsIHNhbnMtc2VyaWYsIG1vbm9zcGFjZTtmb250LXNpemU6NTNwdDtkb21pbmFudC1iYXNlbGluZTpjZW50cmFsIj5TZWNvbmQgc2xpZGU8L3RleHQ+PC9nPjwvc3ZnPg==" data-holder-rendered="true">
-                <div class="container">
-                    <div class="carousel-caption">
-                        <h1>One more for good measure.</h1>
-                        <p><a class="btn btn-lg btn-primary" href="#" role="button">Browse gallery</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img data-src="holder.js/1140x300/auto/#555:#333/text:Third slide" alt="Third slide [1140x300]" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTE0MCIgaGVpZ2h0PSI1MDAiIHZpZXdCb3g9IjAgMCAxMTQwIDUwMCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+PGRlZnMvPjxyZWN0IHdpZHRoPSIxMTQwIiBoZWlnaHQ9IjUwMCIgZmlsbD0iIzU1NSIvPjxnPjx0ZXh0IHg9IjM5MS4zNTkzNzUiIHk9IjI1MCIgc3R5bGU9ImZpbGw6IzMzMztmb250LXdlaWdodDpib2xkO2ZvbnQtZmFtaWx5OkFyaWFsLCBIZWx2ZXRpY2EsIE9wZW4gU2Fucywgc2Fucy1zZXJpZiwgbW9ub3NwYWNlO2ZvbnQtc2l6ZTo1M3B0O2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPlRoaXJkIHNsaWRlPC90ZXh0PjwvZz48L3N2Zz4=" data-holder-rendered="true">
-                <div class="container">
-                    <div class="carousel-caption">
-                        <h1>One more for good measure.</h1>
-                        <p><a class="btn btn-lg btn-primary" href="#" role="button">Browse gallery</a></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 <div class="container theme-showcase" role="main">
-    <ol class="breadcrumb">
-        <li><a href="#">Home</a></li>
-        <li class="active">Home</li>
-    </ol>
     <div class="row">
         <div class="col-sm-8 blog-main">
-            <div class="row featurette">
-                <div class="col-md-8">
-                    <h2 class="blog-post-title">First featurette heading.</h2>
-                    <p class="blog-post-meta">November 06, 2014 by <a href="#">Alex</a></p>
-                    <p>Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-                    <p class="pull-right"><a href="#">Read more...</a></p>
+            <?php if ($this->resultRecipe != NULL){ $i = 0;?>
+                <?php foreach ($this->resultRecipe as $values) { ?>
+                    <?php if($i%2 == 0) { ?>
+                        <?=$this->partial('index/recipe/recipeIndexL.phtml', $values); ?>
+                    <?php }else { ?>
+                        <?=$this->partial('index/recipe/recipeIndexR.phtml', $values); ?>
+                    <?php
+                    }
+                    $i++;
+                }
+            }else{
+            ?>
+                <div class="alert alert-info" role="alert">
+                    <p>Nie dodano jeszcze żandego przepisu do strony.</p>
+                    <p>Zapraszamy później, bądź na naszego Facebook'a.</p>
                 </div>
-                <div class="col-md-4">
-                    <img class="featurette-image img-responsive" data-src="holder.js/500x500/auto" alt="500x500" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iNTAwIiBoZWlnaHQ9IjUwMCIgdmlld0JveD0iMCAwIDUwMCA1MDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iNTAwIiBoZWlnaHQ9IjUwMCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjE5MC4zMTI1IiB5PSIyNTAiIHN0eWxlPSJmaWxsOiNBQUFBQUE7Zm9udC13ZWlnaHQ6Ym9sZDtmb250LWZhbWlseTpBcmlhbCwgSGVsdmV0aWNhLCBPcGVuIFNhbnMsIHNhbnMtc2VyaWYsIG1vbm9zcGFjZTtmb250LXNpemU6MjNwdDtkb21pbmFudC1iYXNlbGluZTpjZW50cmFsIj41MDB4NTAwPC90ZXh0PjwvZz48L3N2Zz4=" data-holder-rendered="true">
-                </div>
-            </div>
+                <?=$this->render('facebook.phtml'); ?>
+            <?php } ?>
             <hr class="featurette-divider">
-            <div class="row featurette">
-                <div class="col-md-4">
-                    <img class="featurette-image img-responsive" data-src="holder.js/500x500/auto" alt="500x500" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iNTAwIiBoZWlnaHQ9IjUwMCIgdmlld0JveD0iMCAwIDUwMCA1MDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iNTAwIiBoZWlnaHQ9IjUwMCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjE5MC4zMTI1IiB5PSIyNTAiIHN0eWxlPSJmaWxsOiNBQUFBQUE7Zm9udC13ZWlnaHQ6Ym9sZDtmb250LWZhbWlseTpBcmlhbCwgSGVsdmV0aWNhLCBPcGVuIFNhbnMsIHNhbnMtc2VyaWYsIG1vbm9zcGFjZTtmb250LXNpemU6MjNwdDtkb21pbmFudC1iYXNlbGluZTpjZW50cmFsIj41MDB4NTAwPC90ZXh0PjwvZz48L3N2Zz4=" data-holder-rendered="true">
-                </div>
-                <div class="col-md-8">
-                    <h2 class="blog-post-title">Second featurette heading.</h2>
-                    <p class="blog-post-meta">November 06, 2014 by <a href="#">Alex</a></p>
-                    <p>Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-                    <p class="pull-right"><a href="#">Read more...</a></p>
-                </div>
-            </div>
         </div>
         <div class="col-sm-4">
+            <?php if ($this->about["active"] == TRUE) { ?>
             <div class="sidebar-module sidebar-module-inset blog-sidebar">
-                <h4>About</h4>
-                <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
+                <h4>O Mnie</h4>
+                <p><?=$this->about["text"]?></p>
             </div>
+            <?php } ?>
             <ul class="list-group">
                 <li class="list-group-item">
                     <span class="badge">14</span>
@@ -250,8 +144,4 @@
     </div>
     <input type="button" class="btn glyphicon-edit" data-toggle="modal" data-target="#bs-example-modal-edit-post"/>
     <hr class="featurette-divider">
-    <footer>
-        <p class="pull-right"><a href="#">Back to top</a></p>
-        <p>� 2014 Company, Inc. � <a href="#">Privacy</a> � <a href="#">Terms</a></p>
-    </footer>
 </div>

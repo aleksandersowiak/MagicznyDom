@@ -12,11 +12,20 @@ class IndexController extends Aso_Controller_Action
     public function indexAction()
     {
         try {
-            if ($this->getModel("Model_Index")->getSetings($result, 'menu')== FALSE) {
-                return $this->aso_sendCommand($result['error']);
+            if ($this->getModel("Model_Index")->getSetings($resultMenu, 'menu')== FALSE) {
+                return $this->aso_sendCommand($resultMenu['error']);
             }
-            $menu = json_decode(($result[0]['data']),true);
-            $this->view->menu = $menu;
+            $this->view->menu = json_decode(($resultMenu[0]['data']),true);
+
+            if ($this->getModel("Model_Index")->getSetings($resultAbout, 'about')== FALSE) {
+                return $this->aso_sendCommand($resultAbout['error']);
+            }
+            $this->view->about = json_decode(($resultAbout[0]['data']),true);
+
+            if ($this->getModel("Model_Index")->getRecipe($resultRecipe)== FALSE) {
+                return $this->aso_sendCommand($resultRecipe['error']);
+            }
+            $this->view->resultRecipe = $resultRecipe;
 
             $this->renderScript('login_popup.phtml');
 	    return $this->render('index');
