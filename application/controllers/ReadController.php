@@ -32,7 +32,13 @@ class ReadController extends Aso_Controller_Action
             if ($this->getModel("Model_Read")->getRecipeDetail($resultRecipeDetail, $params['id'])== FALSE) {
                 return $this->aso_sendCommand($resultRecipeDetail['error']);
             }
-
+            if (!isset($params['id'])){
+                $msg = $this->messageBox("Coś poszło nie tak.","danger");
+                $this->_helper->FlashMessenger($msg);
+                $this->_helper->redirector->gotoRoute(array(
+                    'controller'=> 'index',
+                    'action' =>'index'));
+            }
             $this->view->title      = $resultRecipeDetail[0]['title'];
             $this->view->autor      = $resultRecipeDetail[0]['autor'];
             $this->view->updated    = $resultRecipeDetail[0]['updated'];

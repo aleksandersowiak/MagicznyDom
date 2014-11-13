@@ -9,12 +9,11 @@ class Application_Model_Read extends Aso_Model
     }
 
     public function getRecipeDetail(&$result, $params) {
-
+        $result = FALSE;
         $select = $this->_db    ->select()
             ->from("recipe");
-        $result = $this->getAdapter()->fetchAll($select);
-
-        foreach ($result as $recipe){
+        $result_recipe = $this->getAdapter()->fetchAll($select);
+        foreach ($result_recipe as $recipe){
             if ($params ==$this->replaceOnLink($recipe['title'])){
                 $id_recipe = $recipe['id'];
             }
@@ -23,13 +22,9 @@ class Application_Model_Read extends Aso_Model
             $select_recipe = $this->_db     ->select()
                                             ->from(array("r" => "recipe"))
                                             ->where("id = $id_recipe");
-            $result_recipe = $this->getAdapter()->fetchAll($select_recipe);
-
-        }else{
-            $result_recipe = FALSE;
+            $result = $this->getAdapter()->fetchAll($select_recipe);
         }
-
-        return $this->aso_return($return, CMD_DB_ERROR_NO_ERROR, $result_recipe);
+        return $this->aso_return($return, CMD_DB_ERROR_NO_ERROR, $result);
     }
 
     public function replaceOnLink($text)
