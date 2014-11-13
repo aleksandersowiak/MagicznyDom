@@ -9,3 +9,6 @@
     max-width: 300px;
     z-index: 9999;
 }
+.theme-showcase {
+    margin-top: 20px !important;
+}

@@ -1,0 +1,21 @@
+<div class="container theme-showcase" role="main">
+    <div class="col-sm-8 blog-main">
+
+        <div class="blog-post">
+            <h2 class="blog-post-title"><?=$this->title?></h2>
+            <p class="blog-post-meta"><?=$this->dateFormat($this->updated)?> <a href="#"><?=$this->autor?></a></p>
+            <hr class="featurette-divider">
+            <?=$this->recipe?>
+        </div>
+    </div>
+    <?=$this->render('sidebar.phtml'); ?>
+
+    </div>
+<div class="container">
+    <nav>
+        <ul class="pager">
+            <li class="previous disabled"><a href="#">&larr; Older</a></li>
+            <li class="next"><a href="#">Newer &rarr;</a></li>
+        </ul>
+    </nav>
+</div>

@@ -12,8 +12,16 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         require_once(APPLICATION_PATH ."/configs/constants.php");
     }
 
+    protected function _initRoutes()
+    {
+        $router = Zend_Controller_Front::getInstance()->getRouter();
+        $router->addRoute('readRecipe', new Zend_Controller_Router_Route('/read/:id', array(
+                'controller' => 'Read',
+                'action' => 'index'
+            )
+        ));
+    }
     protected function _initPlaceholders() {
-
         $this->bootstrap('view');
         $view = $this->getResource('view');
         $view->doctype('XHTML1_STRICT');

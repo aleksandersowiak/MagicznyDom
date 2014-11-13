@@ -1,12 +1,37 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: aso@ccp
- * Date: 2014-11-12
- * Time: 14:46
- */
-class Zend_View_Helper_ReplaceOnLink extends Zend_View_Helper_Abstract
+class Application_Model_Read extends Aso_Model
 {
+
+    public function init()
+    {
+        parent::init();
+
+    }
+
+    public function getRecipeDetail(&$result, $params) {
+
+        $select = $this->_db    ->select()
+            ->from("recipe");
+        $result = $this->getAdapter()->fetchAll($select);
+
+        foreach ($result as $recipe){
+            if ($params ==$this->replaceOnLink($recipe['title'])){
+                $id_recipe = $recipe['id'];
+            }
+        }
+        if (isset($id_recipe) != NULL){
+            $select_recipe = $this->_db     ->select()
+                                            ->from(array("r" => "recipe"))
+                                            ->where("id = $id_recipe");
+            $result_recipe = $this->getAdapter()->fetchAll($select_recipe);
+
+        }else{
+            $result_recipe = FALSE;
+        }
+
+        return $this->aso_return($return, CMD_DB_ERROR_NO_ERROR, $result_recipe);
+    }
+
     public function replaceOnLink($text)
     {
         return $this->normalize($text);

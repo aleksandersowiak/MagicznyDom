@@ -26,7 +26,9 @@ define("DATE_DB_FORMAT",                        'y-MM-dd'); // MySQL DATE format
 define("DATE_YM_DB_FORMAT",                     'y-MM'); // MySQL DATE format
 define('DATE_TIME_DB_FORMAT',                   'Y-m-d H:i:s');
 define("DATE_EXPORT_FORMAT",                    'y-MM-dd');
+define("DATE_INDEX_FORMAT",                     'j F, Y, g:i');
 
+define("MAX_LIMIT_INDEX",                       5);
 /*
 |--------------------------------------------------------------------------
 | Database error codes

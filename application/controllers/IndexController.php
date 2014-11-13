@@ -7,6 +7,7 @@ class IndexController extends Aso_Controller_Action
         $messages = $this->_helper->flashMessenger->getMessages();
         if(!empty($messages))
             $this->_helper->layout->getView()->message = $messages[0];
+
     }
  
     public function indexAction()
@@ -22,10 +23,15 @@ class IndexController extends Aso_Controller_Action
             }
             $this->view->about = json_decode(($resultAbout[0]['data']),true);
 
-            if ($this->getModel("Model_Index")->getRecipe($resultRecipe)== FALSE) {
+            if ($this->getModel("Model_Index")->getRecipe($resultRecipe, MAX_LIMIT_INDEX, 'DESC')== FALSE) {
                 return $this->aso_sendCommand($resultRecipe['error']);
             }
             $this->view->resultRecipe = $resultRecipe;
+
+            if ($this->getModel("Model_Index")->getCategory($getCategory)== FALSE) {
+                return $this->aso_sendCommand($getCategory['error']);
+            }
+            $this->view->getCategory = $getCategory;
 
             $this->renderScript('login_popup.phtml');
 	    return $this->render('index');

@@ -29,7 +29,7 @@ class Aso_Controller_Action extends Zend_Controller_Action
             $this->renderScript('error.phtml');
             $this->_helper->viewRenderer->setNoRender(true);
         } else {
-            $this->renderScript('popup.phtml');
+            $this->renderScript('error.phtml');
         }
     }
 
@@ -87,5 +87,18 @@ class Aso_Controller_Action extends Zend_Controller_Action
             $restrict = $text;
         }
         return $restrict;
+    }
+
+    public function getSetings(&$result, $where = null) {
+        if ($where != null) {
+            $where = $this->getAdapter()->quoteInto("type LIKE ?", $where);
+        }else{
+            $where = 1;
+        }
+        $select = $this->_db    ->select()
+            ->from("setings")
+            ->where($where);
+        $result = $this->getAdapter()->fetchAll($select);
+        return $this->aso_return($return, CMD_DB_ERROR_NO_ERROR, $result);
     }
 }

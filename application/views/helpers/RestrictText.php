@@ -1,5 +1,5 @@
 <?php
-class Zend_View_Helper_RestrictText
+class Zend_View_Helper_RestrictText extends Zend_View_Helper_Abstract
 {
     public function restrictText($text, $count)
     {
