@@ -14,22 +14,23 @@ class IndexController extends Aso_Controller_Action
     {
         try {
             if ($this->getModel("Model_Index")->getSetings($resultMenu, 'menu')== FALSE) {
-                return $this->aso_sendCommand($resultMenu['error']);
+                return $this->aso_sendCommand('Menu użytkownika, nie działa prawidłowo.','danger');
             }
             $this->view->menu = json_decode(($resultMenu[0]['data']),true);
 
             if ($this->getModel("Model_Index")->getSetings($resultAbout, 'about')== FALSE) {
-                return $this->aso_sendCommand($resultAbout['error']);
+                return $this->aso_sendCommand('Sekcja "O mnie" nie działa prawidłowo.','danger');
             }
             $this->view->about = json_decode(($resultAbout[0]['data']),true);
 
             if ($this->getModel("Model_Index")->getRecipe($resultRecipe, MAX_LIMIT_INDEX, 'DESC')== FALSE) {
-                return $this->aso_sendCommand($resultRecipe['error']);
+                return $this->aso_sendCommand('Nie pobrano żadnego przepisu','denger');
             }
+
             $this->view->resultRecipe = $resultRecipe;
 
             if ($this->getModel("Model_Index")->getCategory($getCategory)== FALSE) {
-                return $this->aso_sendCommand($getCategory['error']);
+                return $this->aso_sendCommand('Nie znaleniono żdnej kategori','denger');
             }
             $this->view->getCategory = $getCategory;
 

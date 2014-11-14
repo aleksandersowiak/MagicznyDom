@@ -25,7 +25,7 @@ class Aso_Controller_Action extends Zend_Controller_Action
         $this->view->message = $message;
         $this->view->command = $command;
         $this->view->type = $type;
-        $msg = $this->messageBox("Nie odnaleziono takiego artykułu. $message","danger");
+        $msg = $this->messageBox($command,$message ,$type);
         $this->_helper->FlashMessenger($msg);
         $this->aso_Redirect();
 

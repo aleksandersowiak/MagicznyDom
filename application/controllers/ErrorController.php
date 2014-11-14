@@ -5,6 +5,8 @@ class ErrorController extends Aso_Controller_Action
     public function errorAction() {
         $errors = $this->_getParam('error_handler');
 
+        return $this->aso_sendCommand("<strong>$errors->type</strong><br/><br/>Coś poszło nie tak.<br/>Możliwe powody:<br/><ul><li>Brak wybranej strony</li><li>Podany adres jest nieprawidłowy</li></ul>",'danger');
+
         if (!$errors || !$errors instanceof ArrayObject) {
             $this->view->message = 'You have reached the error page';
             return;
