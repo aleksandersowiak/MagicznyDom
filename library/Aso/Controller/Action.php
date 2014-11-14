@@ -25,12 +25,10 @@ class Aso_Controller_Action extends Zend_Controller_Action
         $this->view->message = $message;
         $this->view->command = $command;
         $this->view->type = $type;
-        if ($this->getRequest()->isXmlHttpRequest()) {
-            $this->renderScript('error.phtml');
-            $this->_helper->viewRenderer->setNoRender(true);
-        } else {
-            $this->renderScript('error.phtml');
-        }
+        $msg = $this->messageBox("Nie odnaleziono takiego artykułu. $message","danger");
+        $this->_helper->FlashMessenger($msg);
+        $this->aso_Redirect();
+
     }
 
     public function aso_internalError($r = FALSE) {

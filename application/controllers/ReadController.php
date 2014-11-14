@@ -15,15 +15,13 @@ class ReadController extends Aso_Controller_Action
         $messages = $this->_helper->flashMessenger->getMessages();
         if(!empty($messages))
             $this->_helper->layout->getView()->message = $messages[0];
-
-
     }
 
     public function  indexAction(){
         try {
             $request = $this->getRequest();
             $params = $request->getParams();
-
+            $pass = TRUE;
             if ($this->getModel("Model_Index")->getSetings($resultMenu, 'menu')== FALSE) {
                 return $this->aso_sendCommand($resultMenu['error']);
             }
@@ -32,21 +30,12 @@ class ReadController extends Aso_Controller_Action
             if ($this->getModel("Model_Read")->getRecipeDetail($resultRecipeDetail, $params['id'])== FALSE) {
                 return $this->aso_sendCommand($resultRecipeDetail['error']);
             }
-            if (!isset($params['id'])){
-                $msg = $this->messageBox("Coś poszło nie tak.","danger");
-                $this->_helper->FlashMessenger($msg);
-                $this->_helper->redirector->gotoRoute(array(
-                    'controller'=> 'index',
-                    'action' =>'index'));
-            }
-            $this->view->title      = $resultRecipeDetail[0]['title'];
-            $this->view->autor      = $resultRecipeDetail[0]['autor'];
-            $this->view->updated    = $resultRecipeDetail[0]['updated'];
-            $this->view->recipe     = $resultRecipeDetail[0]['recipe'];
-
+            $this->view->title = $resultRecipeDetail[0]['title'];
+            $this->view->autor = $resultRecipeDetail[0]['autor'];
+            $this->view->updated = $resultRecipeDetail[0]['updated'];
+            $this->view->recipe = $resultRecipeDetail[0]['recipe'];
             $this->renderScript('login_popup.phtml');
             return $this->render('index');
-
         } catch(exception $e) {
             $this->logError("indexAction() exception: ".$e->getMessage());
             return $this->aso_internalError();

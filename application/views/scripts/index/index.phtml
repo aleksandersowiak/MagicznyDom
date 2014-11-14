@@ -72,6 +72,16 @@
     </nav>
 
     <div class="modal fade bs-example-modal-lg" id="bs-example-modal-edit-post" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <script type="text/javascript">
+            function getContent(){
+                var div_val = document.getElementById("editor").innerHTML;
+                document.getElementById("formtextarea").value = div_val;
+                if(div_val==''){
+                    return false;
+                }
+            }
+        </script>
+        <form class="form-horizontal" role="form" id="form" method="post" action="<?=DEF_CONTROLER__LOGIN?>" onsubmit="return getContent()">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -133,15 +143,17 @@
                         </div>
                         <input type="text" data-edit="inserttext" id="voiceBtn" x-webkit-speech="">
                     </div>
-                    <div id="editor" contenteditable="true" style="overflow: auto">
+                    <div id="editor" contenteditable="true" name="editor" style="overflow: auto">
                         Go ahead&hellip;
                     </div>
+                    <textarea id="formtextarea" name="editor" style="display: none"></textarea>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>
+        </form>
     </div>
     <input type="button" class="btn glyphicon-edit" data-toggle="modal" data-target="#bs-example-modal-edit-post"/>
     <hr class="featurette-divider">

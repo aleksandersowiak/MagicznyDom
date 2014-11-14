@@ -12,7 +12,4 @@ class Zend_View_Helper_RestrictText extends Zend_View_Helper_Abstract
         }
         return $restrict;
     }
-    public function replaceOnLink($text){
-        
-    }
 }

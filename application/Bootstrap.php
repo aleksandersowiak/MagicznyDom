@@ -73,5 +73,12 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $view->headMeta()->appendHttpEquiv('Content-Type', 'text/html; charset=utf-8');
 
     }
+
+    protected function _initViewHelperPaths()
+    {
+        $this->bootstrap('view');
+        $view = $this->getResource('view');
+        $view->addHelperPath(APPLICATION_PATH . '/views/helpers', 'Zend_View_Helper_');
+    }
 }
 ?>

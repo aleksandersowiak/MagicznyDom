@@ -22,4 +22,7 @@ class Aso_Model extends Zend_Db_Table_Abstract {
     public function logError($msg) {
         $this->_log->err($this->_module.': '.$msg);
     }
+    public function aso_hasResult($var) {
+        return ( ((is_array($var) && empty($var)) || (bool)$var == 0 || !isset($var) ) == true ) ? false : true;
+    }
 }
