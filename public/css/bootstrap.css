@@ -3379,7 +3379,7 @@ tbody.collapse.in {
   margin-left: -1px;
 }
 .btn-toolbar {
-  margin-left: -5px;
+  margin-left: 0px;
 }
 .btn-toolbar .btn-group,
 .btn-toolbar .input-group {

@@ -1,3 +1,11 @@
+function getContent(){
+    var div_val = document.getElementById("editor").innerHTML;
+    document.getElementById("formtextarea").value = div_val;
+    if(div_val==''){
+        return false;
+    }
+}
+
 $(function(){
 	function initToolbarBootstrapBindings() {
 		var fonts = ['Serif', 'Sans', 'Arial', 'Arial Black', 'Courier',
