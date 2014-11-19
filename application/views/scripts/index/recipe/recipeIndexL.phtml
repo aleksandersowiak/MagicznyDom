@@ -7,6 +7,11 @@
         <p class="pull-right"><a href="read/<?=$this->replaceOnLink($this->title)?>">Czytaj całość...</a></p>
     </div>
     <div class="col-md-4">
-       <?=$this->dataImage($link = null, $text = '230x230', $width = 230, $height = 230)?>
+        <?php preg_match_all('/<img.*src=\"(.*)\".*>/iU', $this->recipe, $images);
+        if (empty($images[1][0]) == false) {
+            $min = 0;
+            $max = count($images[1])-1;
+            echo $this->dataImage($link = $images[1][rand ($min ,$max)], $text = null, $width = 230, $height = 230); }
+        ?>
     </div>
 </div>

@@ -3,7 +3,9 @@
 ?>
 <div class="row featurette">
     <div class="col-md-4">
-        <?=$this->dataImage($link = null, $text = '230x230', $width = 230, $height = 230)?>
+        <?php preg_match_all('/<img.*src=\"(.*)\".*>/iU', $this->recipe, $images); $min = 0; $max = count($images[1])-1;
+        if (empty($images) != false) echo $this->dataImage($link = $images[1][rand ($min ,$max)], $text = null, $width = 230, $height = 230);
+        ?>
     </div>
     <div class="col-md-8">
         <h3 class="blog-post-title"><?=$this->title?></h3>
