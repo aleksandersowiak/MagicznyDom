@@ -3,8 +3,11 @@
 ?>
 <div class="row featurette">
     <div class="col-md-4">
-        <?php preg_match_all('/<img.*src=\"(.*)\".*>/iU', $this->recipe, $images); $min = 0; $max = count($images[1])-1;
-        if (empty($images) != false) echo $this->dataImage($link = $images[1][rand ($min ,$max)], $text = null, $width = 230, $height = 230);
+        <?php preg_match_all('/<img.*src=\"(.*)\".*>/iU', $this->recipe, $images);
+        if (empty($images[1][0]) == false) {
+            $min = 0;
+            $max = count($images[1])-1;
+            echo $this->dataImage($link = $images[1][rand ($min ,$max)], $text = null, $width = 230, $height = 230); }
         ?>
     </div>
     <div class="col-md-8">

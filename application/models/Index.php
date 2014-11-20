@@ -17,11 +17,11 @@ class Application_Model_Index extends Aso_Model {
         return $this->aso_return($return, CMD_DB_ERROR_NO_ERROR, $result);
     }
 
-    public function getRecipe(&$result, $limit = null, $sort= null) {
+    public function getRecipe(&$result, $limit = null, $order = null, $sort= null) {
         $select = $this->_db    ->select()
                                 ->from("recipe")
                                 ->limit($limit)
-                                ->order("updated $sort");
+                                ->order($order." ".$sort);
         $result = $this->getAdapter()->fetchAll($select);
         return $this->aso_return($return, CMD_DB_ERROR_NO_ERROR, $result);
     }
