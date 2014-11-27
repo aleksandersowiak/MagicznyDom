@@ -11,7 +11,25 @@ class Aso_Controller_Action extends Zend_Controller_Action
     private $_module = "";          // module name
     private $_model = null;
     private $_layout = null;        // layout pointer
+    private $_modelIndex = null;        // layout pointer
 //    private $_trans = null;
+
+    public function init() {
+        parent::init();
+        $this->setModel(new Application_Model_Index(), "Model_Index");
+        $this->getModel("Model_Index")->getSetings($title, 'title');
+        $this->view->webtitle = $title[0]['data'];
+        if ($this->getModel("Model_Index")->getSetings($resultMenu, 'menu')== FALSE) {
+            return $this->aso_sendCommand('Menu użytkownika, nie działa prawidłowo.','danger');
+        }
+        $this->view->menu = json_decode(($resultMenu[0]['data']),true);
+        if ($this->getModel("Model_Index")->getSetings($resultAbout, 'about')== FALSE) {
+            return $this->aso_sendCommand('Sekcja "O mnie" nie działa prawidłowo.','danger');
+        }
+        $this->view->about = json_decode(($resultAbout[0]['data']),true);
+        $this->renderScript('login_popup.phtml');
+    }
+
 
     public function aso_Redirect($where = null){
         $ms = new Zend_Session_Namespace(SESSION_NAMESPACE);

@@ -25,4 +25,7 @@ class Aso_Model extends Zend_Db_Table_Abstract {
     public function aso_hasResult($var) {
         return ( ((is_array($var) && empty($var)) || (bool)$var == 0 || !isset($var) ) == true ) ? false : true;
     }
+    public function getTitle(&$result) {
+        return $result = 'W Moim Magicznym Domu';
+    }
 }

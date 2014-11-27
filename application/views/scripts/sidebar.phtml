@@ -2,12 +2,12 @@
     <?php if ($this->about["active"] == TRUE) { ?>
         <div class="sidebar-module sidebar-module-inset blog-sidebar">
             <h4>O Mnie</h4>
-            <p><?=$this->about["text"]?></p>
+            <p><?=$this->restrictText($this->about["text"], 100)?></p>
         </div>
     <?php } ?>
     <ul class="list-group">
-        <?php if ($this->getCategory != NULL )
-            foreach ($this->getCategory as $category) { ?>
+        <?php if ($this->Category != NULL )
+            foreach ($this->Category as $category) { ?>
                 <li class="list-group-item">
                     <span class="badge"><?=$category['category_count']?></span>
                     <a href="#"><?=$category['category']?></a>

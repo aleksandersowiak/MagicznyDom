@@ -69,8 +69,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             $view->headScript()->appendFile(WEB_ROOT_PATH.'/js/scripts.js','text/javascript');
         }
 
-        //$view->headScript()->appendFile(WEB_ROOT_PATH.'/locale/locale.js','text/javascript');
-        $view->headTitle('W Moim Magicznym Domu');
         $view->headMeta()->appendHttpEquiv('Content-Type', 'text/html; charset=utf-8');
 
     }
