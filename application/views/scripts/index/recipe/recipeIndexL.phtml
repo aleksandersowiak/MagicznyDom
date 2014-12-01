@@ -4,7 +4,7 @@
         <h3 class="blog-post-title"><?=$this->title?></h3>
         <p class="blog-post-meta"><?=$this->dateFormat($this->created)?> <a href="#"><?=$this->autor?></a></p>
         <p><?=$this->restrictText($this->recipe, 250)?></p>
-        <p class="pull-right"><a href="read/<?=$this->replaceOnLink($this->title)?>">Czytaj całość...</a></p>
+        <p class="pull-right"><a href="<?=$this->baseUrl()?>/read/<?=$this->replaceOnLink($this->title)?>">Czytaj całość...</a></p>
     </div>
     <div class="col-md-4">
         <?php preg_match_all('/<img.*src=\"(.*)\".*>/iU', $this->recipe, $images);

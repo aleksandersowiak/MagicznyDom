@@ -1,0 +1,6 @@
+
+    <a href="<?=$this->replaceOnLink($this->category)?>" class="list-group-item <?=(strstr($this->url(), $this->replaceOnLink($this->category), true)) ? "active" : ""; ?>">
+        <?=$this->category?>
+        <span class="badge"><?=$this->category_count?></span>
+    </a>
+

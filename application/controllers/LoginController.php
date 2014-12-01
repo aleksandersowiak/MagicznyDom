@@ -10,7 +10,6 @@ class LoginController extends Aso_Controller_Action
 {
     public function init() {
         parent::init();
-        $this->setModel(new Application_Model_Index(), "Model_Login");
     }
     public function indexAction(){
         try {

@@ -3,10 +3,6 @@ class IndexController extends Aso_Controller_Action
 {
 	public function init() {
         parent::init();
-        $this->setModel(new Application_Model_Index(), "Model_Index");
-        $messages = $this->_helper->flashMessenger->getMessages();
-        if(!empty($messages))
-            $this->_helper->layout->getView()->message = $messages[0];
     }
  
     public function indexAction()

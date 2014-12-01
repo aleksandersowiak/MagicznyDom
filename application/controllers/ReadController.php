@@ -10,11 +10,6 @@ class ReadController extends Aso_Controller_Action
 {
     public function init() {
         parent::init();
-        $this->setModel(new Application_Model_Read(), "Model_Read");
-        $this->setModel(new Application_Model_Index(), "Model_Index");
-        $messages = $this->_helper->flashMessenger->getMessages();
-        if(!empty($messages))
-            $this->_helper->layout->getView()->message = $messages[0];
     }
 
     public function  indexAction(){
@@ -30,12 +25,10 @@ class ReadController extends Aso_Controller_Action
             if ($this->getModel("Model_Read")->getRecipeDetail($resultRecipeDetail, $params['id'])== FALSE) {
                 return $this->aso_sendCommand('Nie znaleziono artykułu spełniającego podane kryteria.','danger');
             }
-
             $this->view->title = $resultRecipeDetail[0]['title'];
             $this->view->autor = $resultRecipeDetail[0]['autor'];
             $this->view->updated = $resultRecipeDetail[0]['updated'];
             $this->view->recipe = $resultRecipeDetail[0]['recipe'];
-            $this->renderScript('login_popup.phtml');
             return $this->render('index');
         } catch(exception $e) {
             $this->logError("indexAction() exception: ".$e->getMessage());

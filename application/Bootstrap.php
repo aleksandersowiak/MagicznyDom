@@ -20,6 +20,13 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                 'action' => 'index'
             )
         ));
+
+        $router = Zend_Controller_Front::getInstance()->getRouter();
+        $router->addRoute('viewCategory', new Zend_Controller_Router_Route('/category/:id', array(
+                'controller' => 'Category',
+                'action' => 'view'
+            )
+        ));
     }
     protected function _initPlaceholders() {
         $this->bootstrap('view');
