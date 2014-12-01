@@ -17,10 +17,10 @@ class Application_Model_Index extends Aso_Model {
         return $this->aso_return($return, CMD_DB_ERROR_NO_ERROR, $result);
     }
 
-    public function getRecipe(&$result, $limit = null, $order = null, $sort= null) {
+    public function getRecipe(&$result, $offset, $limit, $order = null, $sort= null) {
         $select = $this->_db    ->select()
                                 ->from("recipe")
-                                ->limit($limit)
+                                ->limit($limit, $offset)
                                 ->order($order." ".$sort);
         $result = $this->getAdapter()->fetchAll($select);
         return $this->aso_return($return, CMD_DB_ERROR_NO_ERROR, $result);
@@ -34,6 +34,12 @@ class Application_Model_Index extends Aso_Model {
                                     ->group("category");
 
         $result = $this->getAdapter()->fetchAll($select_count);
+        return $this->aso_return($return, CMD_DB_ERROR_NO_ERROR, $result);
+    }
+
+    public function getCount(&$result){
+        $count = $this->_db->select()->from(array("r"=>"recipe"), array ("count" => "COUNT(`recipe`)"))->group('autor_id');
+        $result = $this->getAdapter()->fetchAll($count);
         return $this->aso_return($return, CMD_DB_ERROR_NO_ERROR, $result);
     }
 }
