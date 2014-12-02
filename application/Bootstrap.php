@@ -29,7 +29,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 	    $router->addRoute('viewCategory', new Zend_Controller_Router_Route('/category/:id', array(
                 'controller' => 'Category',
                 'action' => 'view'
-			}
+			)
 		));
 		
     }
