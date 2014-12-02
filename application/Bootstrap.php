@@ -20,18 +20,16 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                 'action' => 'index'
             )
         ));
-        $router->addRoute('page', new Zend_Controller_Router_Route('/:page', array(
-                'controller' => 'index',
+        $router->addRoute('page', new Zend_Controller_Router_Route('/page/:page', array(
+                'controller' => 'Index',
                 'action' => 'index'
             )
         ));
-		
 	    $router->addRoute('viewCategory', new Zend_Controller_Router_Route('/category/:id', array(
                 'controller' => 'Category',
                 'action' => 'view'
 			)
 		));
-		
     }
     protected function _initPlaceholders() {
         $this->bootstrap('view');

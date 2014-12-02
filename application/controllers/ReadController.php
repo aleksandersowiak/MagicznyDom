@@ -23,7 +23,7 @@ class ReadController extends Aso_Controller_Action
             $this->view->menu = json_decode(($resultMenu[0]['data']),true);
 
             if ($this->getModel("Model_Read")->getRecipeDetail($resultRecipeDetail, $params['id'])== FALSE) {
-                return $this->aso_sendCommand('Nie znaleziono artykułu spełniającego podane kryteria.','danger');
+                return $this->aso_sendCommand('Wybrany link jest uszkodzony, i zawartość nie może zostać wyświetlona..','warning');
             }
             $this->view->title = $resultRecipeDetail[0]['title'];
             $this->view->autor = $resultRecipeDetail[0]['autor'];

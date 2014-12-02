@@ -7,14 +7,14 @@
             <div class="col-xs-6 col-lg-4">
                 <h2><?=$allCategory['category']?>
                 <span class="badge"><?=$allCategory['category_count']?></span></h2>
-                <p><a class="btn btn-default" href="<?=$this->baseUrl()?>/category/<?=$this->replaceOnLink($allCategory['category'])?>" role="button">Pokaż tą kategorię »</a></p>
+                <p><a class="btn btn-default" href="<?=$this->baseUrl()?>/category/<?=$this->replaceOnLink($allCategory['category'])?>" role="button">Wyświetl »</a></p>
             </div><!--/.col-xs-6.col-lg-4-->
             <?php } ?>
         </div><!--/row-->
     </div><!--/.col-xs-12.col-sm-9-->
     <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
         <ul class="list-group">
-    <?=$this->partialLoop('category/categorySidebar.phtml',$this->Category); ?>
+            <?=$this->partialLoop('category/categorySidebar.phtml',$this->Category); ?>
         </ul>
     </div>
 

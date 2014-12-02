@@ -10,7 +10,6 @@ class IndexController extends Aso_Controller_Action
         try {
             $request = $this->getRequest();
             $params = $request->getParams();
-
             if ($this->getModel("Model_Index")->getCount($count) == FALSE) {
                 return $this->aso_sendCommand('Nie pobrano żadnego przepisu','denger');
             }
@@ -25,11 +24,9 @@ class IndexController extends Aso_Controller_Action
             $left_rec = $count[0]['count'] - ($page * MAX_LIMIT_INDEX);
             $this->view->page = $page;
             $this->view->count = $left_rec;
-            if (($page * MAX_LIMIT_INDEX) > $count[0]['count']) {
-                return $this->aso_sendCommand('Coś się zepsuło, albo przekąbinowałeś.','danger');
+            if (($page * MAX_LIMIT_INDEX) >= $count[0]['count']) {
+                return $this->aso_sendCommand('Coś się zepsuło, albo przekombinowałeś.','warning');
             }
-//            var_dump($dd);
-
 
             if ($this->getModel("Model_Index")->getRecipe($resultHotIndex, 0, MAX_LIMIT_HOT_INDEX, 'hits', 'DESC')== FALSE) {
                 return $this->aso_sendCommand('Menu użytkownika, nie działa prawidłowo.','danger');
@@ -41,7 +38,7 @@ class IndexController extends Aso_Controller_Action
             }
                 $this->view->Recipes = $resultRecipe;
             if ($this->getModel("Model_Index")->getCategory($getCategory)== FALSE) {
-                return $this->aso_sendCommand('Nie znaleniono żdnej kategori','denger');
+                return $this->aso_sendCommand('Nie znaleziono żadnej kategori','denger');
             }
                 $this->view->Category = $getCategory;
 	        return $this->render('index');

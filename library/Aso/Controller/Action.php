@@ -27,7 +27,6 @@ class Aso_Controller_Action extends Zend_Controller_Action
 
         $this->getModel("Model_Index")->getSetings($title, 'title');
         $this->view->webtitle = $title[0]['data'];
-
         if ($this->getModel("Model_Index")->getSetings($resultMenu, 'menu')== FALSE) {
             return $this->aso_sendCommand('Menu użytkownika, nie działa prawidłowo.','danger');
         }

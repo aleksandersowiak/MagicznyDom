@@ -51,13 +51,13 @@
                     foreach ($menu_json as $key => $value){
                         ?>
                         <li <?=($menu_json[$i]['dropdown'] != null) ? 'class="dropdown"' : ''; ?>>
-                            <a href=".<?=$menu_json[$i]['link']?>"<?=($menu_json[$i]['dropdown'] != null) ? 'class="dropdown-toggle" data-toggle="dropdown"' : ''?>>
+                            <a href="<?=$this->baseUrl().$menu_json[$i]['link']?>"<?=($menu_json[$i]['dropdown'] != null) ? 'class="dropdown-toggle" data-toggle="dropdown"' : ''?>>
                                 <?=$menu_json[$i]['name']?><?=($menu_json[$i]['dropdown'] != null) ? '<span class="caret"></span>' : '' ?>
                             </a>
                             <? if($menu_json[$i]['dropdown'] != null) { ?>
                                 <ul class="dropdown-menu" role="menu">
                                     <?php foreach($menu_json[$i]['dropdown'] as $drop_value) {
-                                        echo '<li><a href=".'.$drop_value['drop_link'].'">'.$drop_value['drop_name'].'</a></li>';
+                                        echo '<li><a href="'.$this->baseUrl().$drop_value['drop_link'].'">'.$drop_value['drop_name'].'</a></li>';
                                         $j++;
                                     }; ?>
                                 </ul>

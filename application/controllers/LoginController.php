@@ -13,9 +13,11 @@ class LoginController extends Aso_Controller_Action
     }
     public function indexAction(){
         try {
+
             $auth = Zend_Auth::getInstance();
             $db = $this->_getParam('db');
             $msg = null;
+
             if ($this->getRequest()->isPost()) {
                 if (($this->getRequest()->getPost('email') != '') || ($this->getRequest()->getPost('password') != '')) {
                     $adapter = new Zend_Auth_Adapter_DbTable(
@@ -29,6 +31,7 @@ class LoginController extends Aso_Controller_Action
                     $adapter->setCredential($this->getRequest()->getPost('password'));
                     $result = $auth->authenticate($adapter);
                     $loginRow = $adapter->getResultRowObject(array('id', 'active', 'name'));
+
                     if ($loginRow != false) {
                         if ($loginRow->active == 1) {
                             $ms = new Zend_Session_Namespace(SESSION_NAMESPACE);
@@ -38,7 +41,7 @@ class LoginController extends Aso_Controller_Action
                             $ms->u_use_id = $loginRow->id;
                             $msg = $this->messageBox("Zostałeś zalogowany(a) prawidłowo.", "success");
                         }else {
-                            $msg = $this->messageBox("Podany użytkownik nie został aktywowany.", "warning");
+                            $msg = $this->messageBox("Podany użytkownik nie został aktywowany. Skontaktuj się z administratorem w celu dokończenia aktywacji konta. <a href=\"mailto:aleksander.sowiak@gmail.com\">Pod tym adresem email</a>", "warning");
                         }
                     }else {
                         $msg = $this->messageBox("Uzytkownik nie istnieje. Bądź podane dane są nie prawidłowe.","danger");

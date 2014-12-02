@@ -58,8 +58,16 @@
     </div>
     <nav>
         <ul class="pager">
-            <li class="previous <?=($this->page <= 0) ? "disabled" : "" ?> "><a href="<?=($this->page <= 0) ? null : $this->page-1 ?>">&#171; Nowsze Wpisy</a></li>
-            <li class="next <?=($this->count <= MAX_LIMIT_INDEX) ? "disabled" : "" ?>"><a href="<?=($this->count <= MAX_LIMIT_INDEX) ? null : $this->page+1 ?>">Starze Wpisy &#187;</a></li>
+            <?php
+            $next = $this->page+1;
+            $prev = $this->page-1;
+            ?>
+            <li class="previous <?=($this->page <= 0) ? "disabled" : "" ?> ">
+                <a href="<?=$this->baseUrl()?><?=($this->page <= 0) ? null : "/page/$prev" ?>">&#171; Nowsze Wpisy</a>
+            </li>
+            <li class="next <?=($this->count <= MAX_LIMIT_INDEX) ? "disabled" : "" ?>">
+                <a href="<?=$this->baseUrl()?><?=($this->count <= MAX_LIMIT_INDEX) ? null : "/page/$next" ?>">Starze Wpisy &#187;</a>
+            </li>
         </ul>
     </nav>
 
