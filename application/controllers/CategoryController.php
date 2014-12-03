@@ -9,10 +9,6 @@
 class CategoryController extends Aso_Controller_Action {
     public function init() {
         parent::init();
-        if ($this->getModel("Model_Index")->getCategory($getCategory)== FALSE) {
-            return $this->aso_sendCommand('Nie znaleniono żdnej kategori','denger');
-        }
-        $this->view->Category = $getCategory;
     }
     public function indexAction() {
          return $this->render('index');

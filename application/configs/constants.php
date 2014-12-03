@@ -28,8 +28,8 @@ define('DATE_TIME_DB_FORMAT',                   'Y-m-d H:i:s');
 define("DATE_EXPORT_FORMAT",                    'y-MM-dd');
 define("DATE_INDEX_FORMAT",                     'j F, Y, g:i');
 
-define("MAX_LIMIT_INDEX",                       3);
-define("MAX_LIMIT_HOT_INDEX",                   4);
+define("MAX_LIMIT_INDEX",                       5);
+define("MAX_LIMIT_HOT_INDEX",                   5);
 /*
 |--------------------------------------------------------------------------
 | Database error codes

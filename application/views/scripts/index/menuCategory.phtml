@@ -1,0 +1,7 @@
+<li <?=(Zend_Controller_Front::getInstance()->getRequest()->getParam('id') == $this->replaceOnLink($this->category)) ? "class=\"active\"" : ""; ?>>
+    <a href="<?=$this->baseUrl().'/category/'.$this->replaceOnLink($this->category)?>" ">
+        <?=$this->category?>
+    </a>
+</li>
+
+

@@ -7,8 +7,9 @@ class Application_Model_Read extends Aso_Model
         parent::init();
     }
 
-    public function getRecipeDetail(&$result, $params) {
+    public function getRecipeDetail(&$result, $params = null, $parameters = null) {
         require_once( APPLICATION_PATH . '/views/helpers/ReplaceOnLink.php');
+
         $this->_helper = new Zend_View_Helper_ReplaceOnLink();
         $result = FALSE;
         $select = $this->_db    ->select()
@@ -17,17 +18,31 @@ class Application_Model_Read extends Aso_Model
         foreach ($result_recipe as $recipe){
             if ($params == $this->_helper->replaceOnLink($recipe['title'])){
                 $id_recipe = $recipe['id'];
+                $updated = $recipe['updated'];
             }
         }
         if (isset($id_recipe) != NULL){
+            if (isset($parameters) != NULL){
+                $where = "updated $parameters '$updated'";
+                $limit = 1;
+                $order = "r.updated DESC";
+            }else{
+                $where = "r.id = $id_recipe";
+            }
             $select_recipe = $this->_db     ->select()
                                             ->from(array("r" => "recipe"))
-                                            ->where("id = $id_recipe");
+
+            ->where($where);
+
+            if (isset($parameters) != null) {
+                 $select_recipe->order($order)->limit($limit);
+            }
             $result = $this->getAdapter()->fetchAll($select_recipe);
+
         }
-        if ($this->aso_hasResult($result) == false) {
-            return $this->aso_return($return,CMD_DB_ERROR_NO_DATA);
-        }
+//        if ($this->aso_hasResult($result) == false) {
+//            return $this->aso_return($return,CMD_DB_ERROR_NO_DATA);
+//        }
         return $this->aso_return($return, CMD_DB_ERROR_NO_ERROR, $result);
     }
 }

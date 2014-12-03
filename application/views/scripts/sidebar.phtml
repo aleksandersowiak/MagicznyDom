@@ -5,14 +5,9 @@
             <p><?=$this->restrictText($this->about["text"], 100)?></p>
         </div>
     <?php } ?>
-    <div class="list-group">
-        <?php if ($this->Category != NULL )
-            foreach ($this->Category as $category) { ?>
-                    <a href="<?=$this->baseUrl()?>/category/<?=$this->replaceOnLink($category['category'])?>" class="list-group-item"><?=$category['category']?>
-                        <span class="badge"><?=$category['category_count']?></span>
-                    </a>
-            <?php   } ?>
-    </div>
+    <ul class="list-group">
+        <?=$this->partialLoop('category/categorySidebar.phtml',$this->Category); ?>
+    </ul>
     <div class="list-group">
         <a href="#" class="list-group-item">
             <h4 class="list-group-item-heading">List group item heading</h4>

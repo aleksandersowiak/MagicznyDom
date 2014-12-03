@@ -24,6 +24,6 @@ class Zend_View_Helper_ReplaceOnLink extends Zend_View_Helper_Abstract
             'ô'=>'o', 'õ'=>'o', 'ö'=>'o', 'ø'=>'o', 'ù'=>'u', 'ú'=>'u', 'û'=>'u', 'ý'=>'y', 'ý'=>'y', 'þ'=>'b',
             'ÿ'=>'y', 'Ŕ'=>'R', 'ŕ'=>'r', ' '=>'-', '.'=>'',  ','=>'', '_' => '-'
         );
-        return strtr(strtolower($string), $table);
+        return strtolower(strtr($string, $table));
     }
 }

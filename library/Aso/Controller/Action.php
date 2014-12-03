@@ -11,6 +11,7 @@ class Aso_Controller_Action extends Zend_Controller_Action
     private $_module = "";          // module name
     private $_model = null;
     private $_layout = null;        // layout pointer
+    private $_params = null;
 //    private $_trans = null;
 
     public function init() {
@@ -35,6 +36,10 @@ class Aso_Controller_Action extends Zend_Controller_Action
             return $this->aso_sendCommand('Sekcja "O mnie" nie działa prawidłowo.','danger');
         }
         $this->view->about = json_decode(($resultAbout[0]['data']),true);
+        if ($this->getModel("Model_Index")->getCategory($getCategory)== FALSE) {
+            return $this->aso_sendCommand('Nie znaleniono żdnej kategori','denger');
+        }
+        $this->view->Category = $getCategory;
     }
 
 

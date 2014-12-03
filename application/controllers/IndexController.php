@@ -37,14 +37,19 @@ class IndexController extends Aso_Controller_Action
                 return $this->aso_sendCommand('Nie pobrano żadnego przepisu','denger');
             }
                 $this->view->Recipes = $resultRecipe;
-            if ($this->getModel("Model_Index")->getCategory($getCategory)== FALSE) {
-                return $this->aso_sendCommand('Nie znaleziono żadnej kategori','denger');
-            }
-                $this->view->Category = $getCategory;
+
 	        return $this->render('index');
         } catch(exception $e) {
             $this->logError("indexAction() exception: ".$e->getMessage());
             return $this->aso_internalError();
+        }
+    }
+
+    public function aboutAction(){
+        if ($this->view->about['active'] != FALSE) {
+            return $this->renderScript('about/index.phtml');
+        }else{
+            $this->_redirect('/');
         }
     }
 }

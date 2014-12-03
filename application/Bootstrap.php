@@ -30,6 +30,11 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                 'action' => 'view'
 			)
 		));
+        $router->addRoute('about', new Zend_Controller_Router_Route('/about', array(
+                'controller' => 'Index',
+                'action' => 'about'
+            )
+        ));
     }
     protected function _initPlaceholders() {
         $this->bootstrap('view');
