@@ -25,24 +25,30 @@ class Application_Model_Read extends Aso_Model
             if (isset($parameters) != NULL){
                 $where = "updated $parameters '$updated'";
                 $limit = 1;
-                $order = "r.updated DESC";
+                if ($parameters == '<') {
+                    $order = "r.updated DESC";
+                }else{
+                    $order = "r.updated ASC";
+                }
             }else{
                 $where = "r.id = $id_recipe";
             }
             $select_recipe = $this->_db     ->select()
                                             ->from(array("r" => "recipe"))
+                                            ->where($where);
 
-            ->where($where);
 
             if (isset($parameters) != null) {
                  $select_recipe->order($order)->limit($limit);
+            }else{
+                $select_recipe->joinInner(array("t" => "tags"),'`r`.`id` = `t`.`id_recipe`');
             }
             $result = $this->getAdapter()->fetchAll($select_recipe);
-
         }
-//        if ($this->aso_hasResult($result) == false) {
-//            return $this->aso_return($return,CMD_DB_ERROR_NO_DATA);
-//        }
+
+        if ($this->aso_hasResult($result) == false) {
+            return $this->aso_return($return,CMD_DB_ERROR_NO_DATA);
+        }
         return $this->aso_return($return, CMD_DB_ERROR_NO_ERROR, $result);
     }
 }

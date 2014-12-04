@@ -12,6 +12,9 @@ class ReadController extends Aso_Controller_Action
         parent::init();
     }
 
+    /**
+     *
+     */
     public function  indexAction(){
         try {
             $request = $this->getRequest();
@@ -31,6 +34,8 @@ class ReadController extends Aso_Controller_Action
             $this->view->autor = $resultRecipeDetail[0]['autor'];
             $this->view->updated = $resultRecipeDetail[0]['updated'];
             $this->view->recipe = $resultRecipeDetail[0]['recipe'];
+            $tags = json_decode($resultRecipeDetail[0]['tags']);
+            $this->view->tags = $this->implodeFunction($tags, ',');
 
             if ($this->getModel("Model_Read")->getRecipeDetail($resultNext, $id, "<")!= FALSE) {
                 if ($resultNext)

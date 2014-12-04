@@ -5,6 +5,12 @@
             <p class="blog-post-meta"><?=$this->dateFormat($this->updated)?> <a href="#"><?=$this->autor?></a></p>
             <hr class="featurette-divider">
             <?=$this->recipe?>
+            <label for="tags" class="clearfix">Etykiety:</label>
+            <input type="text" class="form-control" id="tokenfield" value="red,green,blue" />
+            <script>
+                $('#tokenfield').tokenfield();
+                $('#tokenfield').tokenfield('readonly');
+            </script>
         </div>
     </div>
     <?=$this->render('sidebar.phtml'); ?>
