@@ -6,7 +6,7 @@
             <hr class="featurette-divider">
             <?=$this->recipe?>
             <label for="tags" class="clearfix">Etykiety:</label>
-            <input type="text" class="form-control" id="tokenfield" value="red,green,blue" />
+            <input type="text" class="form-control" id="tokenfield" value="<?=$this->tags?>" />
             <script>
                 $('#tokenfield').tokenfield();
                 $('#tokenfield').tokenfield('readonly');

@@ -129,7 +129,9 @@ class Aso_Controller_Action extends Zend_Controller_Action
         $result = $this->getAdapter()->fetchAll($select);
         return $this->aso_return($return, CMD_DB_ERROR_NO_ERROR, $result);
     }
-    public function  implodeFunction($array, $separator){
-        return implode($array, $separator);
+    public function  implodeFunction($array = null, $separator = null){
+        if ($array != null){
+            return implode($array, $separator);
+        }
     }
 }

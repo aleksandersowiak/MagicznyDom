@@ -30,20 +30,18 @@ class ReadController extends Aso_Controller_Action
                 return $this->aso_sendCommand('Wybrany link jest uszkodzony, i zawartość nie może zostać wyświetlona..','warning');
             }
 
-            $this->view->title = $resultRecipeDetail[0]['title'];
-            $this->view->autor = $resultRecipeDetail[0]['autor'];
-            $this->view->updated = $resultRecipeDetail[0]['updated'];
-            $this->view->recipe = $resultRecipeDetail[0]['recipe'];
-            $tags = json_decode($resultRecipeDetail[0]['tags']);
-            $this->view->tags = $this->implodeFunction($tags, ',');
+            $this->view->title      = $resultRecipeDetail[0]['title'];
+            $this->view->autor      = $resultRecipeDetail[0]['autor'];
+            $this->view->updated    = $resultRecipeDetail[0]['updated'];
+            $this->view->recipe     = $resultRecipeDetail[0]['recipe'];
+            $tags                   = json_decode($resultRecipeDetail[0]['tags']);
+            $this->view->tags       = $this->implodeFunction($tags, ',');
 
             if ($this->getModel("Model_Read")->getRecipeDetail($resultNext, $id, "<")!= FALSE) {
-                if ($resultNext)
-                $this->view->nextRecipe = $resultNext[0]['title'];
+                if ($resultNext) $this->view->nextRecipe = $resultNext[0]['title'];
             }
             if ($this->getModel("Model_Read")->getRecipeDetail($resultPrev, $id, ">")!= FALSE) {
-                if ($resultPrev)
-                $this->view->prevRecipe = $resultPrev[0]['title'];
+                if ($resultPrev) $this->view->prevRecipe = $resultPrev[0]['title'];
             }
 
             return $this->render('index');
