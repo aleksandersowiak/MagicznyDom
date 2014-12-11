@@ -2,7 +2,7 @@
     <?php if ($this->about["active"] == TRUE) { ?>
         <div class="sidebar-module sidebar-module-inset blog-sidebar">
             <h4>O Mnie</h4>
-            <p><?=$this->restrictText($this->about["text"], 100)?></p>
+            <p><?=$this->restrictText($this->about["data"], 100)?></p>
         </div>
     <?php } ?>
     <ul class="list-group">

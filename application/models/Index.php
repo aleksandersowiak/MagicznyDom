@@ -12,8 +12,10 @@ class Application_Model_Index extends Aso_Model {
         }
         $select = $this->_db    ->select()
                                 ->from("setings")
-                                ->where($where);
+                                ->where($where .' AND `active` = 1');
         $result = $this->getAdapter()->fetchAll($select);
+
+
         return $this->aso_return($return, CMD_DB_ERROR_NO_ERROR, $result);
     }
 

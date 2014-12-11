@@ -39,10 +39,15 @@ class Application_Model_Read extends Aso_Model
 
 
             if (isset($parameters) != null) {
-                 $select_recipe->order($order)->limit($limit);
+                 $select_recipe ->order($order)
+                                ->limit($limit);
             }else{
-                $select_recipe->joinInner(array("t" => "tags"),'`r`.`id` = `t`.`id_recipe`');
+                $select_recipe  ->joinInner(array("t" => "tags"),'`r`.`id` = `t`.`id_recipe`')
+                                ->joinInner(array("c" => "comments"), '`c`.`id_recipe` = `r`.`id`' );
             }
+
+
+//            echo $select_recipe;
             $result = $this->getAdapter()->fetchAll($select_recipe);
         }
 

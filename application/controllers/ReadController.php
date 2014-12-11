@@ -36,6 +36,8 @@ class ReadController extends Aso_Controller_Action
             $this->view->recipe     = $resultRecipeDetail[0]['recipe'];
             $tags                   = json_decode($resultRecipeDetail[0]['tags']);
             $this->view->tags       = $this->implodeFunction($tags, ',');
+            $this->view->comments   = $resultRecipeDetail[0]['comment'];
+
 
             if ($this->getModel("Model_Read")->getRecipeDetail($resultNext, $id, "<")!= FALSE) {
                 if ($resultNext) $this->view->nextRecipe = $resultNext[0]['title'];

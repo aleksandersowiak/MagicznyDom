@@ -27,15 +27,11 @@ class Aso_Controller_Action extends Zend_Controller_Action
         $this->setModel(new Application_Model_Category(), "Model_Category");
 
         $this->getModel("Model_Index")->getSetings($title, 'title');
-        $this->view->webtitle = $title[0]['data'];
-        if ($this->getModel("Model_Index")->getSetings($resultMenu, 'menu')== FALSE) {
-            return $this->aso_sendCommand('Menu użytkownika, nie działa prawidłowo.','danger');
-        }
-        $this->view->menu = json_decode(($resultMenu[0]['data']),true);
+        if ($title != NULL) { $this->view->webtitle = $title[0]['data']; }else{ $this->view->webtitle = 'Default Data'; }
         if ($this->getModel("Model_Index")->getSetings($resultAbout, 'about')== FALSE) {
             return $this->aso_sendCommand('Sekcja "O mnie" nie działa prawidłowo.','danger');
         }
-        $this->view->about = json_decode(($resultAbout[0]['data']),true);
+        if ($resultAbout != null) { $this->view->about = $resultAbout[0]; }else{ $this->view->about = array("active" => 0); }
         if ($this->getModel("Model_Index")->getCategory($getCategory)== FALSE) {
             return $this->aso_sendCommand('Nie znaleniono żdnej kategori','denger');
         }
@@ -47,7 +43,7 @@ class Aso_Controller_Action extends Zend_Controller_Action
         $ms = new Zend_Session_Namespace(SESSION_NAMESPACE);
         if ($where == null) {
             $where = array( 'action' => DEF_ACTION__USER,
-                            'controller' => DEF_CONTROLER__USER);
+                            'controller' => 'error');
         }
         $this->_helper->redirector($where['action'], $where['controller']);
     }
