@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Czas wygenerowania: 11 Gru 2014, 13:54
+-- Czas wygenerowania: 11 Gru 2014, 16:06
 -- Wersja serwera: 5.5.21-log
 -- Wersja PHP: 5.4.10
 
@@ -33,20 +33,21 @@ CREATE TABLE IF NOT EXISTS `comments` (
   `userName` varchar(50) COLLATE utf8_polish_ci DEFAULT NULL,
   `comment` longtext COLLATE utf8_polish_ci,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `pus` bigint(50) NOT NULL,
+  `plus` bigint(50) NOT NULL,
   `minus` bigint(50) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id` (`id`),
   KEY `id_recipe` (`id_recipe`),
   KEY `id_user` (`userName`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci AUTO_INCREMENT=3 ;
 
 --
 -- Zrzut danych tabeli `comments`
 --
 
-INSERT INTO `comments` (`id`, `id_recipe`, `userName`, `comment`, `created`, `pus`, `minus`) VALUES
-(1, 10, '1', 'Bardzo Dobre jedzonko :)', '2014-12-11 10:01:23', 0, 0);
+INSERT INTO `comments` (`id`, `id_recipe`, `userName`, `comment`, `created`, `plus`, `minus`) VALUES
+(1, 10, 'Aleksander Sowiak', 'Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)', '2014-12-11 14:36:07', 0, 0),
+(2, 10, 'Piotr Zaremba', 'Oszukane :D', '2014-12-11 14:04:21', 3, 5);
 
 -- --------------------------------------------------------
 

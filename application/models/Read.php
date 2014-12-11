@@ -7,11 +7,10 @@ class Application_Model_Read extends Aso_Model
         parent::init();
     }
 
-    public function getRecipeDetail(&$result, $params = null, $parameters = null) {
+    private function getDataRecipe($params = null){
         require_once( APPLICATION_PATH . '/views/helpers/ReplaceOnLink.php');
 
         $this->_helper = new Zend_View_Helper_ReplaceOnLink();
-        $result = FALSE;
         $select = $this->_db    ->select()
             ->from("recipe");
         $result_recipe = $this->getAdapter()->fetchAll($select);
@@ -21,6 +20,15 @@ class Application_Model_Read extends Aso_Model
                 $updated = $recipe['updated'];
             }
         }
+        return array("id_recipe" => $id_recipe, 'updated' => $updated);
+    }
+
+
+    public function getRecipeDetail(&$result, $params = null, $parameters = null) {
+        $result = FALSE;
+        $data = $this->getDataRecipe($params);
+        $id_recipe = $data['id_recipe'];
+        $updated = $data['updated'];
         if (isset($id_recipe) != NULL){
             if (isset($parameters) != NULL){
                 $where = "updated $parameters '$updated'";
@@ -45,9 +53,6 @@ class Application_Model_Read extends Aso_Model
                 $select_recipe  ->joinInner(array("t" => "tags"),'`r`.`id` = `t`.`id_recipe`')
                                 ->joinInner(array("c" => "comments"), '`c`.`id_recipe` = `r`.`id`' );
             }
-
-
-//            echo $select_recipe;
             $result = $this->getAdapter()->fetchAll($select_recipe);
         }
 
@@ -56,4 +61,16 @@ class Application_Model_Read extends Aso_Model
         }
         return $this->aso_return($return, CMD_DB_ERROR_NO_ERROR, $result);
     }
+
+    public function getComments(&$return, $params){
+        $data = $this->getDataRecipe($params);
+        $id_recipe = $data['id_recipe'];
+        $select_comment = $this->_db->select()
+                                    ->from("comments")
+                                    ->where("id_recipe LIKE  $id_recipe")
+                                    ->order("created DESC");
+        $result = $this->getAdapter()->fetchAll($select_comment);
+        return $this->aso_return($return, CMD_DB_ERROR_NO_ERROR, $result);
+    }
+
 }

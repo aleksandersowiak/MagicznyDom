@@ -21,10 +21,6 @@ class ReadController extends Aso_Controller_Action
             $params = $request->getParams();
             $pass = TRUE;
             $id = $params['id'];
-            if ($this->getModel("Model_Index")->getSetings($resultMenu, 'menu')== FALSE) {
-                return $this->aso_sendCommand($resultMenu['error']);
-            }
-            $this->view->menu = json_decode(($resultMenu[0]['data']),true);
 
             if ($this->getModel("Model_Read")->getRecipeDetail($resultRecipeDetail,$id , null)== FALSE) {
                 return $this->aso_sendCommand('Wybrany link jest uszkodzony, i zawartość nie może zostać wyświetlona..','warning');
@@ -36,9 +32,11 @@ class ReadController extends Aso_Controller_Action
             $this->view->recipe     = $resultRecipeDetail[0]['recipe'];
             $tags                   = json_decode($resultRecipeDetail[0]['tags']);
             $this->view->tags       = $this->implodeFunction($tags, ',');
-            $this->view->comments   = $resultRecipeDetail[0]['comment'];
 
 
+            if ($this->getModel("Model_Read")->getComments($resultComments,$id )!= FALSE) {
+                if ($resultComments['result']) $this->view->comments = $resultComments['result'];
+            }
             if ($this->getModel("Model_Read")->getRecipeDetail($resultNext, $id, "<")!= FALSE) {
                 if ($resultNext) $this->view->nextRecipe = $resultNext[0]['title'];
             }
