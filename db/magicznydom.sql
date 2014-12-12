@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Czas wygenerowania: 11 Gru 2014, 16:06
+-- Czas wygenerowania: 12 Gru 2014, 12:00
 -- Wersja serwera: 5.5.21-log
 -- Wersja PHP: 5.4.10
 
@@ -39,15 +39,46 @@ CREATE TABLE IF NOT EXISTS `comments` (
   KEY `id` (`id`),
   KEY `id_recipe` (`id_recipe`),
   KEY `id_user` (`userName`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci AUTO_INCREMENT=58 ;
 
 --
 -- Zrzut danych tabeli `comments`
 --
 
 INSERT INTO `comments` (`id`, `id_recipe`, `userName`, `comment`, `created`, `plus`, `minus`) VALUES
-(1, 10, 'Aleksander Sowiak', 'Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)Bardzo Dobre jedzonko :)', '2014-12-11 14:36:07', 0, 0),
-(2, 10, 'Piotr Zaremba', 'Oszukane :D', '2014-12-11 14:04:21', 3, 5);
+(25, 10, NULL, '1', '2014-12-12 09:15:01', 0, 0),
+(26, 1, NULL, '2', '2014-12-12 10:46:01', 0, 0),
+(27, 6, NULL, '3', '2014-12-12 10:46:03', 0, 0),
+(28, 8, NULL, '4', '2014-12-12 10:46:06', 0, 0),
+(29, 3, NULL, '5', '2014-12-12 10:46:08', 0, 0),
+(30, 9, NULL, '6', '2014-12-12 10:46:13', 0, 0),
+(31, 9, NULL, '7', '2014-12-12 10:52:42', 0, 0),
+(32, 9, NULL, '8', '2014-12-12 10:54:02', 0, 0),
+(33, 9, NULL, '9', '2014-12-12 10:54:05', 0, 0),
+(34, 9, NULL, '10', '2014-12-12 10:54:07', 0, 0),
+(35, 9, NULL, '11', '2014-12-12 10:54:10', 0, 0),
+(36, 9, NULL, '12', '2014-12-12 10:54:28', 0, 0),
+(37, 9, NULL, '13', '2014-12-12 10:54:31', 0, 0),
+(38, 9, NULL, '14', '2014-12-12 10:54:38', 0, 0),
+(39, 9, NULL, '15', '2014-12-12 10:54:45', 0, 0),
+(40, 9, NULL, '16', '2014-12-12 10:54:48', 0, 0),
+(41, 10, NULL, '17', '2014-12-12 09:15:40', 0, 0),
+(42, 10, NULL, '18', '2014-12-12 09:42:57', 0, 0),
+(43, 10, NULL, '19', '2014-12-12 09:42:59', 0, 0),
+(44, 10, NULL, '20', '2014-12-12 09:43:01', 0, 0),
+(45, 10, NULL, '21', '2014-12-12 09:43:03', 0, 0),
+(46, 10, NULL, '22', '2014-12-12 10:16:20', 0, 0),
+(47, 10, NULL, '23', '2014-12-12 10:16:23', 0, 0),
+(48, 10, NULL, '24', '2014-12-12 10:16:24', 0, 0),
+(49, 10, NULL, '25', '2014-12-12 10:16:26', 0, 0),
+(50, 10, NULL, '26', '2014-12-12 10:16:29', 0, 0),
+(51, 10, NULL, '27', '2014-12-12 10:16:30', 0, 0),
+(52, 10, NULL, '28', '2014-12-12 10:16:32', 0, 0),
+(53, 10, NULL, '29', '2014-12-12 10:16:35', 0, 0),
+(54, 10, NULL, '30', '2014-12-12 10:16:37', 0, 0),
+(55, 10, NULL, '31', '2014-12-12 10:16:39', 0, 0),
+(56, 10, NULL, '32', '2014-12-12 10:16:40', 0, 0),
+(57, 10, NULL, '33', '2014-12-12 10:16:42', 0, 0);
 
 -- --------------------------------------------------------
 
