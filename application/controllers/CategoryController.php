@@ -20,6 +20,7 @@ class CategoryController extends Aso_Controller_Action {
         if ($this->getModel("Model_Category")->getRecipesFromCategory($resultCategories, $params['id'])== FALSE) {
             return $this->aso_sendCommand('Nie można wyświetlić wybranej kategorii, ponieważ takowa nie istnieje.', 'warning');
         }
+
         $this->view->SelectedCategory = $resultCategories;
         return $this->renderScript('category/viewCategory.phtml');
     }

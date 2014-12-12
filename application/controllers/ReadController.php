@@ -33,17 +33,16 @@ class ReadController extends Aso_Controller_Action
             $tags                   = json_decode($resultRecipeDetail[0]['tags']);
             $this->view->tags       = $this->implodeFunction($tags, ',');
 
-
-            if ($this->getModel("Model_Read")->getComments($resultComments,$id )!= FALSE) {
-                if ($resultComments['result']) $this->view->comments = $resultComments['result'];
-            }
             if ($this->getModel("Model_Read")->getRecipeDetail($resultNext, $id, "<")!= FALSE) {
                 if ($resultNext) $this->view->nextRecipe = $resultNext[0]['title'];
             }
             if ($this->getModel("Model_Read")->getRecipeDetail($resultPrev, $id, ">")!= FALSE) {
                 if ($resultPrev) $this->view->prevRecipe = $resultPrev[0]['title'];
             }
-
+            if ($this->getModel("Model_Read")->getCountComments($resultCount, $params['id'])== FALSE) {
+                return $this->aso_sendCommand('Nie można wyświetlić wybranej kategorii, ponieważ takowa nie istnieje.', 'warning');
+            }
+            $this->view->commentsCount = $resultCount['result'][0]['comments_count'];
             return $this->render('index');
         } catch(exception $e) {
             $this->logError("indexAction() exception: ".$e->getMessage());

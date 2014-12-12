@@ -35,6 +35,11 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                 'action' => 'about'
             )
         ));
+        $router->addRoute('page', new Zend_Controller_Router_Route('/id/:id/offset/:offset', array(
+                'controller' => 'Comments',
+                'action' => 'getComments'
+            )
+        ));
     }
     protected function _initPlaceholders() {
         $this->bootstrap('view');
@@ -76,7 +81,10 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             $view->headScript()->appendFile(WEB_ROOT_PATH.'/js/external/google-code-prettify/prettify.js','text/javascript');
             $view->headScript()->appendFile(WEB_ROOT_PATH.'/js/summernote.min.js','text/javascript');
             $view->headScript()->appendFile(WEB_ROOT_PATH.'/js/bootstrap-tokenfield.min.js','text/javascript');
+            $view->headScript()->appendFile(WEB_ROOT_PATH.'/js/jquery.easy-paging.js','text/javascript');
             $view->headScript()->appendFile(WEB_ROOT_PATH.'/js/scripts.min.js','text/javascript');
+            $view->headScript()->appendFile(WEB_ROOT_PATH.'/js/jquery.easy-paging.js','text/javascript');
+            $view->headScript()->appendFile(WEB_ROOT_PATH.'/js/jquery.paging.min.js','text/javascript');
         } else {
             $view->headScript()->appendFile(WEB_ROOT_PATH.'/js/bootstrap.js','text/javascript');
             $view->headScript()->appendFile('//code.jquery.com/jquery-1.9.1.js');
@@ -87,7 +95,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             $view->headScript()->appendFile(WEB_ROOT_PATH.'/js/external/google-code-prettify/prettify.js','text/javascript');
             $view->headScript()->appendFile(WEB_ROOT_PATH.'/js/summernote.js','text/javascript');
             $view->headScript()->appendFile(WEB_ROOT_PATH.'/js/bootstrap-tokenfield.js','text/javascript');
-            $view->headScript()->appendFile(WEB_ROOT_PATH.'/js/scripts.js','text/javascript');
+            $view->headScript()->appendFile(WEB_ROOT_PATH.'/js/jquery.easy-paging.js','text/javascript');
+            $view->headScript()->appendFile(WEB_ROOT_PATH.'/js/jquery.paging.js','text/javascript');
         }
 
         $view->headMeta()->appendHttpEquiv('Content-Type', 'text/html; charset=utf-8');
@@ -99,6 +108,11 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $this->bootstrap('view');
         $view = $this->getResource('view');
         $view->addHelperPath(APPLICATION_PATH . '/views/helpers', 'Zend_View_Helper_');
+
+        $view = new Zend_View();
+        $view->addHelperPath('ZendX/JQuery/View/Helper/', 'ZendX_JQuery_View_Helper');
+
+
     }
 }
 ?>

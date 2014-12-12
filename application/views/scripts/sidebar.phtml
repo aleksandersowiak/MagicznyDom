@@ -8,29 +8,29 @@
     <ul class="list-group">
         <?=$this->partialLoop('category/categorySidebar.phtml',$this->Category); ?>
     </ul>
+
     <h2>Komentarze</h2>
-    <div class="list-group">
-        <?php if ($this->comments != null) { ?>
-            <?php $idBox = 0; ?>
-            <script>
-                function showMore(id){
-                    var div = document.getElementById("box"+id);
-                    div.style.overflow = "auto";
-                    div.style.maxHeight = 200+"px";
-                }
-            </script>
-            <?php foreach ($this->comments as $data_comment) { ?>
-                <div class="well">
-                    <h4 class="list-group-item-heading"><?=$data_comment['userName']?></h4>
-                    <p><?=$data_comment['created']?></p>
-                    <p id="box<?=$idBox?>" class="list-group-item-text" style="overflow: hidden; max-height: 90px"><?=$data_comment['comment']?></p>
-                    <p>
-                        <p class="pull-right"><a href="javascript:showMore(<?=$idBox?>)">Czytaj całość</a></p>
-                    </p>
-                    <span class="clearfix"></span>
-                </div>
-                <?php $idBox ++ ?>
-            <?php } ?>
-        <?php } ?>
-    </div>
+    <nav>
+        <ul class="pagination">
+            <li>&laquo;</li>
+            <li>#n</li>
+            <li>#n</li>
+            <li>#n</li>
+            <li>#n</li>
+            <li>#n</li>
+            <li>#n</li>
+            <li>#n</li>
+            <li>#n</li>
+            <li>&raquo;</li>
+        </ul>
+    </nav>
+    <div id="output"></div>
+    <script>
+        $(".pagination").easyPaging(<?=($this->commentsCount)?>, {
+            onSelect: function(page) {
+                var url='<?=$this->url(array("controller" => "comments", "action" => "getComments"),"default",true);?>/id/<?=$this->replaceOnLink($this->title)?>/offset/'+(this.slice[0]);
+                $("#output").load(url);
+            }
+        });
+    </script>
 </div>
