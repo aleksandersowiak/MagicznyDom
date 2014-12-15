@@ -10,8 +10,8 @@ class CommentsController extends Aso_Controller_Action {
         $request = $this->getRequest();
         $params = $request->getParams();
         $id = $params['id'];
-        $offset = $params['offset'];
-            if ($this->getModel("Model_Read")->getComments($resultComments,$id, $offset)!= FALSE) {
+        $page = $params['page'];
+            if ($this->getModel("Model_Read")->getComments($resultComments,$id, $page)!= FALSE) {
                 if ($resultComments['result']) {
                     $this->view->comments = $resultComments['result']['comments'];
                     $this->view->commentsCount = $resultComments['result']['count'];

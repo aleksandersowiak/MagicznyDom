@@ -62,22 +62,22 @@ class Application_Model_Read extends Aso_Model
         return $this->aso_return($return, CMD_DB_ERROR_NO_ERROR, $result);
     }
 
-    public function getComments(&$return, $params, $offset = 0){
+    public function getComments(&$return, $params, $page = 1){
         $data = $this->getDataRecipe($params);
         $id_recipe = $data['id_recipe'];
-
+        $start_from = ($page-1) * 10;
         $select_comment = $this->_db->select()
                                     ->from("comments")
                                     ->where("id_recipe LIKE  $id_recipe")
-        ->limit(10, $offset)
+                                    ->limit(10,$start_from)
                                     ->order("created DESC");
 
        $select_count =  $this->_db  ->select()
-            ->from( array(  "c" => "comments"),
-                array("comments_count" => "COUNT(`id`)"))
-            ->where("id_recipe LIKE  $id_recipe");
-        $result = array("comments" => $this->getAdapter()->fetchAll($select_comment),
-                        'count' => $this->getAdapter()->fetchAll($select_count));
+                                    ->from( array(  "c" => "comments"),
+                                        array("comments_count" => "COUNT(`id`)"))
+                                    ->where("id_recipe LIKE  $id_recipe");
+        $result = array("comments"  => $this->getAdapter()->fetchAll($select_comment),
+                        'count'     => $this->getAdapter()->fetchAll($select_count));
 
         return $this->aso_return($return, CMD_DB_ERROR_NO_ERROR, $result);
     }
@@ -85,10 +85,12 @@ class Application_Model_Read extends Aso_Model
         $data = $this->getDataRecipe($params);
         $id_recipe = $data['id_recipe'];
         $select_comment = $this->_db->select()
-            ->from( array(  "c" => "comments"),
-                array("comments_count" => "COUNT(`id`)"))
-            ->where("id_recipe LIKE  $id_recipe");
+                                    ->from( array(  "c" => "comments"),
+                                            array("comments_count" => "COUNT(`id`)"))
+                                    ->where("id_recipe LIKE  $id_recipe");
+
         $result = $this->getAdapter()->fetchAll($select_comment);
+
         return $this->aso_return($return, CMD_DB_ERROR_NO_ERROR, $result);
     }
 }

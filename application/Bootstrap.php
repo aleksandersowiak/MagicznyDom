@@ -73,7 +73,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         // set the initial javascript files
         if($config->head->js->compress == true) {
             $view->headScript()->appendFile(WEB_ROOT_PATH.'/js/bootstrap.min.js','text/javascript');
-            $view->headScript()->appendFile('//code.jquery.com/jquery-1.9.1.js');
+            $view->headScript()->appendFile('//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js');
             $view->headScript()->appendFile('//code.jquery.com/ui/1.10.3/jquery-ui.js');
             $view->headScript()->appendFile('https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js','text/javascript');
             $view->headScript()->appendFile('http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js','text/javascript');
@@ -87,7 +87,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             $view->headScript()->appendFile(WEB_ROOT_PATH.'/js/jquery.paging.min.js','text/javascript');
         } else {
             $view->headScript()->appendFile(WEB_ROOT_PATH.'/js/bootstrap.js','text/javascript');
-            $view->headScript()->appendFile('//code.jquery.com/jquery-1.9.1.js');
+            $view->headScript()->appendFile('//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.js');
             $view->headScript()->appendFile('//code.jquery.com/ui/1.10.3/jquery-ui.js');
             $view->headScript()->appendFile('https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.js','text/javascript');
             $view->headScript()->appendFile('http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.js','text/javascript');

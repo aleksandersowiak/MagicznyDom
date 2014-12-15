@@ -1,22 +1,32 @@
 <div class="list-group">
     <?php if ($this->comments != null) { ?>
         <?php $idBox = 0; ?>
-        <script>
-            function showMore(id){
-                var div = document.getElementById("box"+id);
-                div.style.overflow = "auto";
-                div.style.maxHeight = 200+"px";
-            }
-        </script>
         <?php foreach ($this->comments as $data_comment) { ?>
-            <div class="well">
+            <script type="text/javascript">
+                $(function() {
+                    $(".btn<?=$idBox?>").click(function(){
+                        $(this).button('loading').delay(1000).queue(function() {
+
+                            $("#box<?=$idBox?>").html("" +
+                                "<h4 class=\"list-group-item-heading\"><?=$data_comment['userName']?></h4>"+
+                                "<p><?=$data_comment['created']?></p>"+
+                                "<p id=\"box<?=$idBox?>\" class=\"list-group-item-text\"><?=$data_comment['comment']?></p>"+
+                                "<p>" +
+                                "<p class=\"pull-right\">");
+                            $(this).button('reset');
+                            $(this).dequeue();
+                        });
+                    });
+                });
+            </script>
+            <div class="well" id="box<?=$idBox?>">
                 <h4 class="list-group-item-heading"><?=$data_comment['userName']?></h4>
                 <p><?=$data_comment['created']?></p>
-                <p id="box<?=$idBox?>" class="list-group-item-text" style="overflow: hidden; max-height: 90px"><?=$data_comment['comment']?></p>
-                <p>
-                <p class="pull-right"><a href="javascript:showMore(<?=$idBox?>)">Czytaj całość</a></p>
-                </p>
-                <span class="clearfix"></span>
+                <p id="box<?=$idBox?>" class="list-group-item-text"><?=$this->restrictText($data_comment['comment'],100)?></p>
+                <div style="padding-bottom:25px;">
+                <p class="pull-right">
+                    <button type="button" class="btn<?=$idBox?> btn-link" data-loading-text="Ładowanie...">Czytaj całość</button>
+                </div>
             </div>
             <?php $idBox ++ ?>
         <?php } ?>

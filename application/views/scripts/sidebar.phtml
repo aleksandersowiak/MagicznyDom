@@ -8,12 +8,11 @@
     <ul class="list-group">
         <?=$this->partialLoop('category/categorySidebar.phtml',$this->Category); ?>
     </ul>
-
+    <?php if($this->commentsCount) : ?>
     <h2>Komentarze</h2>
     <nav>
-        <ul class="pagination">
+        <ul class="pagination" style="text-align: center">
             <li>&laquo;</li>
-            <li>#n</li>
             <li>#n</li>
             <li>#n</li>
             <li>#n</li>
@@ -28,9 +27,10 @@
     <script>
         $(".pagination").easyPaging(<?=($this->commentsCount)?>, {
             onSelect: function(page) {
-                var url='<?=$this->url(array("controller" => "comments", "action" => "getComments"),"default",true);?>/id/<?=$this->replaceOnLink($this->title)?>/offset/'+(this.slice[0]);
+                var url='<?=$this->url(array("controller" => "comments", "action" => "getComments"),"default",true);?>/id/<?=$this->replaceOnLink($this->title)?>/page/'+page;
                 $("#output").load(url);
             }
         });
     </script>
+    <?php endif; ?>
 </div>
