@@ -1,3 +1,6 @@
+<style>
+    button:focus{ outline: none }
+</style>
 <div class="list-group">
     <?php if ($this->comments != null) { ?>
         <?php $idBox = 0; ?>
@@ -6,27 +9,37 @@
                 $(function() {
                     $(".btn<?=$idBox?>").click(function(){
                         $(this).button('loading').delay(1000).queue(function() {
-
-                            $("#box<?=$idBox?>").html("" +
-                                "<h4 class=\"list-group-item-heading\"><?=$data_comment['userName']?></h4>"+
-                                "<p><?=$data_comment['created']?></p>"+
-                                "<p id=\"box<?=$idBox?>\" class=\"list-group-item-text\"><?=$data_comment['comment']?></p>"+
-                                "<p>" +
-                                "<p class=\"pull-right\">");
+                            $("#box<?=$idBox?>").html("<?=$data_comment['comment']?></p>");
                             $(this).button('reset');
                             $(this).dequeue();
+                            $(".pull<?=$idBox?>").html("");
                         });
                     });
                 });
+                $('#plus').click(function() {
+                    var  url = '<?=$this->url(array("controller" => "Comments", "action" => "vote"), "default", true);?>/<?=$data_comment['id']?>';
+                    send_request_new(url, false, true);
+                    alert(url);
+                });
+                $('#minus').click(function() {
+                    send_request_new('<?=$this->url(array("controller" => "Comments" ,"action" => "vote"), "default", true).'/'.$data_comment['id'];?>', "default", true);
+                    alert('minus');
+                });
             </script>
-            <div class="well" id="box<?=$idBox?>">
-                <h4 class="list-group-item-heading"><?=$data_comment['userName']?></h4>
+            <div class="well">
+                <h4 class="list-group-item-heading"><?=$data_comment['userName']?>
+                <p class="pull-right btn-sm">
+                    <a href="#" class="glyphicon glyphicon-thumbs-down" id="plus" style="color: red"></a>
+                    <a href="#" class="glyphicon glyphicon-thumbs-up" id="minus" style="color: forestgreen"></a>
+                </p></h4>
                 <p><?=$data_comment['created']?></p>
                 <p id="box<?=$idBox?>" class="list-group-item-text"><?=$this->restrictText($data_comment['comment'],100)?></p>
-                <div style="padding-bottom:25px;">
-                <p class="pull-right">
-                    <button type="button" class="btn<?=$idBox?> btn-link" data-loading-text="Ładowanie...">Czytaj całość</button>
-                </div>
+                <?php if (strlen($data_comment['comment']) > 100):?>
+                <p class="pull-right pull<?=$idBox?>">
+                    <button type="button" class="btn<?=$idBox?> btn-link" data-loading-text="Ładowanie..." >Czytaj całość <span class="glyphicon glyphicon-chevron-right btn-sm"></span></button>
+                    <div style="padding-bottom: 5px"></div>
+                </p>
+                <?php endif; ?>
             </div>
             <?php $idBox ++ ?>
         <?php } ?>
