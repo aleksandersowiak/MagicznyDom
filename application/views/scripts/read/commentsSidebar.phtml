@@ -1,10 +1,10 @@
 <style>
-    button:focus{ outline: none }
+    span.glyphicon-thumbs-up, span.glyphicon-thumbs-down:hover {cursor: pointer}
 </style>
 <div class="list-group">
-    <?php if ($this->comments != null) { ?>
+    <?php if ($this->comments != null) : ?>
         <?php $idBox = 0; ?>
-        <?php foreach ($this->comments as $data_comment) { ?>
+        <?php foreach ($this->comments as $data_comment) : ?>
             <script type="text/javascript">
                 $(function() {
                     $(".btn<?=$idBox?>").click(function(){
@@ -16,21 +16,20 @@
                         });
                     });
                 });
-                $('#plus').click(function() {
-                    var  url = '<?=$this->url(array("controller" => "Comments", "action" => "vote"), "default", true);?>/<?=$data_comment['id']?>';
-                    send_request_new(url, false, true);
-                    alert(url);
+                $('#plus<?=$idBox?>').click(function() {
+                    var url='<?=$this->url(array("controller" => "comments", "action" => "vote"),"default",true);?>/plus/<?=$data_comment['id'];?>';
+                    $("#plus<?=$idBox?> .small").load(url);
                 });
-                $('#minus').click(function() {
-                    send_request_new('<?=$this->url(array("controller" => "Comments" ,"action" => "vote"), "default", true).'/'.$data_comment['id'];?>', "default", true);
-                    alert('minus');
+                $('#minus<?=$idBox?>').click(function() {
+                    var url='<?=$this->url(array("controller" => "comments", "action" => "vote"),"default",true);?>/minus/<?=$data_comment['id'];?>';
+                    $("#minus<?=$idBox?> .small").load(url);
                 });
             </script>
             <div class="well">
                 <h4 class="list-group-item-heading"><?=$data_comment['userName']?>
                 <p class="pull-right btn-sm">
-                    <a href="#" class="glyphicon glyphicon-thumbs-down" id="plus" style="color: red"></a>
-                    <a href="#" class="glyphicon glyphicon-thumbs-up" id="minus" style="color: forestgreen"></a>
+                    <span class="glyphicon glyphicon-thumbs-up" id="plus<?=$idBox?>" style="color: forestgreen"><span class="small" style="color: forestgreen"><?=$data_comment['plus']?></span></span>
+                    <span class="glyphicon glyphicon-thumbs-down" id="minus<?=$idBox?>" style="color: red"><span class="small" style="color: red"><?=$data_comment['minus']?></span></span>
                 </p></h4>
                 <p><?=$data_comment['created']?></p>
                 <p id="box<?=$idBox?>" class="list-group-item-text"><?=$this->restrictText($data_comment['comment'],100)?></p>
@@ -42,6 +41,6 @@
                 <?php endif; ?>
             </div>
             <?php $idBox ++ ?>
-        <?php } ?>
-    <?php } ?>
+        <?php endforeach; ?>
+    <?php endif; ?>
 </div>

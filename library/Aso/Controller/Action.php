@@ -20,8 +20,6 @@ class Aso_Controller_Action extends Zend_Controller_Action
         $messages = $this->_helper->flashMessenger->getMessages();
         if(!empty($messages)) $this->_helper->layout->getView()->message = $messages[0];
 
-        $this->renderScript('login_popup.phtml');
-
         $this->setModel(new Application_Model_Read(), "Model_Read");
         $this->setModel(new Application_Model_Index(), "Model_Index");
         $this->setModel(new Application_Model_Category(), "Model_Category");
@@ -40,12 +38,12 @@ class Aso_Controller_Action extends Zend_Controller_Action
 
 
     public function aso_Redirect($where = null){
-        $ms = new Zend_Session_Namespace(SESSION_NAMESPACE);
-        if ($where == null) {
-            $where = array( 'action' => DEF_ACTION__USER,
-                            'controller' => 'error');
-        }
-        $this->_helper->redirector($where['action'], $where['controller']);
+//        $ms = new Zend_Session_Namespace(SESSION_NAMESPACE);
+//        if ($where == null) {
+//            $where = array( 'action' => DEF_ACTION__USER,
+//                            'controller' => 'error');
+//        }
+//        $this->_helper->redirector($where['action'], $where['controller']);
     }
     public function aso_sendCommand($command, $message = '', $type = '') {
         $this->view->message = $message;

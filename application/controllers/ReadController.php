@@ -39,10 +39,10 @@ class ReadController extends Aso_Controller_Action
             if ($this->getModel("Model_Read")->getRecipeDetail($resultPrev, $id, ">")!= FALSE) {
                 if ($resultPrev) $this->view->prevRecipe = $resultPrev[0]['title'];
             }
-            if ($this->getModel("Model_Read")->getCountComments($resultCount, $params['id'])== FALSE) {
-                return $this->aso_sendCommand('Nie można wyświetlić wybranej kategorii, ponieważ takowa nie istnieje.', 'warning');
+            if ($this->getModel("Model_Read")->getCountComments($resultCount, $params['id'])!= FALSE) {
+                $this->view->commentsCount = $resultCount['result'][0]['comments_count'];
             }
-            $this->view->commentsCount = $resultCount['result'][0]['comments_count'];
+
             return $this->render('index');
         } catch(exception $e) {
             $this->logError("indexAction() exception: ".$e->getMessage());

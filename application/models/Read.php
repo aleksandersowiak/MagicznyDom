@@ -50,9 +50,9 @@ class Application_Model_Read extends Aso_Model
                  $select_recipe ->order($order)
                                 ->limit($limit);
             }else{
-                $select_recipe  ->joinInner(array("t" => "tags"),'`r`.`id` = `t`.`id_recipe`')
-                                ->joinInner(array("c" => "comments"), '`c`.`id_recipe` = `r`.`id`' );
+                $select_recipe  ->joinInner(array("t" => "tags"),'`r`.`id` = `t`.`id_recipe`');
             }
+
             $result = $this->getAdapter()->fetchAll($select_recipe);
         }
 
@@ -72,16 +72,18 @@ class Application_Model_Read extends Aso_Model
                                     ->limit(10,$start_from)
                                     ->order("created DESC");
 
-       $select_count =  $this->_db  ->select()
+        $select_count =  $this->_db  ->select()
                                     ->from( array(  "c" => "comments"),
                                         array("comments_count" => "COUNT(`id`)"))
                                     ->where("id_recipe LIKE  $id_recipe");
+
         $result = array("comments"  => $this->getAdapter()->fetchAll($select_comment),
                         'count'     => $this->getAdapter()->fetchAll($select_count));
 
         return $this->aso_return($return, CMD_DB_ERROR_NO_ERROR, $result);
     }
     public function getCountComments(&$return, $params){
+
         $data = $this->getDataRecipe($params);
         $id_recipe = $data['id_recipe'];
         $select_comment = $this->_db->select()
@@ -92,5 +94,24 @@ class Application_Model_Read extends Aso_Model
         $result = $this->getAdapter()->fetchAll($select_comment);
 
         return $this->aso_return($return, CMD_DB_ERROR_NO_ERROR, $result);
+    }
+
+    public function updateVote(&$return, $table = null, $data = null, $where = null, $ip = null){
+
+        $vote = $this->getAdapter()->fetchAll($this->_db->select()->from('comments')->where($where));
+        $array_encode =  json_decode($vote[0]['ips']);
+        if(count($array_encode) > 10) $this->_db->update($table, array('ips' => null), $where);
+        if ($array_encode == NULL) $array_encode = array();
+        if (in_array($ip, $array_encode)){
+            $ipTable = $array_encode;
+            array_push($ipTable, $ip);
+            $data = array($data => $vote[0][$data]);
+        }else{
+            $ipTable = $array_encode;
+            array_push($ipTable, $ip);
+            $data = array($data => $vote[0][$data]+1, 'ips' => json_encode($ipTable));
+            $this->_db->update($table, $data, $where);
+        }
+        return $this->aso_return($return, CMD_DB_ERROR_NO_ERROR, $data);
     }
 }
