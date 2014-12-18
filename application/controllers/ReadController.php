@@ -49,4 +49,5 @@ class ReadController extends Aso_Controller_Action
             return $this->aso_internalError();
         }
     }
+
 } 

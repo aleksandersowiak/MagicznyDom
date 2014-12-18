@@ -43,4 +43,21 @@ class CommentsController extends Aso_Controller_Action {
         }
 
     }
+
+    public function addcommentAction(){
+
+        $this->_helper->viewRenderer->setNoRender(true);
+        $this->_helper->layout()->disableLayout();
+
+        $request = $this->getRequest();
+        $params = $request->getParams();
+
+        $name = $params['name'];
+        $message = $params['message'];
+        $id = $params['id'];
+
+        if ($this->getModel("Model_Read")->insertComment($return, $name, $message, $id)==FALSE){
+            return $this->aso_sendCommand('Dodanie nowego komentarza nie powiodło się, błąd...','danger');
+        }
+    }
 }
