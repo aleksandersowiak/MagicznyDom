@@ -17,9 +17,8 @@ class CommentsController extends Aso_Controller_Action {
                     $this->view->commentsCount = $resultComments['result']['count'];
                 }
             }
+        $this->view->issCommentToAdd = true;
         $this->_helper->layout()->disableLayout();
-
-        return $this->renderScript('read/commentsSidebar.phtml');
     }
 
     public function voteAction(){
@@ -57,7 +56,8 @@ class CommentsController extends Aso_Controller_Action {
         $id = $params['id'];
 
         if ($this->getModel("Model_Read")->insertComment($return, $name, $message, $id)==FALSE){
-            return $this->aso_sendCommand('Dodanie nowego komentarza nie powiodło się, błąd...','danger');
+            $this->_helper->redirector('index','index');
+            $this->aso_sendCommand('Dodanie nowego komentarza nie powiodło się, błąd...','danger');
         }
     }
 }

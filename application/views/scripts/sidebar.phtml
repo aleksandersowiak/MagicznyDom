@@ -6,10 +6,10 @@
         </div>
     <?php } ?>
     <ul class="list-group">
-        <?=$this->partialLoop('category/categorySidebar.phtml',$this->Category); ?>
+        <?=$this->partialLoop('category/get-category.phtml',$this->Category); ?>
     </ul>
 
-    <?php if($this->commentsCount) : ?>
+    <?php if ($this->commentsCount) : ?>
     <h2><span class="glyphicon glyphicon-comment btn-lg"></span>Komentarze</h2>
     <nav>
         <ul class="pagination" style="text-align: center">
@@ -33,6 +33,8 @@
             }
         });
     </script>
+    <?php endif; ?>
+    <?php if ($this->issCommentToAdd == true) : ?>
         <button type="button" class="btn btn-default" data-toggle="modal" data-target="#add-new-comment">
             <span class="glyphicon glyphicon-comment"></span> Dodaj komentarz
         </button>
@@ -68,19 +70,19 @@
                         message = $form.find( "textarea[id='message-text']" ).val(),
                         id = '<?=$this->replaceOnLink($this->title)?>',
                         url = $form.attr( "action" );
-                        $.post( url, { name: name, message: message, id: id} );
-//                    posting.done(function( data ) {
-                        $('#add-new-comment').modal('hide');
-                        $('body').prepend('<div class="box-message">'+
-                            '<div class="alert alert-success" role="alert">'+
-                            'Komentarz został dodany'+
-                            '</div>'+
-                            '</div>');
-                        $(".alert-success").delay(5000).fadeTo("slow",0);
-                        $(".alert-success").hide(0);
-                        $( "input[id='recipient-name']" ).val('');
-                        $( "textarea[id='message-text']" ).val('');
-//                    });
+                    $.post( url, { name: name, message: message, id: id} );
+                    $('#add-new-comment').modal('hide');
+                    $('body').prepend(' <div class="box-message">'+
+                                            '<div class="alert alert-success" role="alert">'+
+                                            'Komentarz został dodany'+
+                                            '</div>'+
+                                        '</div>');
+                    $(".alert-success").delay(5000).fadeTo("slow",0);
+                    $(".alert-success").hide(0);
+                    $( "input[id='recipient-name']" ).val('');
+                    $( "textarea[id='message-text']" ).val('');
+                    var url='<?=$this->url(array("controller" => "comments", "action" => "getComments"),"default",true);?>/id/<?=$this->replaceOnLink($this->title)?>/page/1'
+                    $("#output").load(url);
                 });
             </script>
         </div>

@@ -8,8 +8,10 @@ class IndexController extends Aso_Controller_Action
     public function indexAction()
     {
         try {
+
             $request = $this->getRequest();
             $params = $request->getParams();
+
             if ($this->getModel("Model_Index")->getCount($count) == FALSE) {
                 return $this->aso_sendCommand('Nie pobrano żadnego przepisu','denger');
             }

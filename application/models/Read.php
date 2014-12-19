@@ -121,10 +121,10 @@ class Application_Model_Read extends Aso_Model
         $date = Zend_Date::now();
         $timeStamp = gmdate("Y-m-d H:i:s", $date->getTimestamp());
         $data = array(
-            'id_recipe'       => $id_recipe,
-            'userName' => $name,
-            'comment'      => $message,
-            'created'=> $timeStamp
+            'id_recipe' => $id_recipe,
+            'userName'  => $name,
+            'comment'   => $message,
+            'created'   => $timeStamp
         );
         $this->_db->insert('comments', $data);
         return $this->aso_return($return, CMD_DB_ERROR_NO_ERROR, $data);

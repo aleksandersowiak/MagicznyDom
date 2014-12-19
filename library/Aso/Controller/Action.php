@@ -125,7 +125,12 @@ class Aso_Controller_Action extends Zend_Controller_Action
     }
     public function  implodeFunction($array = null, $separator = null){
         if ($array != null){
-            return implode($array, $separator);
+
+            foreach ($array as $key => $value){
+                $array_result[] = ($value->tag);
+            }
+            $result = (json_encode($array_result));
+            return $result;
         }
     }
 }

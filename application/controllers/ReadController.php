@@ -23,7 +23,8 @@ class ReadController extends Aso_Controller_Action
             $id = $params['id'];
 
             if ($this->getModel("Model_Read")->getRecipeDetail($resultRecipeDetail,$id , null)== FALSE) {
-                return $this->aso_sendCommand('Wybrany link jest uszkodzony, i zawartość nie może zostać wyświetlona..','warning');
+                $this->_helper->redirector('index','category');
+                $this->aso_sendCommand('Wybrany link jest uszkodzony, i zawartość nie może zostać wyświetlona..','warning');
             }
 
             $this->view->title      = $resultRecipeDetail[0]['title'];
@@ -42,8 +43,9 @@ class ReadController extends Aso_Controller_Action
             if ($this->getModel("Model_Read")->getCountComments($resultCount, $params['id'])!= FALSE) {
                 $this->view->commentsCount = $resultCount['result'][0]['comments_count'];
             }
-
+            $this->view->issCommentToAdd = true;
             return $this->render('index');
+
         } catch(exception $e) {
             $this->logError("indexAction() exception: ".$e->getMessage());
             return $this->aso_internalError();

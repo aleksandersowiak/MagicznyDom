@@ -1,0 +1,6 @@
+<? var_dump($this->tagList)?>
+<a href="<?=$this->baseUrl().'/category/'.$this->replaceOnLink($this->tag)?>" class="list-group-item <?=(Zend_Controller_Front::getInstance()->getRequest()->getParam('id') == $this->replaceOnLink($this->tag)) ? "active" : ""; ?>">
+    <?=$this->tag?>
+    <span class="badge"><?=$this->category_count?></span>
+</a>
+

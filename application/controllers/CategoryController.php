@@ -18,10 +18,32 @@ class CategoryController extends Aso_Controller_Action {
         $params = $request->getParams();
 
         if ($this->getModel("Model_Category")->getRecipesFromCategory($resultCategories, $params['id'])== FALSE) {
-            return $this->aso_sendCommand('Nie można wyświetlić wybranej kategorii, ponieważ takowa nie istnieje.', 'warning');
+            $this->aso_sendCommand('Nie można wyświetlić wybranej kategorii, ponieważ takowa nie istnieje.', 'warning');
+            $this->_helper->redirector('index','category');
         }
 
         $this->view->SelectedCategory = $resultCategories;
-        return $this->renderScript('category/viewCategory.phtml');
+    }
+
+    public function bytagAction(){
+        $request = $this->getRequest();
+        $params = $request->getParams();
+
+        if ($this->getModel("Model_Category")->getRecipesFromTags($resultTag, $params['tag'])== FALSE) {
+            $this->_helper->redirector('index','category');
+            $this->aso_sendCommand('Nie można wyświetlić wybranej kategorii, ponieważ takowa nie istnieje.', 'warning');
+        }
+        if (empty($resultTag)){
+            $this->aso_sendCommand('Podane nazwy tagów nie pasują do zapisanych.', 'warning');
+            $this->_helper->redirector('index','category');
+        }else{
+            $this->view->SelectedTag = $resultTag;
+        }
+
+        if ($this->getModel("Model_Category")->getTags($resultTags, $params['tag']) == FALSE) {
+            $this->_helper->redirector('index','category');
+            $this->aso_sendCommand('Coś poszło nie tak z wypisaniem tagów.', 'warning');
+        }
+            $this->view->getTags = $resultTags;
     }
 } 

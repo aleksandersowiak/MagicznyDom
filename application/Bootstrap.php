@@ -15,13 +15,13 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     protected function _initRoutes()
     {
         $router = Zend_Controller_Front::getInstance()->getRouter();
-        $router->addRoute('readRecipe', new Zend_Controller_Router_Route('/read/:id', array(
-                'controller' => 'Read',
+        $router->addRoute('Index', new Zend_Controller_Router_Route('/page/:page', array(
+                'controller' => 'Index',
                 'action' => 'index'
             )
         ));
-        $router->addRoute('page', new Zend_Controller_Router_Route('/page/:page', array(
-                'controller' => 'Index',
+        $router->addRoute('readRecipe', new Zend_Controller_Router_Route('/read/:id', array(
+                'controller' => 'Read',
                 'action' => 'index'
             )
         ));
@@ -30,6 +30,11 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                 'action' => 'view'
 			)
 		));
+        $router->addRoute('viewByTag', new Zend_Controller_Router_Route('/category/byTag/:tag', array(
+                'controller' => 'Category',
+                'action' => 'byTag'
+            )
+        ));
         $router->addRoute('about', new Zend_Controller_Router_Route('/about', array(
                 'controller' => 'Index',
                 'action' => 'about'
