@@ -13,7 +13,13 @@
         </div><!--/.col-xs-12.col-sm-9-->
         <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
             <div class="list-group">
-                <?=$this->partialLoop('category/get-tags.phtml',$this->getTags); ?>
+                <?php foreach ($this->getTags as $tag) { ?>
+                    <a href="<?=$this->baseUrl().'/category/byTag/'.$this->replaceOnLink($tag)?>" class="list-group-item <?=(Zend_Controller_Front::getInstance()->getRequest()->getParam('tag') == $this->replaceOnLink($tag)) ? "active" : ""; ?>">
+                        <?=$tag?>
+                        <span class="badge"><?=$this->category_count?></span>
+                    </a>
+                <?php } ?>
+<!--                --><?//=$this->partialLoop('category/get-tags.phtml', array('tages' => $this->getTags)); ?>
             </div>
         </div>
     </div>

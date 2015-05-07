@@ -28,7 +28,7 @@ class Application_Model_Category extends Aso_Model {
             $select_recipe_from_category = $this->_db     ->select()
                 ->from(array("r" => "recipe"))
                 ->where("category LIKE '$category'");
-             $select_recipe_from_category;
+            $select_recipe_from_category;
             $result = $this->getAdapter()->fetchAll($select_recipe_from_category);
         }
         if ($this->aso_hasResult($result) == false) {
@@ -51,6 +51,8 @@ class Application_Model_Category extends Aso_Model {
     }
 
     public function getTags(&$result){
+        $array = array();
+        $i = 0;
         $select = $this->_db->select()
             ->from('tags');
         $result = $this->getAdapter()->fetchAll($select);
@@ -58,10 +60,12 @@ class Application_Model_Category extends Aso_Model {
         foreach ($result as $tag){
 
             foreach (json_decode($tag['tags']) as $key => $value){
-                $array[] =  $value->tag;
+                $array[]= $value->tag;
             }
         }
+
         $result['tagList'] = array_unique($array);
+
         return $result;
     }
 } 

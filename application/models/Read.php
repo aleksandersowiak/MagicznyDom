@@ -54,6 +54,7 @@ class Application_Model_Read extends Aso_Model
             }
 
             $result = $this->getAdapter()->fetchAll($select_recipe);
+            echo $select_recipe;
         }
 
         if ($this->aso_hasResult($result) == false) {

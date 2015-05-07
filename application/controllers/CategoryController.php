@@ -44,6 +44,6 @@ class CategoryController extends Aso_Controller_Action {
             $this->_helper->redirector('index','category');
             $this->aso_sendCommand('Coś poszło nie tak z wypisaniem tagów.', 'warning');
         }
-            $this->view->getTags = $resultTags;
+            $this->view->getTags = $resultTags['tagList'];
     }
-} 
+}

@@ -1,6 +1,9 @@
-<? var_dump($this->tagList)?>
-<a href="<?=$this->baseUrl().'/category/'.$this->replaceOnLink($this->tag)?>" class="list-group-item <?=(Zend_Controller_Front::getInstance()->getRequest()->getParam('id') == $this->replaceOnLink($this->tag)) ? "active" : ""; ?>">
-    <?=$this->tag?>
+<pr>
+    <?php var_dump($this->tages); ?>
+</pr>
+<?php foreach ($this->tag as $tag) { ?>
+<a href="<?=$this->baseUrl().'/category/'.$this->replaceOnLink($tag)?>" class="list-group-item <?=(Zend_Controller_Front::getInstance()->getRequest()->getParam('id') == $this->replaceOnLink($tag)) ? "active" : ""; ?>">
+    <?=$tag?>
     <span class="badge"><?=$this->category_count?></span>
 </a>
-
+<?php } ?>
