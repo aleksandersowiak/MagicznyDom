@@ -69,6 +69,7 @@ class Application_Model_Read extends Aso_Model
         $select_comment = $this->_db->select()
                                     ->from("comments")
                                     ->where("id_recipe LIKE  $id_recipe")
+                                     ->where("moderate != FALSE")
                                     ->limit(10,$start_from)
                                     ->order("created DESC");
 
