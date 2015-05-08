@@ -3,13 +3,13 @@
 
     <div class="col-xs-12 col-sm-9">
         <div class="row">
-            <?php foreach ($this->Category as $allCategory) { ?>
+            <?php foreach ($this->Category as $allCategory) : ?>
             <div class="col-xs-6 col-lg-4">
                 <h3><?=$allCategory['category']?>
                 <span class="badge"><?=$allCategory['category_count']?></span></h3>
                 <p><a class="btn btn-default" href="<?=$this->baseUrl()?>/category/<?=$this->replaceOnLink($allCategory['category'])?>" role="button">Wyświetl »</a></p>
             </div><!--/.col-xs-6.col-lg-4-->
-            <?php } ?>
+            <?php endforeach; ?>
         </div><!--/row-->
     </div><!--/.col-xs-12.col-sm-9-->
     <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">

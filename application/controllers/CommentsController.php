@@ -14,7 +14,6 @@ class CommentsController extends Aso_Controller_Action {
             if ($this->getModel("Model_Read")->getComments($resultComments,$id, $page)!= FALSE) {
                 if ($resultComments['result']) {
                     $this->view->comments = $resultComments['result']['comments'];
-//                    var_dump($resultComments['result']['count'][0]['comments_count']);
                     $this->view->commentsCount = $resultComments['result']['count'][0]['comments_count'];
                 }
             }

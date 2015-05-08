@@ -11,11 +11,11 @@ class Application_Model_Read extends Aso_Model
         require_once( APPLICATION_PATH . '/views/helpers/ReplaceOnLink.php');
 
         $this->_helper = new Zend_View_Helper_ReplaceOnLink();
-        $select = $this->_db    ->select()
-            ->from("recipe");
+        $select = $this->_db->select()
+                            ->from("recipe");
         $result_recipe = $this->getAdapter()->fetchAll($select);
         foreach ($result_recipe as $recipe){
-            if ($params == $this->_helper->replaceOnLink($recipe['title'])){
+            if ($params == $this->_helper->replaceOnLink($recipe['title'])) {
                 $id_recipe = $recipe['id'];
                 $updated = $recipe['updated'];
             }
@@ -41,22 +41,22 @@ class Application_Model_Read extends Aso_Model
             }else{
                 $where = "r.id = $id_recipe";
             }
-            $select_recipe = $this->_db     ->select()
-                                            ->from(array("r" => "recipe"))
-                                            ->where($where);
+            $select_recipe = $this->_db ->select()
+                                        ->from(array("r" => "recipe"))
+                                        ->where($where);
             if (isset($parameters) != null) {
                  $select_recipe ->order($order)
                                 ->limit($limit);
             }
 
-            $select_reciped_tags = $this->_db     ->select()
-                ->from(array("r" => "recipe"))
-                ->where($where)
-                ->joinInner(array("t" => "tags"),'`r`.`id` = `t`.`id_recipe`');
+            $select_reciped_tags = $this->_db   ->select()
+                                                ->from(array("r" => "recipe"))
+                                                ->where($where)
+                                                ->joinInner(array("t" => "tags"),'`r`.`id` = `t`.`id_recipe`');
             $result = $this->getAdapter()->fetchAll($select_recipe);
             $result_tags = $this->getAdapter()->fetchAll($select_reciped_tags);
 
-            if ($result_tags != NULL) {
+            if (!empty($result_tags)) {
                 foreach ($result_tags as $tags){
                     $result_tag[] = $tags['tags'];
                 }
@@ -83,7 +83,7 @@ class Application_Model_Read extends Aso_Model
 
         $select_count =  $this->_db  ->select()
                                     ->from( array(  "c" => "comments"),
-                                        array("comments_count" => "COUNT(`id`)"))
+                                            array("comments_count" => "COUNT(`id`)"))
                                     ->where("id_recipe LIKE  $id_recipe")
                                     ->where("moderate != FALSE")
         ;
@@ -115,11 +115,11 @@ class Application_Model_Read extends Aso_Model
         $array_encode =  json_decode($vote[0]['ips']);
         if(count($array_encode) > 10) $this->_db->update($table, array('ips' => null), $where);
         if ($array_encode == NULL) $array_encode = array();
-        if (in_array($ip, $array_encode)){
+        if (in_array($ip, $array_encode)) {
             $ipTable = $array_encode;
             array_push($ipTable, $ip);
             $data = array($data => $vote[0][$data]);
-        }else{
+        } else {
             $ipTable = $array_encode;
             array_push($ipTable, $ip);
             $data = array($data => $vote[0][$data]+1, 'ips' => json_encode($ipTable));

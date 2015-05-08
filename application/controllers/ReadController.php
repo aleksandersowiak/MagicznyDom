@@ -19,7 +19,6 @@ class ReadController extends Aso_Controller_Action
         try {
             $request = $this->getRequest();
             $params = $request->getParams();
-            $pass = TRUE;
             $id = $params['id'];
 
             if ($this->getModel("Model_Read")->getRecipeDetail($resultRecipeDetail,$id , null)== FALSE) {
@@ -31,11 +30,8 @@ class ReadController extends Aso_Controller_Action
             $this->view->autor      = $resultRecipeDetail[0]['autor'];
             $this->view->updated    = $resultRecipeDetail[0]['updated'];
             $this->view->recipe     = $resultRecipeDetail[0]['recipe'];
+            if (!empty($resultRecipeDetail['tagList'])) $this->view->tags = $resultRecipeDetail['tagList'];
 
-//            $tags                   = json_decode($resultRecipeDetail[0]['tags']);
-//
-//            $this->view->tags       = $this->implodeFunction($tags, ',');
-            $this->view->tags = $resultRecipeDetail['tagList'];
             if ($this->getModel("Model_Read")->getRecipeDetail($resultNext, $id, "<")!= FALSE) {
                 if ($resultNext) $this->view->nextRecipe = $resultNext[0]['title'];
             }

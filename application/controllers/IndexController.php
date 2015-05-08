@@ -23,11 +23,14 @@ class IndexController extends Aso_Controller_Action
                 $page = 0;
                 $offset = 0;
             }
-            $left_rec = $count[0]['count'] - ($page * MAX_LIMIT_INDEX);
-            $this->view->page = $page;
-            $this->view->count = $left_rec;
-            if (($page * MAX_LIMIT_INDEX) >= $count[0]['count']) {
-                return $this->aso_sendCommand('Coś się zepsuło, albo przekombinowałeś.','warning');
+            if(!empty($count)) {
+                $left_rec = $count[0]['count'] - ($page * MAX_LIMIT_INDEX);
+                $this->view->page = $page;
+                $this->view->count = $left_rec;
+
+                if (($page * MAX_LIMIT_INDEX) >= $count[0]['count']) {
+                    return $this->aso_sendCommand('Coś się zepsuło, albo przekombinowałeś.','warning');
+                }
             }
 
             if ($this->getModel("Model_Index")->getRecipe($resultHotIndex, 0, MAX_LIMIT_HOT_INDEX, 'hits', 'DESC')== FALSE) {
