@@ -31,9 +31,11 @@ class ReadController extends Aso_Controller_Action
             $this->view->autor      = $resultRecipeDetail[0]['autor'];
             $this->view->updated    = $resultRecipeDetail[0]['updated'];
             $this->view->recipe     = $resultRecipeDetail[0]['recipe'];
-            $tags                   = json_decode($resultRecipeDetail[0]['tags']);
-            $this->view->tags       = $this->implodeFunction($tags, ',');
 
+//            $tags                   = json_decode($resultRecipeDetail[0]['tags']);
+//
+//            $this->view->tags       = $this->implodeFunction($tags, ',');
+            $this->view->tags = $resultRecipeDetail['tagList'];
             if ($this->getModel("Model_Read")->getRecipeDetail($resultNext, $id, "<")!= FALSE) {
                 if ($resultNext) $this->view->nextRecipe = $resultNext[0]['title'];
             }
@@ -41,6 +43,7 @@ class ReadController extends Aso_Controller_Action
                 if ($resultPrev) $this->view->prevRecipe = $resultPrev[0]['title'];
             }
             if ($this->getModel("Model_Read")->getCountComments($resultCount, $params['id'])!= FALSE) {
+
                 $this->view->commentsCount = $resultCount['result'][0]['comments_count'];
             }
             $this->view->issCommentToAdd = true;

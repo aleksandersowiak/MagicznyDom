@@ -33,6 +33,7 @@ class CategoryController extends Aso_Controller_Action {
             $this->_helper->redirector('index','category');
             $this->aso_sendCommand('Nie można wyświetlić wybranej kategorii, ponieważ takowa nie istnieje.', 'warning');
         }
+
         if (empty($resultTag)){
             $this->aso_sendCommand('Podane nazwy tagów nie pasują do zapisanych.', 'warning');
             $this->_helper->redirector('index','category');

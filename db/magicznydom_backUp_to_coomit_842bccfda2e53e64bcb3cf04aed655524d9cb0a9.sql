@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Czas wygenerowania: 08 Maj 2015, 12:28
+-- Czas wygenerowania: 07 Maj 2015, 14:40
 -- Wersja serwera: 5.5.21-log
 -- Wersja PHP: 5.4.10
 
@@ -40,14 +40,41 @@ CREATE TABLE IF NOT EXISTS `comments` (
   KEY `id` (`id`),
   KEY `id_recipe` (`id_recipe`),
   KEY `id_user` (`userName`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci AUTO_INCREMENT=53 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci AUTO_INCREMENT=29 ;
 
 --
 -- Zrzut danych tabeli `comments`
 --
 
 INSERT INTO `comments` (`id`, `id_recipe`, `userName`, `comment`, `created`, `ips`, `plus`, `minus`, `moderate`) VALUES
-(52, 10, 'Kalista', '<p>Jak zobaczyłam zdjęcie takiego żółciutkiego naleśniczka pomyślałam, że pewnie kurkumy dodałaś :) Ja też często ją dodaję, ale kiedyś mnie fantazja poniosła i dużo za dużo dodałam jej do drożdżówek i był ostre jagodzianki ;P</p>', '2015-05-08 08:23:50', NULL, 0, 0, 1);
+(1, 10, 'Kalista', 'Jak zobaczyłam zdjęcie takiego żółciutkiego naleśniczka pomyślałam, że pewnie kurkumy dodałaś :) Ja też często ją dodaję, ale kiedyś mnie fantazja poniosła i dużo za dużo dodałam jej do drożdżówek i był ostre jagodzianki ;P', '2014-03-26 04:26:22', '["::1"]', 0, 1, 0),
+(2, 1, NULL, NULL, NULL, NULL, 0, 0, 0),
+(3, 10, 'ertye', 'ryry', '0000-00-00 00:00:00', '["::1"]', 1, 0, 0),
+(4, 10, 'ertyer', 'eryeryrty', '2014-12-18 14:11:12', '["::1"]', 1, 0, 0),
+(5, 10, 'ruyu', 'rturtu', '2014-12-18 14:11:57', '["::1"]', 0, 1, 0),
+(6, 10, 'erty', 'eryery', '2014-12-18 14:12:49', '["::1"]', 1, 0, 0),
+(7, 9, 'Aleksander Sowiak', 'No pizza przepyszna, a w dodatku bardzo szybka do zrobienia, naprawdę polecam, a ta dziewczyna potrafi gotować, piec i inne takie :D', '2014-12-19 03:56:29', NULL, 0, 0, 0),
+(8, 9, 'Tomasz Pabjanek', 'Ohohoho :D', '2014-12-19 04:13:38', NULL, 0, 0, 0),
+(9, 9, 'erwr', 'werwer', '2014-12-19 04:14:01', NULL, 0, 0, 0),
+(10, 9, 'gsdg', 'sdgfsdgsd', '2014-12-19 04:14:26', NULL, 0, 0, 0),
+(11, 9, 'rye', 'rytey', '2014-12-19 04:15:14', NULL, 0, 0, 0),
+(12, 3, 'dgsd', 'gsdgsdgf', '2014-12-19 04:18:18', NULL, 0, 0, 0),
+(13, 3, 'sdfg', 'sdgsdgf', '2014-12-19 04:19:20', NULL, 0, 0, 0),
+(14, 3, 'gsdg', 'sdgsdgsd', '2014-12-19 04:19:31', '["::1"]', 1, 0, 0),
+(15, 3, 'sdgfs', 'dgsdg', '2014-12-19 04:19:39', '["::1"]', 1, 0, 0),
+(16, 3, 'gsdgsdg', 'sdfgsdgsd', '2014-12-19 04:19:42', '["::1"]', 0, 1, 0),
+(17, 3, 'sdgfsdg', 'sdgsdgfd', '2014-12-19 04:19:46', '["::1"]', 1, 0, 0),
+(18, 3, 'sdfgsdg', 'sdgfsdgsdf', '2014-12-19 04:19:49', '["::1"]', 0, 1, 1),
+(19, 3, 'sdfgsdg', 'sdgsdgfd', '2014-12-19 04:19:56', NULL, 0, 0, 0),
+(20, 3, 'sdgfsd', 'gfsdgsdgf', '2014-12-19 04:20:01', NULL, 0, 0, 0),
+(21, 3, 'sdgsd', 'gsdgf', '2014-12-19 04:20:10', '["::1"]', 1, 0, 0),
+(22, 3, 'sdfgsd', 'gsdgdfg', '2014-12-19 04:20:13', NULL, 0, 0, 0),
+(23, 3, 'dfghfd', 'fhf', '2014-12-19 04:49:06', NULL, 0, 0, 0),
+(24, 10, 'fghj', 'fgj', '2014-12-19 08:55:43', NULL, 0, 0, 0),
+(25, 8, 'Aleksander', 'Komentarz odnośnie ciasta z truskawkami, które to oto ta osoba zrobiła :D', '2015-03-17 09:48:30', NULL, 0, 0, 0),
+(26, 8, '123', '12312', '2015-03-17 09:48:44', NULL, 0, 0, 0),
+(27, 6, '2324', '25235235', '2015-03-17 09:49:02', '["::1"]', 0, 1, 0),
+(28, 6, 'dt', 'jdj', '2015-03-17 09:49:34', '["::1"]', 1, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -119,26 +146,24 @@ CREATE TABLE IF NOT EXISTS `tags` (
   `id` bigint(11) NOT NULL AUTO_INCREMENT,
   `id_recipe` bigint(11) NOT NULL,
   `autor_id` bigint(11) NOT NULL,
-  `tags` varchar(100) COLLATE utf8_polish_ci NOT NULL,
+  `tags` longtext COLLATE utf8_polish_ci NOT NULL,
   PRIMARY KEY (`id`,`id_recipe`),
   KEY `id_recipe` (`id_recipe`),
   KEY `autor_id` (`autor_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci AUTO_INCREMENT=14 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci AUTO_INCREMENT=10 ;
 
 --
 -- Zrzut danych tabeli `tags`
 --
 
 INSERT INTO `tags` (`id`, `id_recipe`, `autor_id`, `tags`) VALUES
-(1, 1, 1, 'Cynamon'),
-(3, 6, 1, 'Biały Ser'),
-(6, 3, 1, 'Śniadania'),
-(7, 10, 1, 'Jabłka'),
-(8, 9, 1, 'Pizza'),
-(10, 8, 1, 'Ciasto'),
-(11, 8, 1, 'Szybko i tanio'),
-(12, 8, 1, 'Truskawki'),
-(13, 8, 1, 'Pizza');
+(1, 1, 1, '[{"tag":"Ciasta","link":"ciasta"},\r\n{"tag":"cynamon","link":"cynamon"},\r\n{"tag":"jabłka","link":"jablka"},\r\n{"tag":"kruche ciasto","link":"kruche-ciasto"},\r\n{"tag":"Pianka","link":"pianka"}\r\n]'),
+(3, 6, 1, '[{"tag":"Biały ser","link":"bialy-ser"},{"tag":"Sernik","link":"sernik"}]'),
+(5, 8, 1, '[{"tag":"Ciasta","link":"ciasta"},{"tag":"szybko i tanio","link":"szybko-i-tanio"}]'),
+(6, 3, 1, '[{"tag":"śniadania","link":"sniadania"},{"tag":"przekąski","link":"przekaski"}]'),
+(7, 10, 1, '[{"tag":"jabłka","link":"jablka"},\r\n{"tag":"Nalesniki","link":"nalesniki"},\r\n{"tag":"Szybko i tanio","link":"szybko-i-tanio"}]'),
+(8, 9, 1, '[{"tag":"Pizza","link":"pizza"}]'),
+(9, 8, 1, '[{"tag":"Ciasta smakowe","link":"ciasta-smakowe"}]');
 
 -- --------------------------------------------------------
 

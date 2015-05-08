@@ -12,7 +12,7 @@
                 <div class="input-group-addon">Etykiety:</div>
 <!--                <input type="text" class="form-control" id="tokenfield" data-inputType="url" value="--><?//=$this->tags?><!--" />-->
                 <div class="tokenfield form-control readonly" style="width: 100%;">
-                    <?php foreach (json_decode($this->tags) as $token) : ?>
+                    <?php foreach ($this->tags as $token) : ?>
                     <div class="token">
                         <a href="<?=$this->baseUrl()?>/category/byTag/<?=$this->replaceOnLink($token)?>">
                             <span class="token-label" style="max-width: 606px; padding-right:4px"><?=$token?></span>

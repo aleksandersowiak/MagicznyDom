@@ -44,17 +44,24 @@ class Application_Model_Read extends Aso_Model
             $select_recipe = $this->_db     ->select()
                                             ->from(array("r" => "recipe"))
                                             ->where($where);
-
-
             if (isset($parameters) != null) {
                  $select_recipe ->order($order)
                                 ->limit($limit);
-            }else{
-                $select_recipe  ->joinInner(array("t" => "tags"),'`r`.`id` = `t`.`id_recipe`');
             }
 
+            $select_reciped_tags = $this->_db     ->select()
+                ->from(array("r" => "recipe"))
+                ->where($where)
+                ->joinInner(array("t" => "tags"),'`r`.`id` = `t`.`id_recipe`');
             $result = $this->getAdapter()->fetchAll($select_recipe);
-            echo $select_recipe;
+            $result_tags = $this->getAdapter()->fetchAll($select_reciped_tags);
+
+            if ($result_tags != NULL) {
+                foreach ($result_tags as $tags){
+                    $result_tag[] = $tags['tags'];
+                }
+                $result['tagList'] = $result_tag;
+            }
         }
 
         if ($this->aso_hasResult($result) == false) {
@@ -70,14 +77,16 @@ class Application_Model_Read extends Aso_Model
         $select_comment = $this->_db->select()
                                     ->from("comments")
                                     ->where("id_recipe LIKE  $id_recipe")
-                                     ->where("moderate != FALSE")
+                                    ->where("moderate != FALSE")
                                     ->limit(10,$start_from)
                                     ->order("created DESC");
 
         $select_count =  $this->_db  ->select()
                                     ->from( array(  "c" => "comments"),
                                         array("comments_count" => "COUNT(`id`)"))
-                                    ->where("id_recipe LIKE  $id_recipe");
+                                    ->where("id_recipe LIKE  $id_recipe")
+                                    ->where("moderate != FALSE")
+        ;
 
         $result = array("comments"  => $this->getAdapter()->fetchAll($select_comment),
                         'count'     => $this->getAdapter()->fetchAll($select_count));
@@ -91,7 +100,9 @@ class Application_Model_Read extends Aso_Model
         $select_comment = $this->_db->select()
                                     ->from( array(  "c" => "comments"),
                                             array("comments_count" => "COUNT(`id`)"))
-                                    ->where("id_recipe LIKE  $id_recipe");
+                                    ->where("id_recipe LIKE  $id_recipe")
+                                    ->where("moderate !=  FALSE")
+        ;
 
         $result = $this->getAdapter()->fetchAll($select_comment);
 

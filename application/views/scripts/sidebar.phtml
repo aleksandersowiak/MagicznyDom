@@ -11,6 +11,7 @@
 
     <?php if ($this->commentsCount) : ?>
     <h2><span class="glyphicon glyphicon-comment btn-lg"></span>Komentarze</h2>
+
     <nav>
         <ul class="pagination" style="text-align: center">
             <li>&laquo;</li>
@@ -24,6 +25,7 @@
             <li>&raquo;</li>
         </ul>
     </nav>
+
     <div id="output"></div>
     <script>
         $(".pagination").easyPaging(<?=($this->commentsCount)?>, {
@@ -35,6 +37,16 @@
     </script>
     <?php endif; ?>
     <?php if ($this->issCommentToAdd == true) : ?>
+        <script>
+            $(document).ready(function() {
+                $('#message-text').summernote(
+                    {   height: 100,
+                        toolbar: [['style', ['bold', 'italic', 'underline', 'clear']]]
+                    }
+                );
+            });
+
+        </script>
         <button type="button" class="btn btn-default" data-toggle="modal" data-target="#add-new-comment">
             <span class="glyphicon glyphicon-comment"></span> Dodaj komentarz
         </button>
@@ -44,7 +56,7 @@
                     <div class="modal-header">
                         <h4 class="modal-title" id="exampleModalLabel">Dodaj nowy komentarz</h4>
                     </div>
-                    <form role="form" action="<?=$this->url(array("controller" => "comments", "action" => "addComment"),"default",true);?>" id="addCommentForm">
+                    <form role="form" novalidate action="<?=$this->url(array("controller" => "comments", "action" => "addComment"),"default",true);?>" id="addCommentForm">
                         <div class="modal-body">
                             <div class="form-group">
                                 <label for="recipient-name" class="control-label">Nazwa:</label>
@@ -52,7 +64,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="message-text" class="control-label">Komentarz:</label>
-                                <textarea class="form-control" id="message-text" required="required"></textarea>
+                                <textarea class="form-control" id="message-text" name="message-text" required="required"></textarea>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -67,7 +79,7 @@
                     event.preventDefault();
                     var $form = $( this ),
                         name = $form.find( "input[id='recipient-name']" ).val(),
-                        message = $form.find( "textarea[id='message-text']" ).val(),
+                        message = $form.find( "textarea[id='message-text']" ).code(),
                         id = '<?=$this->replaceOnLink($this->title)?>',
                         url = $form.attr( "action" );
                     $.post( url, { name: name, message: message, id: id} );
@@ -76,9 +88,14 @@
                                             '<div class="alert alert-success" role="alert">'+
                                             'Komentarz został dodany'+
                                             '</div>'+
-                                        '</div>');
+                                            '<div class="alert alert-warning" role="alert">'+
+                                            'Lecz z uwagi na możliwość dodawania obraźliwych komentarzy. Wybrany komentarz zostanie wyświetlony po moderacji przez właściciela strony.'+
+                    '</div>'+
+                    '</div>');
                     $(".alert-success").delay(5000).fadeTo("slow",0);
                     $(".alert-success").hide(0);
+                    $(".alert-warning").delay(6000).fadeTo("slow",0);
+                    $(".alert-warning").hide(0);
                     $( "input[id='recipient-name']" ).val('');
                     $( "textarea[id='message-text']" ).val('');
                     var url='<?=$this->url(array("controller" => "comments", "action" => "getComments"),"default",true);?>/id/<?=$this->replaceOnLink($this->title)?>/page/1'

@@ -9,7 +9,7 @@
                 $(function() {
                     $(".btn<?=$idBox?>").click(function(){
                         $(this).button('loading').delay(1000).queue(function() {
-                            $("#box<?=$idBox?>").html("<?=$data_comment['comment']?></p>");
+                            $("#box<?=$idBox?>").html("<?=str_replace('"','\"',$data_comment['comment'])?></p>");
                             $(this).button('reset');
                             $(this).dequeue();
                             $(".pull<?=$idBox?>").html("");
