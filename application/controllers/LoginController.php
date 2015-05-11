@@ -53,7 +53,7 @@ class LoginController extends Aso_Controller_Action
                 'controller'=> 'index',
                 'action' =>'index'));
         } catch(exception $e) {
-            $this->logError("indexAction() exception: ".$e->getMessage());
+//            $this->logError("indexAction() exception: ".$e->getMessage());
             return $this->aso_internalError();
         }
     }
@@ -70,7 +70,7 @@ class LoginController extends Aso_Controller_Action
             $this->_helper->FlashMessenger($msg);
             $this->_redirect('/');
         } catch(exception $e) {
-            $this->logError("logoutAction() exception: ".$e->getMessage());
+//            $this->logError("logoutAction() exception: ".$e->getMessage());
             return $this->cc_internalError();
         }
     }

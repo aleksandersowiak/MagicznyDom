@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <?php echo $this->headTitle($this->webtitle)."\n" ?>
+    <?php echo $this->headTitle($this->title)."\n" ?>
     <?php echo $this->headMeta()."\n" ?>
     <?php echo $this->headLink()."\n" ?>
     <?php echo $this->headStyle()."\n" ?>
@@ -39,7 +39,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="<?=$this->baseUrl()?>"><?=$this->webtitle?></a>
+                <a class="navbar-brand" href="<?=$this->baseUrl()?>"><?=$this->title?></a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -52,7 +52,7 @@
                         </ul>
                     </li>
                     <?php endif; ?>
-                    <?php if ($this->about["active"] == TRUE) { ?>
+                    <?php if ($this->about == TRUE) { ?>
                     <li><a href="<?=$this->baseUrl()?>/about">O mnie</a> </li>
                     <?php } ?>
                 </ul>
@@ -86,7 +86,7 @@
     <hr class="featurette-divider"/>
     <footer>
         <p class="pull-right"><a href="#">&#8593; Wróć na Górę.</a></p>
-        <p><?=$this->webtitle?> &#8226; <a href="#">Privacy</a> &#8226; <a href="#">Terms</a></p>
+        <p><?=$this->title?> &#8226; <a href="#">Privacy</a> &#8226; <a href="#">Terms</a></p>
         <p class="pull-right">ver. <?=APP_VER?>-2014</p>
     </footer>
 </div>

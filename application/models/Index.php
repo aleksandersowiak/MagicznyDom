@@ -12,9 +12,8 @@ class Application_Model_Index extends Aso_Model {
         }
         $select = $this->_db    ->select()
                                 ->from("setings")
-                                ->where($where .' AND `active` = 1');
+                                ->where('`active` = 1');
         $result = $this->getAdapter()->fetchAll($select);
-
 
         return $this->aso_return($return, CMD_DB_ERROR_NO_ERROR, $result);
     }
@@ -43,6 +42,13 @@ class Application_Model_Index extends Aso_Model {
         $count = $this->_db->select()->from(array("r"=>"recipe"), array ("count" => "COUNT(`recipe`)"))->group('autor_id');
         $result = $this->getAdapter()->fetchAll($count);
         return $this->aso_return($return, CMD_DB_ERROR_NO_ERROR, $result);
+    }
+    public function turnedOffApp(&$result, $what){
+        $data = array(
+            'active'      => 0,
+        );
+        $result = $this->_db->update("setings", $data, "`type` = '$what'");
+        return $result;
     }
 }
 ?>

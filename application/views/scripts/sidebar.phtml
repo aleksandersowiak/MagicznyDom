@@ -1,8 +1,8 @@
 <div class="col-sm-4">
-    <?php if ($this->about["active"] == TRUE) : ?>
+    <?php if ($this->about == TRUE) : ?>
         <div class="sidebar-module sidebar-module-inset blog-sidebar">
             <h4>O Mnie</h4>
-            <p><?=$this->restrictText($this->about["data"], 100)?></p>
+            <p><?=$this->restrictText($this->about, 100)?></p>
         </div>
     <?php endif; ?>
     <ul class="list-group">

@@ -45,17 +45,32 @@ class IndexController extends Aso_Controller_Action
 
 	        return $this->render('index');
         } catch(exception $e) {
-            $this->logError("indexAction() exception: ".$e->getMessage());
+//            $this->logError("indexAction() exception: ".$e->getMessage());
             return $this->aso_internalError();
         }
     }
 
     public function aboutAction(){
-        if ($this->view->about['active'] != FALSE) {
+        if ($this->view->about != FALSE) {
             return $this->renderScript('about/index.phtml');
         }else{
             $this->_redirect('/');
         }
+    }
+
+    public function turnOffSettingAction(){
+        $this->_helper->viewRenderer->setNoRender(true);
+        $this->_helper->layout()->disableLayout();
+        $request = $this->getRequest();
+        $params = $request->getParams();
+        $app = $params['app'];
+        if ($this->getModel("Model_Index")->turnedOffApp($resultRecipe, $app) == FALSE) {
+            return $this->aso_sendCommand('Coś poszło nie tak!','denger');
+        }
+        $this->aso_sendCommand("Wystąpił błąd przy sprawdzaniu ustawień aplikacji $app.</br>Jeżli problem będzie się powtarzał.</br>Skontaktuj się z administratorem strony.","danger");
+        $this->_helper->redirector->gotoRoute(array(
+            'controller'=> 'index',
+            'action' =>'index'));
     }
 }
 ?>

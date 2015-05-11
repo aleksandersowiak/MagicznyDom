@@ -12,6 +12,10 @@ class Aso_Controller_Action extends Zend_Controller_Action
     private $_model = null;
     private $_layout = null;        // layout pointer
     private $_params = null;
+    private $_model_read = null;
+    private $_model_index = null;
+    private $_model_category = null;
+
 //    private $_trans = null;
 
     public function init() {
@@ -20,22 +24,29 @@ class Aso_Controller_Action extends Zend_Controller_Action
         $messages = $this->_helper->flashMessenger->getMessages();
         if(!empty($messages)) $this->_helper->layout->getView()->message = $messages[0];
 
-        $this->setModel(new Application_Model_Read(), "Model_Read");
-        $this->setModel(new Application_Model_Index(), "Model_Index");
-        $this->setModel(new Application_Model_Category(), "Model_Category");
+        $this->_model_read = $this->setModel(new Application_Model_Read(), "Model_Read");
+        $this->_model_index = $this->setModel(new Application_Model_Index(), "Model_Index");
+        $this->_model_category = $this->setModel(new Application_Model_Category(), "Model_Category");
 
-        $this->getModel("Model_Index")->getSetings($title, 'title');
-        if ($title != NULL) { $this->view->webtitle = $title[0]['data']; }else{ $this->view->webtitle = 'Default Data'; }
-        if ($this->getModel("Model_Index")->getSetings($resultAbout, 'about')== FALSE) {
-            return $this->aso_sendCommand('Sekcja "O mnie" nie działa prawidłowo.','danger');
+        if ($this->_model_index->getSetings($settings, NULL) == FALSE ) {
+            return $this->aso_sendCommand('Wystąpił problem z pobraniem ustawień strony.');
         }
-        if ($resultAbout != null) { $this->view->about = $resultAbout[0]; }else{ $this->view->about = array("active" => 0); }
-        if ($this->getModel("Model_Index")->getCategory($getCategory)== FALSE) {
+        if (!empty($settings)){
+            for ($x = 0; $x < count($settings); $x++) {
+                $this->view->$settings[$x]['type'] = $settings[$x]['data'];
+                if ($settings[$x]['additional_settings'] != NULL) {
+                    $this->_model_index->getSetings($additional_settings, $settings[$x]['type']);
+
+                    $this->view->additional_settings = $additional_settings[0]['additional_settings'];
+                }
+            }
+        }
+
+        if ($this->getModel("Model_Index")->getCategory($getCategory) == FALSE) {
             return $this->aso_sendCommand('Nie znaleniono żdnej kategori','denger');
         }
         $this->view->Category = $getCategory;
     }
-
 
     public function aso_Redirect($where = null){
 //        $ms = new Zend_Session_Namespace(SESSION_NAMESPACE);
@@ -61,7 +72,7 @@ class Aso_Controller_Action extends Zend_Controller_Action
         else if(isset($r['error']) == FALSE)    $cmd = CMD_INTERNAL_ERROR;
         else                                    $cmd = $r['error'];
         //header('HTTP/1.0 500 Internal Error');
-        return $this->aso_sendCommand($cmd,$this->_('global_popup_db_error'));
+        return $this->aso_sendCommand($cmd,'global_popup_db_error','error');
     }
 
     public function setModuleName($module) {
@@ -85,7 +96,7 @@ class Aso_Controller_Action extends Zend_Controller_Action
         if($this->_layout != null) {
             $this->_layout->setLayout($name);
         } else {
-            $this->logError("setLayoutName: operation on NULL obj");
+//            $this->logError("setLayoutName: operation on NULL obj");
         }
     }
 //
@@ -111,18 +122,18 @@ class Aso_Controller_Action extends Zend_Controller_Action
         return $restrict;
     }
 
-    public function getSetings(&$result, $where = null) {
-        if ($where != null) {
-            $where = $this->getAdapter()->quoteInto("type LIKE ?", $where);
-        }else{
-            $where = 1;
-        }
-        $select = $this->_db    ->select()
-            ->from("setings")
-            ->where($where);
-        $result = $this->getAdapter()->fetchAll($select);
-        return $this->aso_return($return, CMD_DB_ERROR_NO_ERROR, $result);
-    }
+//    public function getSetings(&$result, $where = null) {
+//        if ($where != null) {
+//            $where = $this->getAdapter()->quoteInto("type LIKE ?", $where);
+//        }else{
+//            $where = 1;
+//        }
+//        $select = $this->_db    ->select()
+//            ->from("setings")
+//            ->where($where);
+//        $result = $this->getAdapter()->fetchAll($select);
+//        return $this->aso_return($return, CMD_DB_ERROR_NO_ERROR, $result);
+//    }
     public function  implodeFunction($array = null, $separator = null){
         if ($array != null){
 

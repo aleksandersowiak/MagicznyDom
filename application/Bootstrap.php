@@ -45,6 +45,11 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                 'action' => 'getComments'
             )
         ));
+//        $router->addRoute('turnOffSetting', new Zend_Controller_Router_Route('/:app', array(
+//                'controller' => 'Index',
+//                'action' => 'index'
+//            )
+//        ));
     }
     protected function _initPlaceholders() {
         $this->bootstrap('view');
