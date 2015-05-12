@@ -46,8 +46,22 @@ class Aso_Controller_Action extends Zend_Controller_Action
             return $this->aso_sendCommand('Nie znaleniono żdnej kategori','denger');
         }
         $this->view->Category = $getCategory;
-    }
 
+
+//        $request = $this->getRequest();
+        $form    = new Application_Form_Index();
+
+//        if ($this->getRequest()->isPost()) {
+//            if ($form->isValid($request->getPost())) {
+//                $comment = new Application_Model_Index($form->getValues());
+////                $mapper  = new Application_Model_IndexMapper();
+////                $mapper->save($comment);
+//            return $this->_helper->redirector('index');
+//            }
+//        }
+
+        $this->view->form = $form;
+}
     public function aso_Redirect($where = null){
 //        $ms = new Zend_Session_Namespace(SESSION_NAMESPACE);
 //        if ($where == null) {

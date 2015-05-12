@@ -1,21 +1,23 @@
+<?php if ($this->hotIndex != NULL) : ?>
 <div class="container">
     <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
-            <?php $h = 0; foreach ($this->hotIndex as $hots) : ?>
+            <?php $h = 0;  foreach ($this->hotIndex as $hots) : ?>
                 <li data-target="#carousel-example-generic" data-slide-to="<?=$h++?>" class="<?=($h == 1) ? "active" : ""?>"></li>
             <?php endforeach; ?>
         </ol>
         <div class="carousel-inner" role="listbox">
-            <?php $h = 0; foreach ($this->hotIndex as $hots_display) : ?>
-                <?php  preg_match_all('/<img.*src=\"(.*)\".*>/iU', $hots_display['recipe'], $images);
-                if (empty($images[1][0]) == false) :
+            <?php $h = 0;
+            foreach ($this->hotIndex as $hots_display) :
+                preg_match_all('/<img.*src=\"(.*)\".*>/iU', $hots_display['recipe'], $images);
+                if (count($images[0]) > 0) :
                     $min = 0;
                     $max = count($images[1]) - 1;
-                    $linkImage = $images[1][rand ($min ,$max)];
+                    $linkImage[$h] = $images[1][rand ($min ,$max)];
                 endif;
                 ?>
             <div class="navbar-default item <?=($h == 0) ? "active" : ""?>">
-                <img data-src="holder.js/1140x300/auto/#11<?=$h?>:#11<?=$h?>/" alt="" style="max-width:1140px; max-height:500px; min-width:1140px; min-height:500px; overflow: hidden; background: url(<?=$linkImage?>) no-repeat 50% 50%;" data-holder-rendered="true">
+                <img data-src="holder.js/1140x300/auto/#11<?=$h?>:#11<?=$h?>/" alt="" style="max-width:1140px; max-height:500px; min-width:1140px; min-height:500px; overflow: hidden; background: url(<?=$linkImage[$h]?>) no-repeat 50% 50%;" data-holder-rendered="true">
                 <div class="container navbar-default">
                     <div class="carousel-caption">
                         <h1><?=$hots_display['title']?></h1>
@@ -28,10 +30,11 @@
         </div>
     </div>
 </div>
+<?php endif; ?>
 <div class="container theme-showcase" role="main">
     <div class="row">
         <div class="col-sm-8 blog-main">
-            <?php if ($this->Recipes != NULL) : $i = 0; ?>
+            <?php if (($this->Recipes) != NULL) : $i = 0; ?>
                 <?php foreach ($this->Recipes as $values) : ?>
                     <?php if($i%2 == 0) : ?>
                         <?=$this->partial('index/recipe/recipeIndexL.phtml', $values); ?>
@@ -39,9 +42,7 @@
                         <?=$this->partial('index/recipe/recipeIndexR.phtml', $values); ?>
                     <?php
                     endif;
-                    if ($i == $i) :
-                        echo '<hr class="featurette-divider">';
-                    endif;
+                    echo '<hr class="featurette-divider">';
                     $i++;
                 endforeach;
             else: ?>
@@ -57,7 +58,7 @@
         </div>
         <?=$this->render('sidebar.phtml'); ?>
     </div>
-    <?php if ($this->Recipes != NULL) : ?>
+    <?php if (($this->Recipes) != NULL) : ?>
     <nav>
         <ul class="pager">
             <?php
@@ -81,6 +82,7 @@
         </ul>
     </nav>
     <?php endif; ?>
+
 <!--    <script>-->
 <!--    $(document).ready(function() {-->
 <!--        $('#editor').summernote(-->

@@ -16,19 +16,22 @@ class IndexController extends Aso_Controller_Action
                 return $this->aso_sendCommand('Nie pobrano żadnego przepisu','denger');
             }
 
-            if(isset($params['page']) != null) {
+            define('MAX_LIMIT', ((!empty($count['max_limit'][0]['data']) != NULL) ? $count['max_limit'][0]['data'] : MAX_LIMIT_INDEX));
+
+            if(isset($params['page']) != NULL) {
                 $page = $params['page'] ;
-                $offset = MAX_LIMIT_INDEX  * $page ;
+                $offset = MAX_LIMIT * $page ;
             }else{
                 $page = 0;
                 $offset = 0;
             }
-            if(!empty($count)) {
-                $left_rec = $count[0]['count'] - ($page * MAX_LIMIT_INDEX);
+
+            if(!empty($count[0])) {
+                $left_rec = $count[0]['count'] - ($page * MAX_LIMIT);
                 $this->view->page = $page;
                 $this->view->count = $left_rec;
 
-                if (($page * MAX_LIMIT_INDEX) >= $count[0]['count']) {
+                if (($page * MAX_LIMIT) >= $count[0]['count']) {
                     return $this->aso_sendCommand('Coś się zepsuło, albo przekombinowałeś.','warning');
                 }
             }
@@ -38,12 +41,12 @@ class IndexController extends Aso_Controller_Action
             }
                 $this->view->hotIndex = $resultHotIndex;
 
-            if ($this->getModel("Model_Index")->getRecipe($resultRecipe, $offset, MAX_LIMIT_INDEX, 'updated', 'DESC')== FALSE) {
+            if ($this->getModel("Model_Index")->getRecipe($resultRecipe, $offset, MAX_LIMIT, 'updated', 'DESC')== FALSE) {
                 return $this->aso_sendCommand('Nie pobrano żadnego przepisu','denger');
             }
                 $this->view->Recipes = $resultRecipe;
 
-	        return $this->render('index');
+            return $this->render('index');
         } catch(exception $e) {
 //            $this->logError("indexAction() exception: ".$e->getMessage());
             return $this->aso_internalError();

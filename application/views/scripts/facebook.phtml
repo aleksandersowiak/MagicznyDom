@@ -10,28 +10,37 @@
                     $view = 'fb-like-box';
                     break;
             endswitch;
-        else: ?>
+        ?>
+        <div id="fb-root"></div>
+        <script>(function(d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s); js.id = id;
+                js.src = "//connect.facebook.net/pl_PL/sdk.js#xfbml=1&version=v2.3";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        </script>
+        <div class="<?=$view?>"
+             data-href="<?=$this->facebook?>"
+             <?php
+             foreach ($fb_data as $key => $value) {
+                 echo "$key=\"$value\" ";
+             }
+            ?>
+        >
+            <div class="fb-xfbml-parse-ignore">
+                <blockquote cite="<?=$this->facebook?>">
+                    <a href="<?=$this->facebook?>"><?=$this->headTitle($this->title)?></a>
+                </blockquote>
+            </div>
+        </div>
+       <?php else: ?>
             <script>
                 $(document).ready( function() {
                     var url='<?=$this->url(array("controller" => "index", "action" => "turn-off-setting"),"default",true);?>/app/facebook';
                     $('body').load(url);
                 });
             </script>
-        <?php endif;
-    endif; ?>
-    <div id="fb-root"></div>
-    <script>(function(d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s); js.id = id;
-            js.src = "//connect.facebook.net/pl_PL/sdk.js#xfbml=1&version=v2.3";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));</script>
-    <div class="<?=$view?>" data-href="<?=$this->facebook?>" data-layout="standard" data-share="true"  data-colorscheme="light" data-width="500" data-heigt="650" data-hide-cover="false" data-show-facepile="false" data-show-posts="false">
-        <div class="fb-xfbml-parse-ignore">
-            <blockquote cite="<?=$this->facebook?>">
-                <a href="<?=$this->facebook?>"><?=$this->headTitle($this->title)?></a>
-            </blockquote>
-        </div>
-    </div>
+        <?php endif; ?>
+    <?php endif; ?>
 <?php endif; ?>

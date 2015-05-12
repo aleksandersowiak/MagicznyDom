@@ -40,7 +40,9 @@ class Application_Model_Index extends Aso_Model {
 
     public function getCount(&$result){
         $count = $this->_db->select()->from(array("r"=>"recipe"), array ("count" => "COUNT(`recipe`)"))->group('autor_id');
+        $recipe_per_gage = $this->_db->select()->from('setings')->where("`type` LIKE 'max_limit'");
         $result = $this->getAdapter()->fetchAll($count);
+        $result['max_limit'] = $this->getAdapter()->fetchAll($recipe_per_gage);
         return $this->aso_return($return, CMD_DB_ERROR_NO_ERROR, $result);
     }
     public function turnedOffApp(&$result, $what){

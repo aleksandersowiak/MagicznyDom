@@ -18,8 +18,11 @@ class LoginController extends Aso_Controller_Action
             $db = $this->_getParam('db');
             $msg = null;
 
+
             if ($this->getRequest()->isPost()) {
+
                 if (($this->getRequest()->getPost('email') != '') || ($this->getRequest()->getPost('password') != '')) {
+
                     $adapter = new Zend_Auth_Adapter_DbTable(
                         $db,
                         'user',
@@ -52,6 +55,7 @@ class LoginController extends Aso_Controller_Action
             $this->_helper->redirector->gotoRoute(array(
                 'controller'=> 'index',
                 'action' =>'index'));
+
         } catch(exception $e) {
 //            $this->logError("indexAction() exception: ".$e->getMessage());
             return $this->aso_internalError();
@@ -71,7 +75,7 @@ class LoginController extends Aso_Controller_Action
             $this->_redirect('/');
         } catch(exception $e) {
 //            $this->logError("logoutAction() exception: ".$e->getMessage());
-            return $this->cc_internalError();
+            return $this->aso_internalError();
         }
     }
 } 
