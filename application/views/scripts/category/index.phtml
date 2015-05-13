@@ -1,7 +1,7 @@
 <div class="container theme-showcase">
 <div class="row row-offcanvas row-offcanvas-right">
-
     <div class="col-xs-12 col-sm-9">
+        <?php if ($this->Category != NULL) : ?>
         <div class="row">
             <?php foreach ($this->Category as $allCategory) : ?>
             <div class="col-xs-6 col-lg-4">
@@ -16,7 +16,16 @@
         <ul class="list-group">
             <?=$this->partialLoop('category/get-category.phtml',$this->Category); ?>
         </ul>
-    </div>
 
+    <?php else: ?>
+        <div class="alert alert-info" role="alert">
+            <p>Nie znaleniono żadnych kategori.</p>
+            <?php if ($this->facebook['data'] != null) : ?>
+                <p>Zapraszamy później, bądź na naszego Facebook'a.</p>
+            <?php endif; ?>
+        </div>
+        <?=$this->render('facebook.phtml'); ?>
+    <?php endif; ?>
+    </div>
 </div>
 </div>

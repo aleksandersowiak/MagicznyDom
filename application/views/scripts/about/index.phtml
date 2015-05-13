@@ -1,13 +1,27 @@
+<?php if (is_array($this->about)) {
+    $type = $this->about['data'];
+    $additional_settings = $this->about['additional_settings'];
+        if ($this->isJson($additional_settings)) :
+            $about_data = json_decode($additional_settings, true);  else: ?>
+            <script>
+                $(document).ready( function() {
+                    var url='<?=$this->url(array("controller" => "index", "action" => "turn-off-setting"),"default",true);?>/app/about';
+                    $('body').load(url);
+                });
+            </script>
+            <?php endif;
+    }else{
+        $type = $this->about['data'];
+    }
+?>
 <div class="site-wrapper">
     <div class="site-wrapper-inner">
         <div class="cover-container">
             <div class="inner cover">
-                <h1 class="cover-heading">Troszeczkę o mnie...</h1>
-                <p class="lead"><?=$this->about?></p>
+                <h1 class="cover-heading"><?php if (isset($about_data) != NULL) : echo $about_data['title_about']; else: echo 'Troszeczkę o mnie...'; endif; ?></h1>
+                <p class="lead"><?=$type?></p>
                 <p class="lead">
-                <div class="alert alert-info" role="alert">
                     <?=$this->render('facebook.phtml'); ?>
-                    </div>
                 </p>
             </div>
         </div>

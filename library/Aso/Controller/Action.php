@@ -33,12 +33,8 @@ class Aso_Controller_Action extends Zend_Controller_Action
         }
         if (!empty($settings)){
             for ($x = 0; $x < count($settings); $x++) {
-                $this->view->$settings[$x]['type'] = $settings[$x]['data'];
-                if ($settings[$x]['additional_settings'] != NULL) {
-                    $this->_model_index->getSetings($additional_settings, $settings[$x]['type']);
-
-                    $this->view->additional_settings = $additional_settings[0]['additional_settings'];
-                }
+                $this->view->$settings[$x]['type'] =  array('data' => $settings[$x]['data'],
+                                                            'additional_settings' => $settings[$x]['additional_settings']);
             }
         }
 
@@ -47,21 +43,10 @@ class Aso_Controller_Action extends Zend_Controller_Action
         }
         $this->view->Category = $getCategory;
 
-
-//        $request = $this->getRequest();
-        $form    = new Application_Form_Index();
-
-//        if ($this->getRequest()->isPost()) {
-//            if ($form->isValid($request->getPost())) {
-//                $comment = new Application_Model_Index($form->getValues());
-////                $mapper  = new Application_Model_IndexMapper();
-////                $mapper->save($comment);
-//            return $this->_helper->redirector('index');
-//            }
-//        }
-
+        $form    = new Application_Form_Login();
         $this->view->form = $form;
-}
+
+    }
     public function aso_Redirect($where = null){
 //        $ms = new Zend_Session_Namespace(SESSION_NAMESPACE);
 //        if ($where == null) {

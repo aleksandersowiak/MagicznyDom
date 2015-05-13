@@ -1,8 +1,24 @@
 <div class="col-sm-4">
-    <?php if ($this->about == TRUE) : ?>
+    <?php if ($this->about  != NULL) : ?>
+        <?php if (is_array($this->about)) {
+            $type = $this->about['data'];
+            $additional_settings = $this->about['additional_settings'];
+            if ($this->isJson($additional_settings)) :
+                $about_data = json_decode($additional_settings, true);  else: ?>
+                <script>
+                    $(document).ready( function() {
+                        var url='<?=$this->url(array("controller" => "index", "action" => "turn-off-setting"),"default",true);?>/app/about';
+                        $('body').load(url);
+                    });
+                </script>
+            <?php endif;
+        }else{
+            $type = $this->about['data'];
+        }
+        ?>
         <div class="sidebar-module sidebar-module-inset blog-sidebar">
-            <h4>O Mnie</h4>
-            <p><?=$this->restrictText($this->about, 100)?></p>
+            <h4><?php if (isset($about_data) != NULL) : echo $about_data['title_about']; else: echo 'Troszeczkę o mnie...'; endif; ?></h4>
+            <p><?=$this->restrictText($type, 100)?></p>
         </div>
     <?php endif; ?>
     <ul class="list-group">
@@ -45,7 +61,6 @@
                     }
                 );
             });
-
         </script>
         <button type="button" class="btn btn-default" data-toggle="modal" data-target="#add-new-comment">
             <span class="glyphicon glyphicon-comment"></span> Dodaj komentarz

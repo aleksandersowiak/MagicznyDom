@@ -4,10 +4,16 @@
     right:0;
     margin-left:auto;
     margin-right:auto;
-    margin-top: 20px;
+    margin-top: 0px;
     max-width: 300px;
     z-index: 9999;
 }
+
+.pop-up {
+    -webkit-box-shadow: 0 0 20px 5px #787878;
+    box-shadow: 0 0 20px 5px #787878;
+}
+
 .theme-showcase {
     margin-top: 20px !important;
 }

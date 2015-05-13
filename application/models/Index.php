@@ -6,12 +6,14 @@ class Application_Model_Index extends Aso_Model {
 
     public function getSetings(&$result, $where = null) {
         if ($where != null) {
-            $where = $this->getAdapter()->quoteInto("type LIKE ?", $where);
+            $where_query = $this->getAdapter()->quoteInto("`type` LIKE ?", $where);
+            $where_query .= (" AND `additional_settings` IS NOT NULL");
         }else{
-            $where = 1;
+            $where_query = 1;
         }
         $select = $this->_db    ->select()
                                 ->from("setings")
+                                ->where($where_query)
                                 ->where('`active` = 1');
         $result = $this->getAdapter()->fetchAll($select);
 

@@ -1,16 +1,31 @@
-<?php if($this->facebook != NULL) : ?>
-    <?php  if($this->additional_settings != NULL) :
-        if ($this->isJson($this->additional_settings)) :
-            $fb_data = json_decode($this->additional_settings, true);
-            switch ($fb_data['fb-box']) :
-                case 0:
-                    $view = 'fb-page';
-                    break;
-                case 1:
-                    $view = 'fb-like-box';
-                    break;
-            endswitch;
-        ?>
+<?php if (is_array($this->facebook)) {
+    $type = $this->facebook['data'];
+    $additional_settings = $this->facebook['additional_settings'];
+    if ($this->isJson($additional_settings)) :
+        $fb_data = json_decode($additional_settings, true);
+        $fb_data = json_decode($this->facebook['additional_settings'], true);
+        switch ($fb_data['fb-box']) :
+            case 0:
+                $view = 'fb-page';
+                break;
+            case 1:
+                $view = 'fb-like-box';
+                break;
+        endswitch;
+    else: ?>
+        <script>
+            $(document).ready( function() {
+                var url='<?=$this->url(array("controller" => "index", "action" => "turn-off-setting"),"default",true);?>/app/facebook';
+                $('body').load(url);
+            });
+        </script>
+    <?php endif;
+}else{
+    $type = $this->facebook['data'];
+    $view = 'fb-page';
+}
+?>
+<?php if($type != NULL) : ?>
         <div id="fb-root"></div>
         <script>(function(d, s, id) {
                 var js, fjs = d.getElementsByTagName(s)[0];
@@ -21,26 +36,19 @@
             }(document, 'script', 'facebook-jssdk'));
         </script>
         <div class="<?=$view?>"
-             data-href="<?=$this->facebook?>"
+             data-href="<?=$type?>"
              <?php
-             foreach ($fb_data as $key => $value) {
-                 echo "$key=\"$value\" ";
-             }
+             if (isset($fb_data) != NULL) :
+                 foreach ($fb_data as $key => $value) :
+                     echo "$key=\"$value\" ";
+                 endforeach;
+             endif;
             ?>
         >
             <div class="fb-xfbml-parse-ignore">
-                <blockquote cite="<?=$this->facebook?>">
-                    <a href="<?=$this->facebook?>"><?=$this->headTitle($this->title)?></a>
+                <blockquote cite="<?=$type?>">
+                    <a href="<?=$type?>"><?=$this->headTitle($this->title)?></a>
                 </blockquote>
             </div>
         </div>
-       <?php else: ?>
-            <script>
-                $(document).ready( function() {
-                    var url='<?=$this->url(array("controller" => "index", "action" => "turn-off-setting"),"default",true);?>/app/facebook';
-                    $('body').load(url);
-                });
-            </script>
-        <?php endif; ?>
-    <?php endif; ?>
 <?php endif; ?>
