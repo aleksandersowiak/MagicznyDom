@@ -1,5 +1,5 @@
 <?php if ($this->hotIndex != NULL) : ?>
-<div class="container">
+<div class="container aso-container">
     <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
             <?php $h = 0;  foreach ($this->hotIndex as $hots) : ?>
@@ -17,7 +17,7 @@
                 endif;
                 ?>
             <div class="navbar-default item <?=($h == 0) ? "active" : ""?>">
-                <img data-src="holder.js/1140x300/auto/#11<?=$h?>:#11<?=$h?>/" alt="" style="max-width:1140px; max-height:500px; min-width:1140px; min-height:500px; overflow: hidden; background: url(<?=$linkImage[$h]?>) no-repeat 50% 50%;" data-holder-rendered="true">
+                <img data-src="holder.js/auto/auto/#11<?=$h?>:#11<?=$h?>/" alt="" style="max-width:1140px; max-height:500px; min-width:100%; min-height:500px; overflow: hidden; background: url(<?=$linkImage[$h]?>) no-repeat 50% 50%;" data-holder-rendered="true">
                 <div class="container navbar-default">
                     <div class="carousel-caption">
                         <h1><?=$hots_display['title']?></h1>

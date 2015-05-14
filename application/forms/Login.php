@@ -12,7 +12,7 @@ class Application_Form_Login extends Zend_Form
         // Set the method for the display form to POST
         $this->setMethod('post');
 
-        $email = new Zend_Form_Element_Text ('email');
+        $email = new Zend_Form_Element_Text('email');
         $email-> setRequired(true)
               -> setOptions(array(
                     'type'=>'email',

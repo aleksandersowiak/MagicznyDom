@@ -16,9 +16,9 @@
             $type = $this->about['data'];
         }
         ?>
-        <div class="sidebar-module sidebar-module-inset blog-sidebar">
+        <div class="sidebar-module sidebar-module-inset blog-sidebar aso-about">
             <h4><?php if (isset($about_data) != NULL) : echo $about_data['title_about']; else: echo 'Troszeczkę o mnie...'; endif; ?></h4>
-            <p><?=$this->restrictText($type, 100)?></p>
+            <p ><?=$this->restrictText($type, 100)?></p>
         </div>
     <?php endif; ?>
     <ul class="list-group">
