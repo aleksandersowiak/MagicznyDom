@@ -64,15 +64,14 @@ class Application_Model_Category extends Aso_Model {
     public function getTags(&$result){
         $select = $this->_db->select()
                             ->distinct()
-                            ->from(array('t' => 'tags'))
+                            ->from(array('t' => 'tags'), 'tags')
                             ->order( 't.tags');
         $result = $this->getAdapter()->fetchAll($select);
+//        foreach ($result as $tag) {
+//                $array[] =  $tag['tags'];
+//        }
 
-        foreach ($result as $tag) {
-                $array[] =  $tag['tags'];
-        }
-
-        $result['tagList'] = array_unique($array);
+//        $result['tagList'] = array_unique($array);
         return $result;
     }
 } 

@@ -22,7 +22,7 @@
         </div>
     <?php endif; ?>
     <ul class="list-group">
-        <?=$this->partialLoop('category/get-category.phtml',$this->Category); ?>
+        <?=$this->partialLoop('category/get/get-category.phtml',$this->Category); ?>
     </ul>
 
     <?php if ($this->commentsCount) : ?>

@@ -14,9 +14,8 @@
     </div><!--/.col-xs-12.col-sm-9-->
     <div class="col-sm-4 aso-col-sm-nav" id="sidebar" role="navigation">
         <ul class="list-group">
-            <?=$this->partialLoop('category/get-category.phtml',$this->Category); ?>
+            <?=$this->partialLoop('category/get/get-category.phtml',$this->Category); ?>
         </ul>
-
     <?php else: ?>
         <div class="alert alert-info" role="alert">
             <p>Nie znaleniono żadnych kategori.</p>

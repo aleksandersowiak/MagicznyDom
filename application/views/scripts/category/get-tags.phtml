@@ -1,6 +1,0 @@
-<?php foreach ($this->tag as $tag) : ?>
-<a href="<?=$this->baseUrl().'/category/'.$this->replaceOnLink($tag)?>" class="list-group-item <?=(Zend_Controller_Front::getInstance()->getRequest()->getParam('id') == $this->replaceOnLink($tag)) ? "active" : ""; ?>">
-    <?=$tag?>
-    <span class="badge"><?=$this->category_count?></span>
-</a>
-<?php endforeach; ?>
