@@ -33,6 +33,11 @@ body {
 .aso-container {
     margin-top:50px;
 }
+
+.aso-col-sm-nav {
+    z-index: 0 !important;
+    margin-top:25px;
+}
 /*O MNIE */
 /*
 * Globals
