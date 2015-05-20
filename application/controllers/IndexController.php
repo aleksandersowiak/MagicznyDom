@@ -45,7 +45,9 @@ class IndexController extends Aso_Controller_Action
                 return $this->aso_sendCommand('Nie pobrano żadnego przepisu','denger');
             }
                 $this->view->Recipes = $resultRecipe;
-
+            $this->view->render('index/hotIndex.phtml');
+            $this->view->render('sidebar.phtml');
+            $this->view->render('navigation/index-navigation.phtml');
             return $this->render('index');
         } catch(exception $e) {
 //            $this->logError("indexAction() exception: ".$e->getMessage());

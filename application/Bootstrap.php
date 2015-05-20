@@ -121,8 +121,37 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
         $view = new Zend_View();
         $view->addHelperPath('ZendX/JQuery/View/Helper/', 'ZendX_JQuery_View_Helper');
+    }
 
+    protected function _initSidebar()
+    {
+        $this->bootstrap('View');
+        $view = $this->getResource('View');
 
+        $view->placeholder('sidebar')
+            ->setPrefix("<div class=\"col-sm-4\">")
+            ->setSeparator("</div>\n    <div class=\"block\">\n")
+            ->setPostfix("</div>\n</div>");
+    }
+
+    protected function _initHotIndex()
+    {
+        $this->bootstrap('View');
+        $view = $this->getResource('View');
+
+        $view->placeholder('hotIndex')
+            ->setPrefix("<div class=\"container aso-container\">")
+            ->setSeparator("</div>\n    <div class=\"block\">\n")
+            ->setPostfix("</div>\n</div>");
+    }
+
+    protected function _initNavigation()
+    {
+        $this->bootstrap('View');
+        $view = $this->getResource('View');
+        $view->placeholder('navigation')
+            ->setPrefix("<nav>")
+            ->setPostfix("</nav>");
     }
 }
 ?>

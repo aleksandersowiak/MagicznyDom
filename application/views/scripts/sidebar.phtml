@@ -1,33 +1,30 @@
-<div class="col-sm-4">
+<?php $this->placeholder('sidebar')->captureStart() ?>
     <?php if ($this->about  != NULL) : ?>
-        <?php if (is_array($this->about)) {
-            $type = $this->about['data'];
-            $additional_settings = $this->about['additional_settings'];
-            if ($this->isJson($additional_settings)) :
-                $about_data = json_decode($additional_settings, true);  else: ?>
-                <script>
-                    $(document).ready( function() {
-                        var url='<?=$this->url(array("controller" => "index", "action" => "turn-off-setting"),"default",true);?>/app/about';
-                        $('body').load(url);
-                    });
-                </script>
-            <?php endif;
-        }else{
-            $type = $this->about['data'];
-        }
-        ?>
+        <?php $type = $this->about['data'];
+        $additional_settings = $this->about['additional_settings'];
+        if ($this->isJson($additional_settings)) :
+            $about_data = json_decode($additional_settings, true);  else: ?>
+            <script>
+                $(document).ready( function() {
+                    var url='<?=$this->url(array("controller" => "index", "action" => "turn-off-setting"),"default",true);?>/app/about';
+                    $('body').load(url);
+                });
+            </script>
+        <?php endif; ?>
         <div class="sidebar-module sidebar-module-inset blog-sidebar aso-about">
             <h4><?php if (isset($about_data) != NULL) : echo $about_data['title_about']; else: echo 'Troszeczkę o mnie...'; endif; ?></h4>
             <p ><?=$this->restrictText($type, 100)?></p>
         </div>
     <?php endif; ?>
+    <?php if (count($this->Category) > 0) : ?>
     <ul class="list-group">
         <?=$this->partialLoop('category/get/get-category.phtml',$this->Category); ?>
     </ul>
-
-    <?php if ($this->commentsCount) : ?>
-    <h2><span class="glyphicon glyphicon-comment btn-lg"></span>Komentarze</h2>
-
+    <?php endif; ?>
+    <?php if ($this->commentsCount > 0) : ?>
+    <h2>
+       <span class="glyphicon glyphicon-comment btn-lg"></span>Komentarze
+    </h2>
     <nav>
         <ul class="pagination" style="text-align: center">
             <li>&laquo;</li>
@@ -120,3 +117,4 @@
         </div>
     <?php endif; ?>
 </div>
+<?php $this->placeholder('sidebar')->captureEnd() ?>

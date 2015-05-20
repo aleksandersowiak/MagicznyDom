@@ -43,6 +43,8 @@ class ReadController extends Aso_Controller_Action
                 $this->view->commentsCount = $resultCount['result'][0]['comments_count'];
             }
             $this->view->issCommentToAdd = true;
+            $this->view->render('sidebar.phtml');
+            $this->view->render('navigation/read-navigation.phtml');
             return $this->render('index');
 
         } catch(exception $e) {

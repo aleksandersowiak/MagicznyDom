@@ -82,7 +82,18 @@
             </div><!--/.nav-collapse -->
         </div>
     </nav>
-<?php echo $this->layout()->content ?>
+<?php echo $this->placeholder('hotIndex') ?>
+<div class="container theme-showcase" role="main">
+    <div class="row">
+        <div class="container">
+            <?php echo $this->layout()->content ?>
+            <?php echo $this->placeholder('sidebar') ?>
+        </div>
+        <div class="container">
+            <?php echo $this->placeholder('navigation') ?>
+        </div>
+    </div>
+</div>
 <div class="container">
     <hr class="featurette-divider"/>
     <footer>
