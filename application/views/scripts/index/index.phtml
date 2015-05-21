@@ -1,25 +1,27 @@
-        <div class="col-sm-8 blog-main">
-            <?php if (($this->Recipes) != NULL) : $i = 0; ?>
-                <?php foreach ($this->Recipes as $values) : ?>
-                    <?php if($i%2 == 0) : ?>
-                        <?=$this->partial('index/recipe/recipeIndexL.phtml', $values); ?>
-                    <?php else : ?>
-                        <?=$this->partial('index/recipe/recipeIndexR.phtml', $values); ?>
-                    <?php
-                    endif;
-                    echo '<hr class="featurette-divider">';
-                    $i++;
-                endforeach;
-            else: ?>
-                <div class="alert alert-info" role="alert">
-                    <p>Nie dodano jeszcze żandego przepisu do strony.</p>
-                    <?php if ($this->facebook != null) : ?>
-                    <p>Zapraszamy później, bądź na naszego Facebook'a.</p>
-                    <?php endif; ?>
-                </div>
-                <?=$this->render('facebook.phtml'); ?>
-            <?php endif ?>
-        </div>
+<div  role="main">
+    <div class="col-sm-8 blog-main">
+        <?php if (($this->Recipes) != NULL) : $i = 0; ?>
+            <?php foreach ($this->Recipes as $values) : ?>
+                <?php if($i%2 == 0) : ?>
+                    <?=$this->partial('index/recipe/recipeIndexL.phtml', $values); ?>
+                <?php else : ?>
+                    <?=$this->partial('index/recipe/recipeIndexR.phtml', $values); ?>
+                <?php
+                endif;
+                echo '<hr class="featurette-divider">';
+                $i++;
+            endforeach;
+        else: ?>
+            <div class="alert alert-info" role="alert">
+                <p>Nie dodano jeszcze żandego przepisu do strony.</p>
+                <?php if ($this->facebook != null) : ?>
+                <p>Zapraszamy później, bądź na naszego Facebook'a.</p>
+                <?php endif; ?>
+            </div>
+            <?=$this->render('facebook.phtml'); ?>
+        <?php endif ?>
+    </div>
+</div>
 <!--    <script>-->
 <!--    $(document).ready(function() {-->
 <!--        $('#editor').summernote(-->

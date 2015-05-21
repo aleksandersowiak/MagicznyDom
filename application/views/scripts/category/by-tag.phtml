@@ -1,14 +1,11 @@
-<div class="container theme-showcase">
-    <div class="row row-offcanvas row-offcanvas-right">
-        <div class="col-sm-8 blog-main">
-            <div class="row">
-               <?=$this->partialLoop('category/get/get-view-tags.phtml',$this->SelectedTag); ?>
-            </div><!--/row-->
-        </div><!--/.col-xs-12.col-sm-9-->
-        <div class="col-sm-4 aso-col-sm-nav" id="sidebar" role="navigation">
-            <ul class="list-group">
-                <?=$this->partialLoop('category/get/get-tags.phtml', $this->getTags); ?>
-            </ul>
-        </div>
-    </div>
+<div class="col-sm-8 blog-main">
+    <div class="row">
+       <?=$this->partialLoop('category/get/get-view-tags.phtml',$this->SelectedTag); ?>
+    </div><!--/row-->
+</div><!--/.col-xs-12.col-sm-9-->
+<div class="col-sm-4 aso-col-sm-nav" id="sidebar" role="navigation">
+    <ul class="list-group">
+        <?=$this->partialLoop('category/get/get-tags.phtml', $this->getTags); ?>
+    </ul>
 </div>
+

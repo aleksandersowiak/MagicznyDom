@@ -12,7 +12,7 @@ class Application_Model_Read extends Aso_Model
 
         $this->_helper = new Zend_View_Helper_ReplaceOnLink();
         $select = $this->_db->select()
-                            ->from("recipe");
+                            ->from('recipe');
         $result_recipe = $this->getAdapter()->fetchAll($select);
         foreach ($result_recipe as $recipe){
             if ($params == $this->_helper->replaceOnLink($recipe['title'])) {
@@ -34,15 +34,15 @@ class Application_Model_Read extends Aso_Model
                 $where = "updated $parameters '$updated'";
                 $limit = 1;
                 if ($parameters == '<') {
-                    $order = "r.updated DESC";
+                    $order = 'r.updated DESC';
                 }else{
-                    $order = "r.updated ASC";
+                    $order = 'r.updated ASC';
                 }
             }else{
-                $where = "r.id = $id_recipe";
+                $where = 'r.id = '. $id_recipe;
             }
             $select_recipe = $this->_db ->select()
-                                        ->from(array("r" => "recipe"))
+                                        ->from(array('r' => 'recipe'))
                                         ->where($where);
             if (isset($parameters) != null) {
                  $select_recipe ->order($order)
@@ -50,9 +50,9 @@ class Application_Model_Read extends Aso_Model
             }
 
             $select_reciped_tags = $this->_db   ->select()
-                                                ->from(array("r" => "recipe"))
+                                                ->from(array('r' => 'recipe'))
                                                 ->where($where)
-                                                ->joinInner(array("t" => "tags"),'`r`.`id` = `t`.`id_recipe`');
+                                                ->joinInner(array('t' => 'tags'),'`r`.`id` = `t`.`id_recipe`');
             $result = $this->getAdapter()->fetchAll($select_recipe);
             $result_tags = $this->getAdapter()->fetchAll($select_reciped_tags);
 
@@ -75,20 +75,20 @@ class Application_Model_Read extends Aso_Model
         $id_recipe = $data['id_recipe'];
         $start_from = ($page-1) * 10;
         $select_comment = $this->_db->select()
-                                    ->from("comments")
-                                    ->where("id_recipe LIKE  $id_recipe")
-                                    ->where("moderate != FALSE")
+                                    ->from('comments')
+                                    ->where('id_recipe LIKE ?', $id_recipe)
+                                    ->where('moderate != FALSE')
                                     ->limit(10,$start_from)
-                                    ->order("created DESC");
+                                    ->order('created DESC');
 
         $select_count =  $this->_db  ->select()
-                                    ->from( array(  "c" => "comments"),
-                                            array("comments_count" => "COUNT(`id`)"))
-                                    ->where("id_recipe LIKE  $id_recipe")
-                                    ->where("moderate != FALSE")
+                                    ->from( array('c' => 'comments'),
+                                            array('comments_count' => 'COUNT(`id`)'))
+                                    ->where('id_recipe LIKE ?', $id_recipe)
+                                    ->where('moderate != FALSE')
         ;
 
-        $result = array("comments"  => $this->getAdapter()->fetchAll($select_comment),
+        $result = array('comments'  => $this->getAdapter()->fetchAll($select_comment),
                         'count'     => $this->getAdapter()->fetchAll($select_count));
 
         return $this->aso_return($return, CMD_DB_ERROR_NO_ERROR, $result);
@@ -98,10 +98,10 @@ class Application_Model_Read extends Aso_Model
         $data = $this->getDataRecipe($params);
         $id_recipe = $data['id_recipe'];
         $select_comment = $this->_db->select()
-                                    ->from( array(  "c" => "comments"),
-                                            array("comments_count" => "COUNT(`id`)"))
-                                    ->where("id_recipe LIKE  $id_recipe")
-                                    ->where("moderate !=  FALSE")
+                                    ->from( array('c' => 'comments'),
+                                            array('comments_count' => 'COUNT(`id`)'))
+                                    ->where('id_recipe LIKE ?', $id_recipe)
+                                    ->where('moderate !=  FALSE')
         ;
 
         $result = $this->getAdapter()->fetchAll($select_comment);
@@ -132,7 +132,7 @@ class Application_Model_Read extends Aso_Model
         $data = $this->getDataRecipe($id);
         $id_recipe = $data['id_recipe'];
         $date = Zend_Date::now();
-        $timeStamp = gmdate("Y-m-d H:i:s", $date->getTimestamp());
+        $timeStamp = gmdate('Y-m-d H:i:s', $date->getTimestamp());
         $data = array(
             'id_recipe' => $id_recipe,
             'userName'  => $name,
@@ -141,5 +141,17 @@ class Application_Model_Read extends Aso_Model
         );
         $this->_db->insert('comments', $data);
         return $this->aso_return($return, CMD_DB_ERROR_NO_ERROR, $data);
+    }
+
+    public function getCommentData(&$return, $id = null){
+        $select_comment = $this->_db->select()
+            ->from( array(  'c' => 'comments'))
+            ->where('id LIKE ?', $id)
+            ->where('moderate !=  FALSE')
+        ;
+
+        $result = $this->getAdapter()->fetchAll($select_comment);
+
+        return $this->aso_return($return, CMD_DB_ERROR_NO_ERROR, $result);
     }
 }

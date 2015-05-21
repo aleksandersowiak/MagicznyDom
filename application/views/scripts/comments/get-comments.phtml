@@ -1,41 +1,42 @@
 <style>
     span.glyphicon-thumbs-up, span.glyphicon-thumbs-down:hover {cursor: pointer}
 </style>
+<script type="text/javascript">
+    $(function() {
+        $(".read-more").click(function(){
+            $(this).button('loading').delay(1000).queue(function() {
+                var url='<?=$this->url(array("controller" => "comments", "action" => "get-comment"),"default",true);?>/id/' + $(this).attr('data-main');
+                $("#"+$(this).attr('name')).load(url);
+                $(this).button('reset');
+                $(this).dequeue();
+                $($(this)).html("");
+            });
+        });
+    });
+    $('.vote-plus').click(function() {
+        var url='<?=$this->url(array("controller" => "comments", "action" => "vote"),"default",true);?>/plus/' + $(this).attr('data-main');
+        $("#"+$(this).attr('id')+" .small").load(url);
+    });
+    $('.vote-minus').click(function() {
+        var url='<?=$this->url(array("controller" => "comments", "action" => "vote"),"default",true);?>/minus/' + $(this).attr('data-main');
+        $("#"+$(this).attr('id')+" .small").load(url);
+    });
+</script>
 <div class="list-group">
     <?php if ($this->comments != null) : ?>
         <?php $idBox = 0; ?>
         <?php foreach ($this->comments as $data_comment) : ?>
-            <script type="text/javascript">
-                $(function() {
-                    $(".btn<?=$idBox?>").click(function(){
-                        $(this).button('loading').delay(1000).queue(function() {
-                            $("#box<?=$idBox?>").html("<?=str_replace('"','\"',$data_comment['comment'])?></p>");
-                            $(this).button('reset');
-                            $(this).dequeue();
-                            $(".pull<?=$idBox?>").html("");
-                        });
-                    });
-                });
-                $('#plus<?=$idBox?>').click(function() {
-                    var url='<?=$this->url(array("controller" => "comments", "action" => "vote"),"default",true);?>/plus/<?=$data_comment['id'];?>';
-                    $("#plus<?=$idBox?> .small").load(url);
-                });
-                $('#minus<?=$idBox?>').click(function() {
-                    var url='<?=$this->url(array("controller" => "comments", "action" => "vote"),"default",true);?>/minus/<?=$data_comment['id'];?>';
-                    $("#minus<?=$idBox?> .small").load(url);
-                });
-            </script>
             <div class="well">
                 <h4 class="list-group-item-heading"><?=$data_comment['userName']?>
                 <p class="pull-right btn-sm">
-                    <span class="glyphicon glyphicon-thumbs-up" id="plus<?=$idBox?>" style="color: forestgreen"><span class="small" style="color: forestgreen"><?=$data_comment['plus']?></span></span>
-                    <span class="glyphicon glyphicon-thumbs-down" id="minus<?=$idBox?>" style="color: red"><span class="small" style="color: red"><?=$data_comment['minus']?></span></span>
+                    <span class="glyphicon glyphicon-thumbs-up vote-plus" id="plus<?=$idBox?>" data-main="<?=$data_comment['id']?>" style="color: forestgreen"><span class="small" style="color: forestgreen"><?=$data_comment['plus']?></span></span>
+                    <span class="glyphicon glyphicon-thumbs-down vote-minus" id="minus<?=$idBox?>" data-main="<?=$data_comment['id']?>" style="color: red"><span class="small" style="color: red"><?=$data_comment['minus']?></span></span>
                 </p></h4>
                 <p><?=$data_comment['created']?></p>
                 <p id="box<?=$idBox?>" class="list-group-item-text"><?=$this->restrictText($data_comment['comment'],100)?></p>
                 <?php if (strlen($data_comment['comment']) > 100):?>
                 <p class="pull-right pull<?=$idBox?>">
-                    <button type="button" class="btn<?=$idBox?> btn-link" data-loading-text="Ładowanie..." >Czytaj całość <span class="glyphicon glyphicon-chevron-right btn-sm"></span></button>
+                    <button type="button" class="btn<?=$idBox?> btn-link read-more" name="box<?=$idBox?>" data-main="<?=$data_comment['id']?>" data-loading-text="Ładowanie..." >Czytaj całość <span class="glyphicon glyphicon-chevron-right btn-sm"></span></button>
                     <div style="padding-bottom: 5px"></div>
                 </p>
                 <?php endif; ?>

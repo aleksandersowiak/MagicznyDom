@@ -1,4 +1,4 @@
-<div  role="main">
+<div role="main">
     <div class="col-sm-8 blog-main">
         <div class="blog-post">
             <h2 class="blog-post-title"><?=$this->title?></h2>
@@ -10,7 +10,6 @@
             <p class="clearfix">
             <div class="input-group">
                 <div class="input-group-addon">Etykiety:</div>
-<!--                   <input type="text" class="form-control" id="tokenfield" data-inputType="url" value="--><?//=$this->tags?><!--" />-->
                 <div class="tokenfield form-control readonly" style="width: 100%;">
                     <?php if ($this->tags != NULL) : ?>
                     <?php foreach ($this->tags as $token) : ?>
@@ -23,13 +22,7 @@
                     <?php endif; ?>
                 </div>
             </div>
-<!--                <script>-->
-<!--                    $('#tokenfield').tokenfield();-->
-<!---->
-<!--                    $('#tokenfield').tokenfield('readonly');-->
-<!--                </script>-->
-            </p>
-
         </div>
     </div>
+</div>
 
