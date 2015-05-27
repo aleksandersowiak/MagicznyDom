@@ -30,21 +30,25 @@ class ReadController extends Aso_Controller_Action
             $this->view->autor      = $resultRecipeDetail[0]['autor'];
             $this->view->updated    = $resultRecipeDetail[0]['updated'];
             $this->view->recipe     = $resultRecipeDetail[0]['recipe'];
+
             if (!empty($resultRecipeDetail['tagList'])) $this->view->tags = $resultRecipeDetail['tagList'];
 
             if ($this->getModel("Model_Read")->getRecipeDetail($resultNext, $id, "<")!= FALSE) {
                 if ($resultNext) $this->view->nextRecipe = $resultNext[0]['title'];
             }
+
             if ($this->getModel("Model_Read")->getRecipeDetail($resultPrev, $id, ">")!= FALSE) {
                 if ($resultPrev) $this->view->prevRecipe = $resultPrev[0]['title'];
             }
-            if ($this->getModel("Model_Read")->getCountComments($resultCount, $params['id'])!= FALSE) {
 
+            if ($this->getModel("Model_Read")->getCountComments($resultCount, $params['id'])!= FALSE) {
                 $this->view->commentsCount = $resultCount['result'][0]['comments_count'];
             }
+
             $this->view->issCommentToAdd = true;
             $this->view->render('sidebar.phtml');
             $this->view->render('navigation/read-navigation.phtml');
+
             return $this->render('index');
 
         } catch(exception $e) {

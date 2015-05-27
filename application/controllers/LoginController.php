@@ -55,7 +55,8 @@ class LoginController extends Aso_Controller_Action
             $this->_helper->redirector->gotoRoute(array(
                 'controller'=> 'index',
                 'action' =>'index'));
-
+            $this->_helper->viewRenderer->setNoRender(true);
+            $this->_helper->layout()->disableLayout();
         } catch(exception $e) {
 //            $this->logError("indexAction() exception: ".$e->getMessage());
             return $this->aso_internalError();
@@ -65,6 +66,8 @@ class LoginController extends Aso_Controller_Action
     public function logoutAction() {
 
         try {
+            $this->_helper->viewRenderer->setNoRender(true);
+            $this->_helper->layout()->disableLayout();
             $ms = new Zend_Session_Namespace(SESSION_NAMESPACE);
             $msg = $this->messageBox("Zostałeś prawidołwo wylogowany(a).","success");
             unset($ms->u_id);

@@ -31,7 +31,7 @@ class IndexController extends Aso_Controller_Action
                 $this->view->page = $page;
                 $this->view->count = $left_rec;
 
-                if (($page * MAX_LIMIT) >= $count[0]['count']) {
+                if (($page * MAX_LIMIT) > $count[0]['count']) {
                     return $this->aso_sendCommand('Coś się zepsuło, albo przekombinowałeś.','warning');
                 }
             }
@@ -49,6 +49,7 @@ class IndexController extends Aso_Controller_Action
             $this->view->render('sidebar.phtml');
             $this->view->render('navigation/index-navigation.phtml');
             return $this->render('index');
+
         } catch(exception $e) {
 //            $this->logError("indexAction() exception: ".$e->getMessage());
             return $this->aso_internalError();
