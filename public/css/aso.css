@@ -1,6 +1,9 @@
 body {
     padding-top: 20px !important;
 }
+p {
+    word-wrap:break-word;
+}
 .box-message {
     position: absolute;
     left:0;

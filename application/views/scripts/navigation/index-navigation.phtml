@@ -1,0 +1,24 @@
+<?php $this->placeholder('navigation')->captureStart() ?>
+<?php if (($this->Recipes) != NULL) : ?>
+    <ul class="pager">
+        <?php
+        $next = $this->page+1;
+        $prev = $this->page-1;
+        ?>
+        <li class="next <?=($this->count <= MAX_LIMIT_INDEX) ? "disabled" : "" ?>">
+            <?php if(($this->count <= MAX_LIMIT_INDEX)) : ?>
+                <a href="#">Starszy Wpisy &#187;</a>
+            <?php else : ?>
+                <a href="<?=$this->baseUrl()?><?=($this->count <= MAX_LIMIT_INDEX) ? null : "/page/$next" ?>">Starzy Wpisy &#187;</a>
+            <?php endif; ?>
+        </li>
+        <li class="previous <?=($this->page <= 0) ? "disabled" : "" ?> ">
+            <?php if(($this->page <= 0)) : ?>
+                <a href="#">&#171; Nowszy Wpisy</a>
+            <?php else : ?>
+                <a href="<?=$this->baseUrl()?><?=($this->page <= 0) ? null : "/page/$prev" ?>">&#171; Nowszy Wpisy</a>
+            <?php endif; ?>
+        </li>
+    </ul>
+<?php endif; ?>
+<?php $this->placeholder('navigation')->captureEnd() ?>

@@ -6,7 +6,7 @@
         $(".read-more").click(function(){
             $(this).button('loading').delay(1000).queue(function() {
                 var url='<?=$this->url(array("controller" => "comments", "action" => "get-comment"),"default",true);?>/id/' + $(this).attr('data-main');
-                $("#"+$(this).attr('name')).load(url);
+                $("#"+$(this).attr('data-target')).load(url);
                 $(this).button('reset');
                 $(this).dequeue();
                 $($(this)).html("");
@@ -36,7 +36,7 @@
                 <p id="box<?=$idBox?>" class="list-group-item-text"><?=$this->restrictText($data_comment['comment'],100)?></p>
                 <?php if (strlen($data_comment['comment']) > 100):?>
                 <p class="pull-right pull<?=$idBox?>">
-                    <button type="button" class="btn<?=$idBox?> btn-link read-more" name="box<?=$idBox?>" data-main="<?=$data_comment['id']?>" data-loading-text="Ładowanie..." >Czytaj całość <span class="glyphicon glyphicon-chevron-right btn-sm"></span></button>
+                    <button type="button" class="btn<?=$idBox?> btn-link read-more" data-target="box<?=$idBox?>" data-main="<?=$data_comment['id']?>" data-loading-text="Ładowanie..." >Czytaj całość <span class="glyphicon glyphicon-chevron-right btn-sm"></span></button>
                     <div style="padding-bottom: 5px"></div>
                 </p>
                 <?php endif; ?>

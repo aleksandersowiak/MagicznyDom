@@ -29,7 +29,10 @@ class CommentsController extends Aso_Controller_Action {
         $params = $request->getParams();
         $id = $params['id'];
         if ($this->getModel('Model_Read')->getCommentData($resultComments,$id)!= FALSE) {
-            echo ($resultComments['result'][0]['comment']);
+            $regex = '#<img([^>]*) src="([^"/]*/?[^".]*\.[^"]*)"([^>]*)>((?!</a>))#';
+            $replace = '<a rel="group" class="fancybox fancy" title="" href="$2">$2</a>';
+            $ret = preg_replace($regex, $replace, $resultComments['result'][0]['comment']);
+            echo ($ret);
         }
         $this->_helper->layout()->disableLayout();
     }

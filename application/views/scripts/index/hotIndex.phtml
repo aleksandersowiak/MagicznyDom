@@ -1,0 +1,33 @@
+<?php $this->placeholder('hotIndex')->captureStart() ?>
+    <?php if ($this->hotIndex != NULL) : ?>
+        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <?php $h = 0;  foreach ($this->hotIndex as $hots) : ?>
+                    <li data-target="#carousel-example-generic" data-slide-to="<?=$h++?>" class="<?=($h == 1) ? "active" : ""?>"></li>
+                <?php endforeach; ?>
+            </ol>
+            <div class="carousel-inner" role="listbox">
+                <?php $h = 0;
+                foreach ($this->hotIndex as $hots_display) :
+                    preg_match_all('/<img.*src=\"(.*)\".*>/iU', $hots_display['recipe'], $images);
+                    if (count($images[0]) > 0) :
+                        $min = 0;
+                        $max = count($images[1]) - 1;
+                        $linkImage[$h] = $images[1][rand ($min ,$max)];
+                    endif;
+                    ?>
+                    <div class="navbar-default item <?=($h == 0) ? "active" : ""?>">
+                        <img data-src="holder.js/auto/auto/#11<?=$h?>:#11<?=$h?>/" alt="" style="max-width:1140px; max-height:500px; min-width:100%; min-height:500px; overflow: hidden; background: url(<?=$linkImage[$h]?>) no-repeat 50% 50%;" data-holder-rendered="true">
+                        <div class="container navbar-default">
+                            <div class="carousel-caption">
+                                <h1><?=$hots_display['title']?></h1>
+                                <p><a class="btn btn-lg btn-primary" href="<?=$this->baseUrl()?>/read/<?=$this->replaceOnLink($hots_display['title'])?>" role="button">Przejdź do wpisu</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    <?php $h++ ?>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    <?php endif; ?>
+<?php $this->placeholder('hotIndex')->captureEnd() ?>
