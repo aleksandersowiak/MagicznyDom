@@ -4,6 +4,13 @@ body {
 p {
     word-wrap:break-word;
 }
+img {
+    vertical-align: middle;
+    border: 0;
+    page-break-inside: avoid;
+    max-width: 100% !important;
+    height: auto;
+}
 .box-message {
     position: absolute;
     left:0;

@@ -1,8 +1,19 @@
 <?php
 class Zend_View_Helper_RestrictText extends Zend_View_Helper_Abstract
 {
-    public function restrictText($string, $length)
+    public function restrictText($string, $length, $simple = false)
     {
+        if ($simple == true){
+            $countText = strlen($string);
+            $table = array('<br>' => ' ', '<br/>' => ' ', '</br>' => ' ', '</li>' => ' ', '</p>' => ' ');
+            if ($countText > $length) {
+                $cut = mb_substr(strip_tags(strtr($string, $table)), 0, $length, 'utf-8');
+                $restrict = ($cut) . "...";
+            } else {
+                $restrict = $string;
+            }
+            return $restrict;
+        }
         if( !empty( $string ) && $length>0 ) {
             $isText = true;
             $ret = "";
@@ -97,14 +108,6 @@ class Zend_View_Helper_RestrictText extends Zend_View_Helper_Abstract
     }
 
     public function simpleRestrictText($text, $count){
-                $countText = strlen($text);
-        $table = array('<br>' => ' ', '<br/>' => ' ', '</br>' => ' ', '</li>' => ' ', '</p>' => ' ');
-        if ($countText > $count) {
-            $cut = mb_substr(strip_tags(strtr($text, $table)), 0, $count, 'utf-8');
-            $restrict = ($cut) . "...";
-        } else {
-            $restrict = $text;
-        }
-        return $restrict;
+
     }
 }
