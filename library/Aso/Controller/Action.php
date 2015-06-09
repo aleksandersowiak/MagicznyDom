@@ -28,6 +28,11 @@ class Aso_Controller_Action extends Zend_Controller_Action
         $this->_model_index = $this->setModel(new Application_Model_Index(), "Model_Index");
         $this->_model_category = $this->setModel(new Application_Model_Category(), "Model_Category");
 
+        $this->view->googleAuthUrl = TBS\Auth\Adapter\Google::getAuthorizationUrl();
+        $this->view->googleAuthUrlOffline = TBS\Auth\Adapter\Google::getAuthorizationUrl(true);
+//        $this->view->facebookAuthUrl = TBS\Auth\Adapter\Facebook::getAuthorizationUrl();
+//        $this->view->twitterAuthUrl = \TBS\Auth\Adapter\Twitter::getAuthorizationUrl();
+
         if ($this->_model_index->getSetings($settings, NULL) == FALSE ) {
             return $this->aso_sendCommand('Wystąpił problem z pobraniem ustawień strony.');
         }
@@ -45,6 +50,8 @@ class Aso_Controller_Action extends Zend_Controller_Action
 
         $form    = new Application_Form_Login();
         $this->view->form = $form;
+//            echo '</pre>';
+//            exit;
 
     }
     public function aso_Redirect($where = null){

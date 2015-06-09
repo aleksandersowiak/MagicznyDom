@@ -12,6 +12,11 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         require_once(APPLICATION_PATH ."/configs/constants.php");
     }
 
+    protected function _initConfig()
+    {
+        Zend_Registry::set('config', $this->getOptions());
+    }
+
     protected function _initRoutes()
     {
         $router = Zend_Controller_Front::getInstance()->getRouter();
@@ -50,6 +55,27 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 //                'action' => 'index'
 //            )
 //        ));
+
+        $route = new Zend_Controller_Router_Route('login/:provider',
+            array(
+                'controller' => 'login',
+                'action' => 'index'
+            ));
+        $router->addRoute('login/:provider', $route);
+
+        $route = new Zend_Controller_Router_Route_Static('public/login',
+            array(
+                'controller' => 'login',
+                'action' => 'index'
+            ));
+        $router->addRoute('login', $route);
+
+        $route = new Zend_Controller_Router_Route_Static('login/logout',
+            array(
+                'controller' => 'login',
+                'action' => 'logout'
+            ));
+        $router->addRoute('logout', $route);
     }
     protected function _initPlaceholders() {
         $this->bootstrap('view');

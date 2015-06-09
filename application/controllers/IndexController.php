@@ -3,12 +3,12 @@ class IndexController extends Aso_Controller_Action
 {
 	public function init() {
         parent::init();
+
     }
  
     public function indexAction()
     {
         try {
-
             $request = $this->getRequest();
             $params = $request->getParams();
 
