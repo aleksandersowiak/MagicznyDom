@@ -66,15 +66,20 @@
                     </form>
                     <ul class="nav navbar-nav">
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?=(isset($ms->u_name)) ? $ms->u_name : 'Konto'?> <span class="caret"></span></a>
+
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?=(isset($ms->u_name)) ? $ms->u_name : 'Konto'?> <span class="caret"></span>
+                                <?php if (isset($ms->u_picture) != '') : ?><img class="img-circle aso-img-menu" src="<?=$ms->u_picture?>" alt="Generic placeholder image" width="20" height="20"> <?php endif; ?>
+                            </a>
                             <ul class="dropdown-menu" role="menu">
-                                <?php if (isset($ms->u_id)) { ?>
-                                    <li><a href="/">Dodaj nowy wpis</a></li>
-                                    <li><a href="/">Ustawienia</a></li>
+                                <?php if (isset($ms->u_id)) : ?>
+                                    <?php if ($ms->u_role == 1) : ?>
+                                        <li><a href="/">Dodaj nowy wpis</a></li>
+                                        <li><a href="/">Ustawienia</a></li>
+                                    <?php endif; ?>
                                     <li><a href="<?=$this->baseUrl()?>/login/logout">Wyloguj</a></li>
-                                <?php }else{ ?>
+                                <?php else: ?>
                                     <li><a href="#" data-toggle="modal" data-target="#login">Zaloguj</a></li>
-                                <?php } ?>
+                                <?php endif; ?>
                             </ul>
                         </li>
                     </ul>
@@ -88,9 +93,7 @@
         <div class="container">
             <?php echo $this->layout()->content ?>
             <?php echo $this->placeholder('sidebar') ?>
-
             <?php echo $this->placeholder('navigation') ?>
-
     </div>
 </div>
 <div class="container">

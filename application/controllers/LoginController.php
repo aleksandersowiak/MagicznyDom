@@ -14,6 +14,8 @@ class LoginController extends Aso_Controller_Action
     public function indexAction(){
         try {
 
+            $ms = new Zend_Session_Namespace(SESSION_NAMESPACE);
+
             $this->_helper->viewRenderer->setNoRender(true);
             $this->_helper->layout()->disableLayout();
 
@@ -68,12 +70,24 @@ class LoginController extends Aso_Controller_Action
                     throw new Zend_Controller_Action_Exception('Login failed');
                 } else {
                     if ($auth->hasIdentity()) {
+
                         foreach ($auth->getIdentity() as $provider){
-                            $ms = new Zend_Session_Namespace(SESSION_NAMESPACE);
+
                             $ms->u_id = $provider->getApi()->getProfile()['id'];
                             $ms->u_name = $provider->getApi()->getProfile()['name'];
+                            $ms->u_given_name = $provider->getApi()->getProfile()['given_name'];
+                            $ms->u_family_name = $provider->getApi()->getProfile()['family_name'];
+                            $ms->u_link = $provider->getApi()->getProfile()['link'];
+                            $ms->u_picture = $provider->getApi()->getProfile()['picture'];
+                            $ms->u_gender = $provider->getApi()->getProfile()['gender'];
+                            $ms->u_locale = $provider->getApi()->getProfile()['locale'];
+                            $ms->u_active = 1;
                             $ms->u_role = 0;
-                            $ms->u_use_id = $provider->getApi()->getProfile()['id'];
+
+                            $login = new Application_Model_Login();
+                            if ($login->checkLogin($provider->getApi()->getProfile()['id']) == FALSE){
+                                $login->addNewGoogleUser($provider->getApi()->getProfile());
+                            }
                         }
                     }
                     $this->_helper->FlashMessenger($msg);
@@ -99,15 +113,22 @@ class LoginController extends Aso_Controller_Action
                     $adapter->setIdentity($this->getRequest()->getPost('email'));
                     $adapter->setCredential($this->getRequest()->getPost('password'));
                     $result = $auth->authenticate($adapter);
-                    $loginRow = $adapter->getResultRowObject(array('id', 'active', 'name'));
+                    $loginRow = $adapter->getResultRowObject(array('id', 'name', 'given_name', 'family_name', 'link', 'picture', 'gender', 'locale', 'active', 'role'));
 
                     if ($loginRow != false) {
                         if ($loginRow->active == 1) {
-                            $ms = new Zend_Session_Namespace(SESSION_NAMESPACE);
+
                             $ms->u_id = $loginRow->id;
                             $ms->u_name = $loginRow->name;
-                            $ms->u_role = 1;
-                            $ms->u_use_id = $loginRow->id;
+                            $ms->u_given_name = $loginRow->given_name;
+                            $ms->u_family_name = $loginRow->family_name;
+                            $ms->u_link = $loginRow->link;
+                            $ms->u_picture = $loginRow->picture;
+                            $ms->u_gender = $loginRow->gender;
+                            $ms->u_locale = $loginRow->locale;
+                            $ms->u_active = $loginRow->active;
+                            $ms->u_role = $loginRow->role;
+
                             $msg = $this->messageBox("Zostałeś zalogowany(a) prawidłowo.", "success");
                         }else {
                             $msg = $this->messageBox("Podany użytkownik nie został aktywowany. Skontaktuj się z administratorem w celu dokończenia aktywacji konta. <a href=\"mailto:aleksander.sowiak@gmail.com\">Pod tym adresem email</a>", "warning");
@@ -139,8 +160,17 @@ class LoginController extends Aso_Controller_Action
 
             unset($ms->u_id);
             unset($ms->u_name);
+            unset($ms->u_given_name);
+            unset($ms->u_family_name);
+            unset($ms->u_link);
+            unset($ms->u_picture);
+            unset($ms->u_gender);
+            unset($ms->u_locale);
+            unset($ms->u_active);
             unset($ms->u_role);
-            unset($ms->u_use_id);
+            unset($ms->u_id);
+            unset($ms->u_name);
+            unset($ms->u_given_name);
 
             $this->_helper->FlashMessenger($msg);
             $this->_redirect('/');
