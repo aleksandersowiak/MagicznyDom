@@ -68,7 +68,7 @@
                         <li class="dropdown">
 
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?=(isset($ms->u_name)) ? $ms->u_name : 'Konto'?> <span class="caret"></span>
-                                <?php if (isset($ms->u_picture) != '') : ?><img class="img-circle aso-img-menu" src="<?=$ms->u_picture?>" alt="Generic placeholder image" width="20" height="20"> <?php endif; ?>
+                                <?php if (isset($ms->u_picture) && $ms->u_picture != '') : ?><img class="img-circle aso-img-menu" src="<?=$ms->u_picture?>" alt="Generic placeholder image" width="20" height="20"> <?php endif; ?>
                             </a>
                             <ul class="dropdown-menu" role="menu">
                                 <?php if (isset($ms->u_id)) : ?>
