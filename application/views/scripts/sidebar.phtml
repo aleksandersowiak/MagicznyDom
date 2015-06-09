@@ -1,21 +1,21 @@
 <?php $this->placeholder('sidebar')->captureStart() ?>
-    <?php if ($this->about  != NULL) : ?>
-        <?php $type = $this->about['data'];
-        $additional_settings = $this->about['additional_settings'];
-        if ($this->isJson($additional_settings)) :
-            $about_data = json_decode($additional_settings, true);  else: ?>
-            <script>
-                $(document).ready( function() {
-                    var url='<?=$this->url(array("controller" => "index", "action" => "turn-off-setting"),"default",true);?>/app/about';
-                    $('body').load(url);
-                });
-            </script>
-        <?php endif; ?>
+<!--    --><?php //if ($this->about  != NULL) : ?>
+<!--        --><?php //$type = $this->about['data'];
+//        $additional_settings = $this->about['additional_settings'];
+//        if ($this->isJson($additional_settings)) :
+//            $about_data = json_decode($additional_settings, true);  else: ?>
+<!--            <script>-->
+<!--                $(document).ready( function() {-->
+<!--                    var url='--><?//=$this->url(array("controller" => "index", "action" => "turn-off-setting"),"default",true);?><!--/app/about';-->
+<!--                    $('body').load(url);-->
+<!--                });-->
+<!--            </script>-->
+<!--        --><?php //endif; ?>
         <div class="sidebar-module sidebar-module-inset blog-sidebar aso-about">
-            <h4><?php if (isset($about_data) != NULL) : echo $about_data['title_about']; else: echo 'Troszeczkę o mnie...'; endif; ?></h4>
-            <p ><?=$this->restrictText($type, 100)?></p>
+<!--            <h4>--><?php //if (isset($about_data) != NULL) : echo $about_data['title_about']; else: echo 'Troszeczkę o mnie...'; endif; ?><!--</h4>-->
+<!--            <p >--><?//=$this->restrictText($type, 100)?><!--</p>-->
         </div>
-    <?php endif; ?>
+<!--    --><?php //endif; ?>
     <?php if (count($this->Category) > 0) : ?>
     <ul class="list-group">
         <?=$this->partialLoop('category/get/get-category.phtml',$this->Category); ?>
@@ -50,6 +50,7 @@
     </script>
     <?php endif; ?>
     <?php if ($this->issCommentToAdd == true) : ?>
+    <?php if ($this->getSession()->u_id != NULL) : ?>
         <script>
             $(document).ready(function() {
                 $('#message-text').summernote(
@@ -72,7 +73,8 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <label for="recipient-name" class="control-label">Nazwa:</label>
-                                <input type="text" class="form-control" id="recipient-name" required="required" >
+                                <input type="text" class="form-control" required="required" readonly value="<?=$this->getSession()->u_name?>">
+                                <input type="hidden" class="form-control" id="recipient-name" required="required" readonly value="<?=$this->getSession()->u_name?>">
                             </div>
                             <div class="form-group">
                                 <label for="message-text" class="control-label">Komentarz:</label>
@@ -115,6 +117,7 @@
                 });
             </script>
         </div>
+        <?php endif; ?>
     <?php endif; ?>
 </div>
 <?php $this->placeholder('sidebar')->captureEnd() ?>

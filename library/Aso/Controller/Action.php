@@ -15,12 +15,13 @@ class Aso_Controller_Action extends Zend_Controller_Action
     private $_model_read = null;
     private $_model_index = null;
     private $_model_category = null;
+    private $_ms = null;
 
 //    private $_trans = null;
 
     public function init() {
-        parent::init();
-
+//        parent::init();
+        $this->_ms = new Zend_Session_Namespace(SESSION_NAMESPACE);
         $messages = $this->_helper->flashMessenger->getMessages();
         if(!empty($messages)) $this->_helper->layout->getView()->message = $messages[0];
 
@@ -54,6 +55,11 @@ class Aso_Controller_Action extends Zend_Controller_Action
 //            exit;
 
     }
+
+    public function getSession(){
+        return $this->_ms;
+    }
+
     public function aso_Redirect($where = null){
 //        $ms = new Zend_Session_Namespace(SESSION_NAMESPACE);
 //        if ($where == null) {

@@ -14,8 +14,7 @@ class LoginController extends Aso_Controller_Action
     public function indexAction(){
         try {
 
-            $ms = new Zend_Session_Namespace(SESSION_NAMESPACE);
-
+           
             $this->_helper->viewRenderer->setNoRender(true);
             $this->_helper->layout()->disableLayout();
 
@@ -73,16 +72,16 @@ class LoginController extends Aso_Controller_Action
 
                         foreach ($auth->getIdentity() as $provider){
 
-                            $ms->u_id = $provider->getApi()->getProfile()['id'];
-                            $ms->u_name = $provider->getApi()->getProfile()['name'];
-                            $ms->u_given_name = $provider->getApi()->getProfile()['given_name'];
-                            $ms->u_family_name = $provider->getApi()->getProfile()['family_name'];
-                            $ms->u_link = $provider->getApi()->getProfile()['link'];
-                            $ms->u_picture = $provider->getApi()->getProfile()['picture'];
-                            $ms->u_gender = $provider->getApi()->getProfile()['gender'];
-                            $ms->u_locale = $provider->getApi()->getProfile()['locale'];
-                            $ms->u_active = 1;
-                            $ms->u_role = 0;
+                            $this->getSession()->u_id = $provider->getApi()->getProfile()['id'];
+                            $this->getSession()->u_name = $provider->getApi()->getProfile()['name'];
+                            $this->getSession()->u_given_name = $provider->getApi()->getProfile()['given_name'];
+                            $this->getSession()->u_family_name = $provider->getApi()->getProfile()['family_name'];
+                            $this->getSession()->u_link = $provider->getApi()->getProfile()['link'];
+                            $this->getSession()->u_picture = $provider->getApi()->getProfile()['picture'];
+                            $this->getSession()->u_gender = $provider->getApi()->getProfile()['gender'];
+                            $this->getSession()->u_locale = $provider->getApi()->getProfile()['locale'];
+                            $this->getSession()->u_active = 1;
+                            $this->getSession()->u_role = 0;
 
                             $login = new Application_Model_Login();
                             if ($login->checkLogin($provider->getApi()->getProfile()['id']) == FALSE){
@@ -118,16 +117,16 @@ class LoginController extends Aso_Controller_Action
                     if ($loginRow != false) {
                         if ($loginRow->active == 1) {
 
-                            $ms->u_id = $loginRow->id;
-                            $ms->u_name = $loginRow->name;
-                            $ms->u_given_name = $loginRow->given_name;
-                            $ms->u_family_name = $loginRow->family_name;
-                            $ms->u_link = $loginRow->link;
-                            $ms->u_picture = $loginRow->picture;
-                            $ms->u_gender = $loginRow->gender;
-                            $ms->u_locale = $loginRow->locale;
-                            $ms->u_active = $loginRow->active;
-                            $ms->u_role = $loginRow->role;
+                            $this->getSession()->u_id = $loginRow->id;
+                            $this->getSession()->u_name = $loginRow->name;
+                            $this->getSession()->u_given_name = $loginRow->given_name;
+                            $this->getSession()->u_family_name = $loginRow->family_name;
+                            $this->getSession()->u_link = $loginRow->link;
+                            $this->getSession()->u_picture = $loginRow->picture;
+                            $this->getSession()->u_gender = $loginRow->gender;
+                            $this->getSession()->u_locale = $loginRow->locale;
+                            $this->getSession()->u_active = $loginRow->active;
+                            $this->getSession()->u_role = $loginRow->role;
 
                             $msg = $this->messageBox("Zostałeś zalogowany(a) prawidłowo.", "success");
                         }else {
@@ -144,7 +143,8 @@ class LoginController extends Aso_Controller_Action
                 'action' =>'index'));
         } catch(exception $e) {
 //            $this->logError("indexAction() exception: ".$e->getMessage());
-            return $this->aso_internalError();
+            $this->_helper->FlashMessenger($this->messageBox($e,'denger'));
+            $this->redirect('/');
         }
     }
 
@@ -153,24 +153,24 @@ class LoginController extends Aso_Controller_Action
         try {
             $this->_helper->viewRenderer->setNoRender(true);
             $this->_helper->layout()->disableLayout();
-            $ms = new Zend_Session_Namespace(SESSION_NAMESPACE);
+
             $msg = $this->messageBox("Zostałeś prawidołwo wylogowany(a).","success");
 
             \TBS\Auth::getInstance()->clearIdentity();
 
-            unset($ms->u_id);
-            unset($ms->u_name);
-            unset($ms->u_given_name);
-            unset($ms->u_family_name);
-            unset($ms->u_link);
-            unset($ms->u_picture);
-            unset($ms->u_gender);
-            unset($ms->u_locale);
-            unset($ms->u_active);
-            unset($ms->u_role);
-            unset($ms->u_id);
-            unset($ms->u_name);
-            unset($ms->u_given_name);
+            unset($this->getSession()->u_id);
+            unset($this->getSession()->u_name);
+            unset($this->getSession()->u_given_name);
+            unset($this->getSession()->u_family_name);
+            unset($this->getSession()->u_link);
+            unset($this->getSession()->u_picture);
+            unset($this->getSession()->u_gender);
+            unset($this->getSession()->u_locale);
+            unset($this->getSession()->u_active);
+            unset($this->getSession()->u_role);
+            unset($this->getSession()->u_id);
+            unset($this->getSession()->u_name);
+            unset($this->getSession()->u_given_name);
 
             $this->_helper->FlashMessenger($msg);
             $this->_redirect('/');

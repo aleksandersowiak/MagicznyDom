@@ -67,11 +67,12 @@ class CommentsController extends Aso_Controller_Action {
         $request = $this->getRequest();
         $params = $request->getParams();
 
-        $name = $params['name'];
-        $message = $params['message'];
-        $id = $params['id'];
+        $data = array('userName' => $params['name'],
+        'comment' => $params['message'],
+        'id_recipe' => $params['id'],
+        'user_id' => $this->getSession()->u_id);
 
-        if ($this->getModel('Model_Read')->insertComment($return, $name, $message, $id)==FALSE){
+        if ($this->getModel('Model_Read')->insertComment($return, $data)==FALSE){
             $this->_helper->redirector('index','index');
             $this->aso_sendCommand('Dodanie nowego komentarza nie powiodło się, błąd...','danger');
         }

@@ -29,8 +29,6 @@
         </div>
     </div>
 <?php endif;?>
-
-<?php $ms = new Zend_Session_Namespace(SESSION_NAMESPACE); ?>
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
         <div class="container">
             <div class="navbar-header">
@@ -66,13 +64,12 @@
                     </form>
                     <ul class="nav navbar-nav">
                         <li class="dropdown">
-
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?=(isset($ms->u_name)) ? $ms->u_name : 'Konto'?> <span class="caret"></span>
-                                <?php if (isset($ms->u_picture) && $ms->u_picture != '') : ?><img class="img-circle aso-img-menu" src="<?=$ms->u_picture?>" alt="Generic placeholder image" width="20" height="20"> <?php endif; ?>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?=(isset($this->getSession()->u_name)) ? $this->getSession()->u_name : 'Konto'?> <span class="caret"></span>
+                                <?php if (isset($this->getSession()->u_picture) && $this->getSession()->u_picture != '') : ?><img class="img-circle aso-img-menu" src="<?=$this->getSession()->u_picture?>" alt="Generic placeholder image" width="20" height="20"> <?php endif; ?>
                             </a>
                             <ul class="dropdown-menu" role="menu">
-                                <?php if (isset($ms->u_id)) : ?>
-                                    <?php if ($ms->u_role == 1) : ?>
+                                <?php if (isset($this->getSession()->u_id)) : ?>
+                                    <?php if ($this->getSession()->u_role == 1) : ?>
                                         <li><a href="/">Dodaj nowy wpis</a></li>
                                         <li><a href="/">Ustawienia</a></li>
                                     <?php endif; ?>

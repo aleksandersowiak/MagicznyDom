@@ -128,17 +128,17 @@ class Application_Model_Read extends Aso_Model
         return $this->aso_return($return, CMD_DB_ERROR_NO_ERROR, $data);
     }
 
-    public function insertComment(&$return, $name = null, $message = null, $id = null){
-        $data = $this->getDataRecipe($id);
-        $id_recipe = $data['id_recipe'];
+    public function insertComment(&$return, $data){
+        $data_id_recipe = $this->getDataRecipe($data['id_recipe']);
+        $id_recipe = $data_id_recipe['id_recipe'];
         $date = Zend_Date::now();
         $timeStamp = gmdate('Y-m-d H:i:s', $date->getTimestamp());
-        $data = array(
+        $_data = array(
             'id_recipe' => $id_recipe,
-            'userName'  => $name,
-            'comment'   => $message,
             'created'   => $timeStamp
         );
+      $data = array_replace($data, $_data);
+
         $this->_db->insert('comments', $data);
         return $this->aso_return($return, CMD_DB_ERROR_NO_ERROR, $data);
     }
