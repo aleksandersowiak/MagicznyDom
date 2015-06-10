@@ -45,7 +45,7 @@
     </script>
     <?php endif; ?>
     <?php if ($this->issCommentToAdd == true) : ?>
-    <?php if ($this->id != NULL) : ?>
+    <?php if ($this->u_id != NULL) : ?>
         <script>
             $(document).ready(function() {
                 $('#message-text').summernote(
@@ -68,8 +68,8 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <label for="recipient-name" class="control-label">Nazwa:</label>
-                                <input type="text" class="form-control" required="required" readonly value="<?=$this->name?>">
-                                <input type="hidden" class="form-control" id="recipient-name" required="required" readonly value="<?=$this->name?>">
+                                <input type="text" class="form-control" required="required" readonly value="<?=$this->u_name?>">
+                                <input type="hidden" class="form-control" id="recipient-name" required="required" readonly value="<?=$this->u_name?>">
                             </div>
                             <div class="form-group">
                                 <label for="message-text" class="control-label">Komentarz:</label>

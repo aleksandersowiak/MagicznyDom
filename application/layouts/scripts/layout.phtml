@@ -64,12 +64,12 @@
                 </form>
                 <ul class="nav navbar-nav">
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?=(isset($this->name)) ? $this->name : 'Konto'?> <span class="caret"></span>
-                            <?php if (isset($this->picture) && $this->picture != '') : ?><img class="img-circle aso-img-menu" src="<?=$this->picture?>" alt="Generic placeholder image" width="20" height="20"> <?php endif; ?>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?=(isset($this->u_name)) ? $this->u_name : 'Konto'?> <span class="caret"></span>
+                            <?php if (isset($this->u_picture) && $this->u_picture != '') : ?><img class="img-circle aso-img-menu" src="<?=$this->u_picture?>" alt="Generic placeholder image" width="20" height="20"> <?php endif; ?>
                         </a>
                         <ul class="dropdown-menu" role="menu">
-                            <?php if (isset($this->id)) : ?>
-                                <?php if ($this->role == 1) : ?>
+                            <?php if (isset($this->u_id)) : ?>
+                                <?php if ($this->u_role == 1) : ?>
                                     <li><a href="/">Dodaj nowy wpis</a></li>
                                     <li><a href="/">Ustawienia</a></li>
                                 <?php endif; ?>

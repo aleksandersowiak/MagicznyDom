@@ -34,7 +34,8 @@ class Aso_Controller_Action extends Zend_Controller_Action
         if (isset($this->_ms->u_id)) {
            $user_data = $this->_model_login->getUserData($this->_ms->u_id);
             foreach($user_data[0] as $key => $value) {
-                $this->view->$key = $value;
+                $view_key = 'u_'.$key;
+                $this->view->$view_key = $value;
             }
         }
 
