@@ -14,7 +14,7 @@
 <?php if(isset($this->message)) :?>
     <?php $message = $this->message; ?>
     <?php   if (isset($message["message"])) { $text   = $message["message"]; }else{ $text   = ''; };
-            if (isset($message["style"])) { $style   = $message["style"]; }else{ $style   = ''; };
+    if (isset($message["style"])) { $style   = $message["style"]; }else{ $style   = ''; };
     ?>
     <script>
         $(document).ready(function(){
@@ -29,61 +29,61 @@
         </div>
     </div>
 <?php endif;?>
-    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="<?=$this->baseUrl()?>"><?=$this->web_title['data']?></a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a href="<?=$this->baseUrl()?>">Główna</a></li>
-                    <?php if(!empty($this->Category)) : ?>
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="<?=$this->baseUrl()?>"><?=$this->web_title['data']?></a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="<?=$this->baseUrl()?>">Główna</a></li>
+                <?php if(!empty($this->Category)) : ?>
                     <li class="dropdown">
                         <a href="<?=$this->baseUrl()?>/category" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">Kategorie <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             <?=$this->partialLoop('index/menu-category.phtml',$this->Category); ?>
                         </ul>
                     </li>
-                    <?php endif; ?>
-                    <?php if ($this->about == TRUE) { ?>
+                <?php endif; ?>
+                <?php if ($this->about == TRUE) { ?>
                     <li><a href="<?=$this->baseUrl()?>/about">O mnie</a> </li>
-                    <?php } ?>
-                </ul>
-                <div class="nav navbar-nav navbar-right">
-                    <form class="navbar-form navbar-left" role="search">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Wpisz szukane słowa...">
-                        </div>
-                        <button type="submit" class="btn btn-default">Szukaj</button>
-                    </form>
-                    <ul class="nav navbar-nav">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?=(isset($this->getSession()->u_name)) ? $this->getSession()->u_name : 'Konto'?> <span class="caret"></span>
-                                <?php if (isset($this->getSession()->u_picture) && $this->getSession()->u_picture != '') : ?><img class="img-circle aso-img-menu" src="<?=$this->getSession()->u_picture?>" alt="Generic placeholder image" width="20" height="20"> <?php endif; ?>
-                            </a>
-                            <ul class="dropdown-menu" role="menu">
-                                <?php if (isset($this->getSession()->u_id)) : ?>
-                                    <?php if ($this->getSession()->u_role == 1) : ?>
-                                        <li><a href="/">Dodaj nowy wpis</a></li>
-                                        <li><a href="/">Ustawienia</a></li>
-                                    <?php endif; ?>
-                                    <li><a href="<?=$this->baseUrl()?>/login/logout">Wyloguj</a></li>
-                                <?php else: ?>
-                                    <li><a href="#" data-toggle="modal" data-target="#login">Zaloguj</a></li>
+                <?php } ?>
+            </ul>
+            <div class="nav navbar-nav navbar-right">
+                <form class="navbar-form navbar-left" role="search">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Wpisz szukane słowa...">
+                    </div>
+                    <button type="submit" class="btn btn-default">Szukaj</button>
+                </form>
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?=(isset($this->getSession()->u_name)) ? $this->getSession()->u_name : 'Konto'?> <span class="caret"></span>
+                            <?php if (isset($this->picture) && $this->picture != '') : ?><img class="img-circle aso-img-menu" src="<?=$this->picture?>" alt="Generic placeholder image" width="20" height="20"> <?php endif; ?>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <?php if (isset($this->getSession()->u_id)) : ?>
+                                <?php if ($this->getSession()->u_role == 1) : ?>
+                                    <li><a href="/">Dodaj nowy wpis</a></li>
+                                    <li><a href="/">Ustawienia</a></li>
                                 <?php endif; ?>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </div><!--/.nav-collapse -->
-        </div>
-    </nav>
+                                <li><a href="<?=$this->baseUrl()?>/login/logout">Wyloguj</a></li>
+                            <?php else: ?>
+                                <li><a href="#" data-toggle="modal" data-target="#login">Zaloguj</a></li>
+                            <?php endif; ?>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
 <?php echo $this->placeholder('hotIndex') ?>
 <div class="container theme-showcase" role="main">
     <div class="row">
@@ -91,6 +91,7 @@
             <?php echo $this->layout()->content ?>
             <?php echo $this->placeholder('sidebar') ?>
             <?php echo $this->placeholder('navigation') ?>
+        </div>
     </div>
 </div>
 <div class="container">

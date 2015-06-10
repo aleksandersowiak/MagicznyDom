@@ -1,5 +1,6 @@
 <?php $this->placeholder('hotIndex')->captureStart() ?>
     <?php if ($this->hotIndex != NULL) : ?>
+    <div class="container aso-container">
         <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
                 <?php $h = 0;  foreach ($this->hotIndex as $hots) : ?>
@@ -30,5 +31,6 @@
                 <?php endforeach; ?>
             </div>
         </div>
+    </div>
     <?php endif; ?>
 <?php $this->placeholder('hotIndex')->captureEnd() ?>

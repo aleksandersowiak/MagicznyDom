@@ -60,21 +60,27 @@ class CommentsController extends Aso_Controller_Action {
     }
 
     public function addcommentAction(){
+        try{
+            $this->_helper->viewRenderer->setNoRender(true);
+            $this->_helper->layout()->disableLayout();
 
-        $this->_helper->viewRenderer->setNoRender(true);
-        $this->_helper->layout()->disableLayout();
+            $request = $this->getRequest();
+            $params = $request->getParams();
 
-        $request = $this->getRequest();
-        $params = $request->getParams();
+            $data = array('userName' => $params['name'],
+            'comment' => $params['message'],
+            'id_recipe' => $params['id'],
+            'user_id' => $this->getSession()->u_id);
 
-        $data = array('userName' => $params['name'],
-        'comment' => $params['message'],
-        'id_recipe' => $params['id'],
-        'user_id' => $this->getSession()->u_id);
-
-        if ($this->getModel('Model_Read')->insertComment($return, $data)==FALSE){
-            $this->_helper->redirector('index','index');
-            $this->aso_sendCommand('Dodanie nowego komentarza nie powiodło się, błąd...','danger');
+            if ($this->getModel('Model_Read')->insertComment($return, $data)==FALSE){
+                $this->_helper->redirector('index','index');
+                $this->aso_sendCommand('Dodanie nowego komentarza nie powiodło się, błąd...','danger');
+            }
+        } catch(exception $e) {
+        //            $this->logError("indexAction() exception: ".$e->getMessage());
+            $this->_helper->FlashMessenger($this->messageBox($e,'danger'));
+            $this->redirect('/');
         }
     }
+
 }

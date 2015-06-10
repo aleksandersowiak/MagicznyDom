@@ -26,7 +26,7 @@ class Application_Model_Category extends Aso_Model {
         if (isset($category) != NULL){
             $select_recipe_from_category = $this->_db   ->select()
                                                         ->from(array('r' => 'recipe'))
-                                                        ->where('category LIKE ?', $category);
+                                                        ->where('category LIKE ?', $category)->where('`r`.`active` = 1');
             $result = $this->getAdapter()->fetchAll($select_recipe_from_category);
         }
         if ($this->aso_hasResult($result) == false) {
@@ -51,8 +51,9 @@ class Application_Model_Category extends Aso_Model {
         }
         $select_one_tag = $this->_db->select()
                                     ->from(array('t'=>'tags'))
-                                    ->where('tags LIKE "' . $_tag . '"')
-                                    ->joinInner(array('r' => 'recipe'),'`t`.`id_recipe` = `r`.`id`');
+                                    ->where('`t`.`tags` LIKE "' . $_tag . '"')
+                                    ->joinInner(array('r' => 'recipe'),'`t`.`id_recipe` = `r`.`id`')->where('`r`.`active` = 1');
+
         $result_one_tag = $this->getAdapter()->fetchAll($select_one_tag);
         foreach ($result_one_tag as $recipe_by_tag) {
 

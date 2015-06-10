@@ -1,3 +1,4 @@
+<div class="container theme-showcase" role="main">
     <div class="col-sm-8 blog-main">
         <?php if ($this->Category != NULL) : ?>
         <div class="row">
@@ -15,14 +16,16 @@
             <?=$this->partialLoop('category/get/get-category.phtml',$this->Category); ?>
         </ul>
     <?php else: ?>
-        <div class="alert alert-info" role="alert">
-            <p>Nie znaleniono żadnych kategori.</p>
-            <?php if ($this->facebook['data'] != null) : ?>
-                <p>Zapraszamy później, bądź na naszego Facebook'a.</p>
-            <?php endif; ?>
+        <div class="row">
+            <div class="alert alert-info" role="alert">
+                <p>Nie znaleniono żadnych kategori.</p>
+                <?php if ($this->facebook['data'] != null) : ?>
+                    <p>Zapraszamy później, bądź na naszego Facebook'a.</p>
+                <?php endif; ?>
+            </div>
+            <?=$this->render('facebook.phtml'); ?>
         </div>
-        <?=$this->render('facebook.phtml'); ?>
     <?php endif; ?>
     </div>
-
+</div>
 

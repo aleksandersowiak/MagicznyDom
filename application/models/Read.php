@@ -12,7 +12,7 @@ class Application_Model_Read extends Aso_Model
 
         $this->_helper = new Zend_View_Helper_ReplaceOnLink();
         $select = $this->_db->select()
-                            ->from('recipe');
+                            ->from('recipe')->where('`active` = 1');
         $result_recipe = $this->getAdapter()->fetchAll($select);
         foreach ($result_recipe as $recipe){
             if ($params == $this->_helper->replaceOnLink($recipe['title'])) {
@@ -52,7 +52,7 @@ class Application_Model_Read extends Aso_Model
             $select_reciped_tags = $this->_db   ->select()
                                                 ->from(array('r' => 'recipe'))
                                                 ->where($where)
-                                                ->joinInner(array('t' => 'tags'),'`r`.`id` = `t`.`id_recipe`');
+                                                ->joinInner(array('t' => 'tags'),'`r`.`id` = `t`.`id_recipe`')->where('`r`.`active` = 1');
             $result = $this->getAdapter()->fetchAll($select_recipe);
             $result_tags = $this->getAdapter()->fetchAll($select_reciped_tags);
 

@@ -11,16 +11,11 @@
 <!--                });-->
 <!--            </script>-->
 <!--        --><?php //endif; ?>
-        <div class="sidebar-module sidebar-module-inset blog-sidebar aso-about">
+<!--        <div class="sidebar-module sidebar-module-inset blog-sidebar aso-about">-->
 <!--            <h4>--><?php //if (isset($about_data) != NULL) : echo $about_data['title_about']; else: echo 'Troszeczkę o mnie...'; endif; ?><!--</h4>-->
 <!--            <p >--><?//=$this->restrictText($type, 100)?><!--</p>-->
-        </div>
+<!--        </div>-->
 <!--    --><?php //endif; ?>
-    <?php if (count($this->Category) > 0) : ?>
-    <ul class="list-group">
-        <?=$this->partialLoop('category/get/get-category.phtml',$this->Category); ?>
-    </ul>
-    <?php endif; ?>
     <?php if ($this->commentsCount > 0) : ?>
     <h2>
        <span class="glyphicon glyphicon-comment btn-lg"></span>Komentarze
@@ -119,5 +114,15 @@
         </div>
         <?php endif; ?>
     <?php endif; ?>
+<?php if (count($this->Category) > 0) : ?>
+    <div>
+        <h2>
+            <span class="glyphicon glyphicon glyphicon-th-list btn-lg"></span>Kategorie
+        </h2>
+    <ul class="list-group">
+        <?=$this->partialLoop('category/get/get-category.phtml',$this->Category); ?>
+    </ul>
+    </div>
+<?php endif; ?>
 </div>
 <?php $this->placeholder('sidebar')->captureEnd() ?>

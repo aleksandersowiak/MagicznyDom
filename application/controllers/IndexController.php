@@ -51,8 +51,8 @@ class IndexController extends Aso_Controller_Action
             return $this->render('index');
 
         } catch(exception $e) {
-//            $this->logError("indexAction() exception: ".$e->getMessage());
-            return $this->aso_internalError();
+            $this->_helper->FlashMessenger($this->messageBox($e,'danger'));
+            $this->redirect('/');
         }
     }
 

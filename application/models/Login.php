@@ -1,12 +1,13 @@
 <?php
 class Application_Model_Login extends Aso_Model {
 
-    public function checkLogin($id = null){
-        echo $select_count = $this->_db  ->select()
-            ->from(array('u' => 'user'))
+    public function getUserData($id = null){
+        $select_count = $this->_db  ->select()
+            ->from(array('u' => 'user'), array('id', 'name', 'given_name', 'family_name', 'link', 'picture', 'gender', 'locale', 'active', 'role', 'email'))
             ->where('`u`.`id` LIKE ?', $id);
         $result = $this->getAdapter()->fetchAll($select_count);
-        if ($result) { return true; }else{ return false; }
+
+        if ($result) { return $result; }else{ return false; }
     }
 
     public function addNewGoogleUser($array = array()){

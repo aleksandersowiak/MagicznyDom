@@ -24,7 +24,8 @@ class Application_Model_Index extends Aso_Model {
         $select = $this->_db    ->select()
                                 ->from('recipe')
                                 ->limit($limit, $offset)
-                                ->order($order.' '.$sort);
+                                ->order($order.' '.$sort)
+            ->where('`active` = 1');
         $result = $this->getAdapter()->fetchAll($select);
         return $this->aso_return($return, CMD_DB_ERROR_NO_ERROR, $result);
     }
@@ -34,6 +35,7 @@ class Application_Model_Index extends Aso_Model {
                                     ->from( array(  'r' => 'recipe'),
                                             array(  'category',
                                                     'category_count' => 'COUNT(`category`)'))
+            ->where('`r`.`active` = 1')
                                     ->group('category');
 
         $result = $this->getAdapter()->fetchAll($select_count);
@@ -43,7 +45,7 @@ class Application_Model_Index extends Aso_Model {
     public function getCount(&$result){
         $count = $this->_db->select()
             ->from(array('r'=>'recipe'), array ('count' => 'COUNT(`recipe`)'))
-            ->group('autor_id');
+            ->group('autor_id')->where('`r`.`active` = 1');
         $recipe_per_gage = $this->_db->select()
             ->from('setings')
             ->where('`type` LIKE "max_limit"');
