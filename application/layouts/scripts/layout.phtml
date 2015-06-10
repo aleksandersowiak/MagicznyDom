@@ -64,12 +64,12 @@
                 </form>
                 <ul class="nav navbar-nav">
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?=(isset($this->getSession()->u_name)) ? $this->getSession()->u_name : 'Konto'?> <span class="caret"></span>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?=(isset($this->name)) ? $this->name : 'Konto'?> <span class="caret"></span>
                             <?php if (isset($this->picture) && $this->picture != '') : ?><img class="img-circle aso-img-menu" src="<?=$this->picture?>" alt="Generic placeholder image" width="20" height="20"> <?php endif; ?>
                         </a>
                         <ul class="dropdown-menu" role="menu">
-                            <?php if (isset($this->getSession()->u_id)) : ?>
-                                <?php if ($this->getSession()->u_role == 1) : ?>
+                            <?php if (isset($this->id)) : ?>
+                                <?php if ($this->role == 1) : ?>
                                     <li><a href="/">Dodaj nowy wpis</a></li>
                                     <li><a href="/">Ustawienia</a></li>
                                 <?php endif; ?>
@@ -99,7 +99,8 @@
     <footer>
         <p class="pull-right"><a href="#">&#8593; Wróć na Górę.</a></p>
         <p><?=$this->web_title['data']?> &#8226; <a href="#">Privacy</a> &#8226; <a href="#">Terms</a></p>
-        <p class="pull-right">ver. <?=APP_VER?>-2014</p>
+        <p class="pull-right">&nbsp;ver. <?=APP_VER?>-2014 </p>
+        <p class="pull-right"><?=(APPLICATION_ENV == 'development') ? APPLICATION_ENV : ''?></p>
     </footer>
 </div>
 </body>

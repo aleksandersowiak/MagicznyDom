@@ -66,6 +66,7 @@ class LoginController extends Aso_Controller_Action
                     throw new Zend_Controller_Action_Exception('Login failed');
                 } else {
                     if ($auth->hasIdentity()) {
+
                         foreach ($auth->getIdentity() as $provider){
 
                             $this->getSession()->u_id = $provider->getApi()->getProfile()['id'];

@@ -11,6 +11,7 @@ img {
     max-width: 100% !important;
     height: auto;
 }
+
 .box-message {
     position: absolute;
     left:0;
@@ -273,4 +274,7 @@ a.site-wrapper:hover {
 .aso-img-menu {
     padding:0 !important;
     position: relative;
+}
+.tokenfield .token {
+    margin:0 !important;
 }

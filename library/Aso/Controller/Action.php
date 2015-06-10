@@ -16,6 +16,7 @@ class Aso_Controller_Action extends Zend_Controller_Action
     private $_model_index = null;
     private $_model_category = null;
     private $_ms = null;
+    private $_model_login = null;
 
 //    private $_trans = null;
 
@@ -28,6 +29,14 @@ class Aso_Controller_Action extends Zend_Controller_Action
         $this->_model_read = $this->setModel(new Application_Model_Read(), "Model_Read");
         $this->_model_index = $this->setModel(new Application_Model_Index(), "Model_Index");
         $this->_model_category = $this->setModel(new Application_Model_Category(), "Model_Category");
+        $this->_model_login = $this->setModel(new Application_Model_Login(), "Model_Login");
+
+        if (isset($this->_ms->u_id)) {
+           $user_data = $this->_model_login->getUserData($this->_ms->u_id);
+            foreach($user_data[0] as $key => $value) {
+                $this->view->$key = $value;
+            }
+        }
 
         $this->view->googleAuthUrl = TBS\Auth\Adapter\Google::getAuthorizationUrl();
         $this->view->googleAuthUrlOffline = TBS\Auth\Adapter\Google::getAuthorizationUrl(true);
