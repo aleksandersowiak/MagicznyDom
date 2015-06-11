@@ -13,7 +13,7 @@ img {
 }
 
 .box-message {
-    position: absolute;
+    position: fixed;
     left:0;
     right:0;
     margin-left:auto;
@@ -40,7 +40,9 @@ img {
     /*border-bottom: 1px solid #ddd;*/
     margin-bottom: 5px ;
 }
-
+.message-box-error {
+    border-color: red;
+}
 .aso-container {
     margin-top:50px;
 }
@@ -276,5 +278,5 @@ a.site-wrapper:hover {
     position: relative;
 }
 .tokenfield .token {
-    margin:0 !important;
+    margin:0 5px 0 5px !important;
 }

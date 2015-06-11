@@ -41,8 +41,9 @@
                 var url='<?=$this->url(array("controller" => "comments", "action" => "getComments"),"default",true);?>/id/<?=$this->replaceOnLink($this->title)?>/page/'+page;
                 $("#output").load(url);
             }
-        });
+        }, <?=($this->per_page)?>);
     </script>
+
     <?php endif; ?>
     <?php if ($this->issCommentToAdd == true) : ?>
     <?php if ($this->u_id != NULL) : ?>
@@ -69,11 +70,11 @@
                             <div class="form-group">
                                 <label for="recipient-name" class="control-label">Nazwa:</label>
                                 <input type="text" class="form-control" required="required" readonly value="<?=$this->u_name?>">
-                                <input type="hidden" class="form-control" id="recipient-name" required="required" readonly value="<?=$this->u_name?>">
+                                <input type="hidden" class="form-control" id="recipient-name" required="required" value="<?=$this->u_name?>">
                             </div>
                             <div class="form-group">
                                 <label for="message-text" class="control-label">Komentarz:</label>
-                                <textarea class="form-control" id="message-text" name="message-text" required="required"></textarea>
+                                <textarea class="form-control" id="message-text" name="message-text" required="required" ></textarea>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -90,7 +91,19 @@
                         name = $form.find( "input[id='recipient-name']" ).val(),
                         message = $form.find( "textarea[id='message-text']" ).code(),
                         id = '<?=$this->replaceOnLink($this->title)?>',
-                        url = $form.attr( "action" );
+                        url = $form.attr( "action" )
+                    <?php if(!isset($this->u_name) && $this->u_name == '') : ?>
+                        $( "input[id='recipient-name']" ).val('');
+                    <?php endif; ?>
+                    if (message == '' || message == '<p><br></p>' ) {
+                        $("label[for='message-text']").prepend(
+                            '<div class="alert-danger" role="alert">'+
+                            'Pole komentarza jest wymagane, i nie może być pozostawione puste.'+
+                            '</div>');
+                        $(".alert-danger").delay(5000).fadeTo("slow",0);
+                        $(".alert-danger").hide(0);
+                        return;
+                    }
                     $.post( url, { name: name, message: message, id: id} );
                     $('#add-new-comment').modal('hide');
                     $('body').prepend(' <div class="box-message">'+
@@ -105,10 +118,11 @@
                     $(".alert-success").hide(0);
                     $(".alert-warning").delay(7000).fadeTo("slow",0);
                     $(".alert-warning").hide(0);
-                    $( "input[id='recipient-name']" ).val('');
-                    $( "textarea[id='message-text']" ).val('');
+
                     var url='<?=$this->url(array("controller" => "comments", "action" => "getComments"),"default",true);?>/id/<?=$this->replaceOnLink($this->title)?>/page/1'
                     $("#output").load(url);
+                    $( "textarea[id='message-text']" ).val('');
+                    $("div[class='note-editable']").empty();
                 });
             </script>
         </div>

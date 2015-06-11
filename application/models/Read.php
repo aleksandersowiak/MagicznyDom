@@ -70,15 +70,22 @@ class Application_Model_Read extends Aso_Model
         return $this->aso_return($return, CMD_DB_ERROR_NO_ERROR, $result);
     }
 
+    public  function perPage(){
+        return $this->getAdapter()->fetchOne($this->_db->select()
+            ->from(array('s' => 'setings'), 'data')
+            ->where('`type` LIKE "com_per_page"'));
+    }
     public function getComments(&$return, $params, $page = 1){
         $data = $this->getDataRecipe($params);
         $id_recipe = $data['id_recipe'];
-        $start_from = ($page-1) * 10;
+        $per_page = $this->perPage();
+        $start_from = ($page-1) * $per_page;
         $select_comment = $this->_db->select()
                                     ->from('comments')
                                     ->where('id_recipe LIKE ?', $id_recipe)
                                     ->where('moderate != FALSE')
-                                    ->limit(10,$start_from)
+//        here is checking settings from database to get how comment should be displayed on page
+                                    ->limit($per_page,$start_from)
                                     ->order('created DESC');
 
         $select_count =  $this->_db  ->select()
@@ -89,7 +96,8 @@ class Application_Model_Read extends Aso_Model
         ;
 
         $result = array('comments'  => $this->getAdapter()->fetchAll($select_comment),
-                        'count'     => $this->getAdapter()->fetchAll($select_count));
+                        'count'     => $this->getAdapter()->fetchAll($select_count),
+                        'per_page'  => $per_page);
 
         return $this->aso_return($return, CMD_DB_ERROR_NO_ERROR, $result);
     }
@@ -105,7 +113,7 @@ class Application_Model_Read extends Aso_Model
         ;
 
         $result = $this->getAdapter()->fetchAll($select_comment);
-
+        $result['per_page'] = $this->perPage();
         return $this->aso_return($return, CMD_DB_ERROR_NO_ERROR, $result);
     }
 

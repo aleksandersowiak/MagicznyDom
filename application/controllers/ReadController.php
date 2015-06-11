@@ -43,6 +43,7 @@ class ReadController extends Aso_Controller_Action
 
             if ($this->getModel("Model_Read")->getCountComments($resultCount, $params['id'])!= FALSE) {
                 $this->view->commentsCount = $resultCount['result'][0]['comments_count'];
+                $this->view->per_page = $resultCount['result']['per_page'];
             }
 
             $this->view->issCommentToAdd = true;

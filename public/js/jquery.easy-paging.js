@@ -8,7 +8,7 @@
 
 (function($) {
 
-    $["fn"]["easyPaging"] = function(num, o) {
+    $["fn"]["easyPaging"] = function(num, o, per_page) {
 
         if (!$["fn"]["paging"]) {
             return this;
@@ -16,7 +16,7 @@
 
         // Normal Paging config
         var opts = {
-            "perpage": 10,
+            "perpage": per_page,
             "elements": 0,
             "page": 1,
             "format": "",
