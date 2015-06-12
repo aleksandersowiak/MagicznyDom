@@ -71,9 +71,10 @@ class Application_Model_Read extends Aso_Model
     }
 
     public  function perPage(){
-        return $this->getAdapter()->fetchOne($this->_db->select()
+        $per_page = $this->getAdapter()->fetchOne($this->_db->select()
             ->from(array('s' => 'setings'), 'data')
             ->where('`type` LIKE "com_per_page"'));
+        return ($per_page != false) ? $per_page : COM_PER_PAGE;
     }
     public function getComments(&$return, $params, $page = 1){
         $data = $this->getDataRecipe($params);
@@ -81,14 +82,23 @@ class Application_Model_Read extends Aso_Model
         $per_page = $this->perPage();
         $start_from = ($page-1) * $per_page;
         $select_comment = $this->_db->select()
-                                    ->from('comments')
-                                    ->where('id_recipe LIKE ?', $id_recipe)
-                                    ->where('moderate != FALSE')
-//        here is checking settings from database to get how comment should be displayed on page
+                                    ->from(array('c' => 'comments'))
+                                    ->joinInner(array(  'u' => 'user'),
+                                                        '`c`.user_id = `u`.id' ,
+                                                        array('name',
+                                                            'given_name',
+                                                            'family_name',
+                                                            'link',
+                                                            'picture',
+                                                            'gender',
+                                                            'locale',
+                                                            'email'))
+                                    ->where('`c`.id_recipe LIKE ?', $id_recipe)
+                                    ->where('`c`.moderate != FALSE')
                                     ->limit($per_page,$start_from)
-                                    ->order('created DESC');
+                                    ->order('c.created DESC');
 
-        $select_count =  $this->_db  ->select()
+        $select_count =  $this->_db ->select()
                                     ->from( array('c' => 'comments'),
                                             array('comments_count' => 'COUNT(`id`)'))
                                     ->where('id_recipe LIKE ?', $id_recipe)

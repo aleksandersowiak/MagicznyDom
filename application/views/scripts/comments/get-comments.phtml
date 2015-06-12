@@ -21,13 +21,23 @@
         var url='<?=$this->url(array("controller" => "comments", "action" => "vote"),"default",true);?>/minus/' + $(this).attr('data-main');
         $("#"+$(this).attr('id')+" .small").load(url);
     });
+
+    $(document).ready(function(){
+        $('[data-toggle="popover"]').popover({ html : true, delay: { "show": 500, "hide": 100 }});
+
+    });
 </script>
 <div class="list-group">
+
     <?php if ($this->comments != null) : ?>
         <?php $idBox = 0; ?>
         <?php foreach ($this->comments as $data_comment) : ?>
             <div class="well">
-                <h4 class="list-group-item-heading"><?=$data_comment['userName']?>
+                <h4 class="list-group-item-heading"><span data-placement="left" data-toggle="popover" data-trigger="click" data-content='<div class="row">
+  <div class="col-md-8">.col-md-8</div>
+  <div class="col-md-4">.col-md-4</div>
+</div>' data-title="<?=$data_comment['userName']?>"><?=$data_comment['userName']?></span>
+                    <?php if (isset($data_comment['picture']) && $data_comment['picture'] != '') : ?><img class="img-circle aso-img-menu" src="<?=$data_comment['picture']?>" width="20" height="20"> <?php endif; ?>
                 <p class="pull-right btn-sm">
                     <span class="glyphicon glyphicon-thumbs-up vote-plus" id="plus<?=$idBox?>" data-main="<?=$data_comment['id']?>" style="color: forestgreen"><span class="small" style="color: forestgreen"><?=$data_comment['plus']?></span></span>
                     <span class="glyphicon glyphicon-thumbs-down vote-minus" id="minus<?=$idBox?>" data-main="<?=$data_comment['id']?>" style="color: red"><span class="small" style="color: red"><?=$data_comment['minus']?></span></span>

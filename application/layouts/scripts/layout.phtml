@@ -100,7 +100,7 @@
         <p class="pull-right"><a href="#">&#8593; Wróć na Górę.</a></p>
         <p><?=$this->web_title['data']?> &#8226; <a href="#">Privacy</a> &#8226; <a href="#">Terms</a></p>
         <p class="pull-right">&nbsp;ver. <?=APP_VER?>-2014 </p>
-        <p class="pull-right"><?=(APPLICATION_ENV == 'development') ? APPLICATION_ENV : ''?></p>
+        <?=(APPLICATION_ENV == '<p class="pull-right">development</p>') ? APPLICATION_ENV : ''?>
     </footer>
 </div>
 </body>
