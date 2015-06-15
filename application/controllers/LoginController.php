@@ -58,7 +58,6 @@ class LoginController extends Aso_Controller_Action
                             $msg = $this->messageBox("Google login failed. <b>".$this->_getParam('error')."</b>","danger");
                         }
                         break;
-
                 }
                 // What to do when invalid
                 if (isset($result) && !$result->isValid()) {
@@ -66,21 +65,36 @@ class LoginController extends Aso_Controller_Action
                     throw new Zend_Controller_Action_Exception('Login failed');
                 } else {
                     if ($auth->hasIdentity()) {
-
+                        $login = new Application_Model_Login();
                         foreach ($auth->getIdentity() as $provider){
+                            if ($login->getUserData(null, $provider->getApi()->getProfile()) == TRUE) {
+                                $this->getSession()->u_id = $provider->getApi()->getProfile()['id'];
+                                $this->getSession()->u_name = $provider->getApi()->getProfile()['name'];
+                                $this->getSession()->u_active = 1;
+//                                role 0 becouse, google user can not modify pages
+                                $this->getSession()->u_role = 0;
+                                $msg = $this->messageBox("Zostałeś zalogowany(a) prawidłowo.<br>Używając konta Google", "success");
+                            }else{
 
-                            $this->getSession()->u_id = $provider->getApi()->getProfile()['id'];
-                            $this->getSession()->u_name = $provider->getApi()->getProfile()['name'];
-                            $this->getSession()->u_active = 1;
-                            $this->getSession()->u_role = 0;
-
-                            $login = new Application_Model_Login();
-                            if ($login->getUserData($provider->getApi()->getProfile()['id']) == FALSE){
-                                $login->addNewGoogleUser($provider->getApi()->getProfile());
+                                if ($login->getUserData(null, array('email' => $provider->getApi()->getProfile()['email'])) == TRUE) {
+                                    $msg = $this->messageBox("Przy próbie zalogowania za pomocą konta Google.<br>Wykryto że adres email<br><b><ul><li>".$provider->getApi()->getProfile()['email']."</li></ul></b><br>jest przypisany do innego konta.", "danger");
+                                }else{
+                                    if ($login->getUserData($provider->getApi()->getProfile()['id'], array('email' => $provider->getApi()->getProfile()['email'])) == FALSE) {
+                                        $login->addNewGoogleUser($provider->getApi()->getProfile());
+                                    }
+                                    $this->getSession()->u_id = $provider->getApi()->getProfile()['id'];
+                                    $this->getSession()->u_name = $provider->getApi()->getProfile()['name'];
+                                    $this->getSession()->u_active = 1;
+                                    $this->getSession()->u_role = 0;
+                                    $msg = $this->messageBox("Zostałeś zalogowany(a) prawidłowo.<br>Używając konta Google", "success");
+                                }
                             }
                         }
+                        $this->_helper->FlashMessenger($msg);
+                        $this->_redirect(($this->getRequest()->getPost('redirurl') != NULL) ? $this->getRequest()->getPost('redirurl') : '/');
                     }
                 }
+
             } elseif ($this->getRequest()->isPost()) {
 
                 if (($this->getRequest()->getPost('email') != '') || ($this->getRequest()->getPost('password') != '')) {

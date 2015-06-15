@@ -280,3 +280,12 @@ a.site-wrapper:hover {
 .tokenfield .token {
     margin:0 5px 0 5px !important;
 }
+
+.popover {
+    width: 300px !important;
+}
+
+.aso-comment-popover:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}

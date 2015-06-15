@@ -31,11 +31,13 @@ class Aso_Controller_Action extends Zend_Controller_Action
         $this->_model_category = $this->setModel(new Application_Model_Category(), "Model_Category");
         $this->_model_login = $this->setModel(new Application_Model_Login(), "Model_Login");
 
-        if (isset($this->_ms->u_id)) {
+        if (isset($this->_ms->u_id) && $this->_ms->u_id != NULL) {
            $user_data = $this->_model_login->getUserData($this->_ms->u_id);
-            foreach($user_data[0] as $key => $value) {
-                $view_key = 'u_'.$key;
-                $this->view->$view_key = $value;
+            if ($user_data != false) {
+                foreach($user_data[0] as $key => $value) {
+                    $view_key = 'u_'.$key;
+                    $this->view->$view_key = $value;
+                }
             }
         }
 
