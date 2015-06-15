@@ -10,6 +10,7 @@ class LoginController extends Aso_Controller_Action
 {
     public function init() {
         parent::init();
+
     }
     public function indexAction(){
         try {
@@ -19,25 +20,25 @@ class LoginController extends Aso_Controller_Action
 
             $db = $this->_getParam('db');
             $msg = null;
-
+            $dataProvider =null;
             $auth = TBS\Auth::getInstance();
 
             $providers = $auth->getIdentity();
 
             // Here the response of the providers are registered
             if ($this->_hasParam('provider')) {
-                $provider = $this->_getParam('provider');
+                $providerParam = $this->_getParam('provider');
 
-                switch ($provider) {
+                switch ($providerParam) {
                     case "facebook":
                         if ($this->_hasParam('code')) {
                             $adapter = new TBS\Auth\Adapter\Facebook(
                                 $this->_getParam('code'));
                             $result = $auth->authenticate($adapter);
+
                         }
                         if($this->_hasParam('error')) {
-                            throw new Zend_Controller_Action_Exception('Facebook login failed, response is: ' .
-                                $this->_getParam('error'));
+                            $msg = $this->messageBox("$providerParam login failed. <b>".$this->_getParam('error')."</b>","danger");
                         }
                         break;
                     case "twitter":
@@ -52,10 +53,10 @@ class LoginController extends Aso_Controller_Action
                             $adapter = new TBS\Auth\Adapter\Google(
                                 $this->_getParam('code'));
                             $result = $auth->authenticate($adapter);
-                            $msg = $this->messageBox("Zostałeś prawidołwo zalogowany(a). Używając konta Google.","success");
+
                         }
                         if($this->_hasParam('error')) {
-                            $msg = $this->messageBox("Google login failed. <b>".$this->_getParam('error')."</b>","danger");
+                            $msg = $this->messageBox("$providerParam login failed. <b>".$this->_getParam('error')."</b>","danger");
                         }
                         break;
                 }
@@ -66,31 +67,44 @@ class LoginController extends Aso_Controller_Action
                 } else {
                     if ($auth->hasIdentity()) {
                         $login = new Application_Model_Login();
-                        foreach ($auth->getIdentity() as $provider){
-                            if ($login->getUserData(null, $provider->getApi()->getProfile()) == TRUE) {
-                                $this->getSession()->u_id = $provider->getApi()->getProfile()['id'];
-                                $this->getSession()->u_name = $provider->getApi()->getProfile()['name'];
+
+                        foreach ($auth->getIdentity() as $provider) {
+
+                            $dataProvider = $provider->getApi()->getProfile();
+                            $dataProvider['provider'] = $providerParam;
+                            if ($providerParam == "facebook") {
+
+                                    $dataProvider = $this->change_key($dataProvider, "first_name", "given_name");
+                                    $dataProvider = $this->change_key($dataProvider, "last_name", "family_name");
+                                    $dataProvider = $this->change_key($dataProvider, "verified", "verified_email");
+                                    $dataProvider["picture"] = "http://graph.facebook.com/".$dataProvider['id']."/picture?type=large";
+                            }
+
+                            if ($login->getUserData(null, $dataProvider) == TRUE) {
+                                $this->getSession()->u_id = $dataProvider['id'];
+                                $this->getSession()->u_name = $$dataProvider['name'];
                                 $this->getSession()->u_active = 1;
 //                                role 0 becouse, google user can not modify pages
                                 $this->getSession()->u_role = 0;
-                                $msg = $this->messageBox("Zostałeś zalogowany(a) prawidłowo.<br>Używając konta Google", "success");
+                                $msg = $this->messageBox("Zostałeś zalogowany(a) prawidłowo.<br>Używając konta <b>$providerParam</b>", "success");
                             }else{
 
-                                if ($login->getUserData(null, array('email' => $provider->getApi()->getProfile()['email'])) == TRUE) {
-                                    $msg = $this->messageBox("Przy próbie zalogowania za pomocą konta Google.<br>Wykryto że adres email<br><b><ul><li>".$provider->getApi()->getProfile()['email']."</li></ul></b><br>jest przypisany do innego konta.", "danger");
+                                if ($login->getUserData(null, array('email' => $dataProvider['email'])) == TRUE) {
+                                    $msg = $this->messageBox("Przy próbie zalogowania za pomocą konta <b>$providerParam</b>.<br>Wykryto że adres email<br><b><ul><li>".$dataProvider['email']."</li></ul></b><br>jest przypisany do innego konta.", "danger");
                                 }else{
-                                    if ($login->getUserData($provider->getApi()->getProfile()['id'], array('email' => $provider->getApi()->getProfile()['email'])) == FALSE) {
-                                        $login->addNewGoogleUser($provider->getApi()->getProfile());
+                                    if ($login->getUserData($dataProvider['id'], array('email' => $dataProvider['email'])) == FALSE) {
+                                        $login->addNewSocialNetworkUser($dataProvider);
                                     }
-                                    $this->getSession()->u_id = $provider->getApi()->getProfile()['id'];
-                                    $this->getSession()->u_name = $provider->getApi()->getProfile()['name'];
+                                    $this->getSession()->u_id = $dataProvider['id'];
+                                    $this->getSession()->u_name = $dataProvider['name'];
                                     $this->getSession()->u_active = 1;
                                     $this->getSession()->u_role = 0;
-                                    $msg = $this->messageBox("Zostałeś zalogowany(a) prawidłowo.<br>Używając konta Google", "success");
+                                    $msg = $this->messageBox("Zostałeś zalogowany(a) prawidłowo.<br>Używając konta <b>$providerParam</b>", "success");
                                 }
                             }
                         }
                         $this->_helper->FlashMessenger($msg);
+                        $dataProvider = null;
                         $this->_redirect(($this->getRequest()->getPost('redirurl') != NULL) ? $this->getRequest()->getPost('redirurl') : '/');
                     }
                 }
@@ -158,5 +172,16 @@ class LoginController extends Aso_Controller_Action
             $this->_helper->FlashMessenger($this->messageBox($e,'danger'));
             $this->redirect('/');
         }
+    }
+
+    public function change_key( $array, $old_key, $new_key) {
+
+        if( ! array_key_exists( $old_key, $array ) )
+            return $array;
+
+        $keys = array_keys( $array );
+        $keys[ array_search( $old_key, $keys ) ] = $new_key;
+
+        return array_combine( $keys, $array );
     }
 } 

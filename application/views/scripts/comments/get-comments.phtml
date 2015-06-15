@@ -39,7 +39,7 @@
                         <?php if (isset($data_comment['picture']) && $data_comment['picture'] != '') : ?><img class="" src="<?=$data_comment['picture']?>" width="100%" height="100%"> <?php endif; ?>
                     </div>
                     <div class="col-md-8">
-                        <?php if (isset($data_comment['picture']) && $data_comment['picture'] != '') : ?>Profil na <a href="<?=$data_comment['link']?>" taget="_blank">Google +</a><?php endif; ?>
+                        <?php if (isset($data_comment['picture']) && $data_comment['picture'] != '') : ?>Profil na <a href="<?=$data_comment['link']?>" taget="_blank"><?=ucfirst($data_comment['provider'])?></a><?php endif; ?>
                     </div>
                 </div>' data-title="<?=$data_comment['userName']?>"><?=$data_comment['userName']?></span>
                     <?php if (isset($data_comment['picture']) && $data_comment['picture'] != '') : ?><img class="img-circle aso-img-menu" src="<?=$data_comment['picture']?>" width="20" height="20"> <?php endif; ?>

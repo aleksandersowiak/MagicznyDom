@@ -92,7 +92,8 @@ class Application_Model_Read extends Aso_Model
                                                             'picture',
                                                             'gender',
                                                             'locale',
-                                                            'email'))
+                                                            'email',
+                                                            'provider'))
                                     ->where('`c`.id_recipe LIKE ?', $id_recipe)
                                     ->where('`c`.moderate != FALSE')
                                     ->limit($per_page,$start_from)

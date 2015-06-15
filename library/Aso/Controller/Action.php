@@ -43,7 +43,7 @@ class Aso_Controller_Action extends Zend_Controller_Action
 
         $this->view->googleAuthUrl = TBS\Auth\Adapter\Google::getAuthorizationUrl();
         $this->view->googleAuthUrlOffline = TBS\Auth\Adapter\Google::getAuthorizationUrl(true);
-//        $this->view->facebookAuthUrl = TBS\Auth\Adapter\Facebook::getAuthorizationUrl();
+        $this->view->facebookAuthUrl = TBS\Auth\Adapter\Facebook::getAuthorizationUrl();
 //        $this->view->twitterAuthUrl = \TBS\Auth\Adapter\Twitter::getAuthorizationUrl();
 
         if ($this->_model_index->getSetings($settings, NULL) == FALSE ) {
