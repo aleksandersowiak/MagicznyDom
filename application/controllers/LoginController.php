@@ -12,12 +12,19 @@ class LoginController extends Aso_Controller_Action
         parent::init();
 
     }
+    public function accessProtected($obj, $prop) {
+        $reflection = new ReflectionClass($obj);
+        $property = $reflection->getProperty($prop);
+        $property->setAccessible(true);
+        return $property->getValue($obj);
+    }
     public function indexAction(){
         try {
 
             $this->_helper->viewRenderer->setNoRender(true);
             $this->_helper->layout()->disableLayout();
 
+            $accessToken = null;
             $db = $this->_getParam('db');
             $msg = null;
             $dataProvider =null;
@@ -67,17 +74,23 @@ class LoginController extends Aso_Controller_Action
                 } else {
                     if ($auth->hasIdentity()) {
                         $login = new Application_Model_Login();
-
                         foreach ($auth->getIdentity() as $provider) {
 
                             $dataProvider = $provider->getApi()->getProfile();
                             $dataProvider['provider'] = $providerParam;
+
                             if ($providerParam == "facebook") {
 
-                                    $dataProvider = $this->change_key($dataProvider, "first_name", "given_name");
-                                    $dataProvider = $this->change_key($dataProvider, "last_name", "family_name");
-                                    $dataProvider = $this->change_key($dataProvider, "verified", "verified_email");
-                                    $dataProvider["picture"] = "http://graph.facebook.com/".$dataProvider['id']."/picture?type=large";
+                                $dataProvider['access_token'] = $provider->getApi()->getAccessToken();
+
+                                $dataProvider = $this->change_key($dataProvider, "first_name", "given_name");
+                                $dataProvider = $this->change_key($dataProvider, "last_name", "family_name");
+                                $dataProvider = $this->change_key($dataProvider, "verified", "verified_email");
+                                $dataProvider["picture"] = "http://graph.facebook.com/".$dataProvider['id']."/picture?type=large";
+
+                                if ($login->upateAccessToken($dataProvider['id'], $data = array('access_token' => $provider->getApi()->getAccessToken())) != NULL){
+                                    unset($dataProvider['access_token']);
+                                }
                             }
 
                             if ($login->getUserData(null, $dataProvider) == TRUE) {

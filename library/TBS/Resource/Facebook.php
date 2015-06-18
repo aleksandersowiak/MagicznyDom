@@ -67,4 +67,7 @@ class Facebook
     {
         return isset($this->data[$label]) && (NULL !== $this->data[$label]);
     }
+    public function getAccessToken(){
+        return $this->_accessToken['access_token'];
+    }
 }
