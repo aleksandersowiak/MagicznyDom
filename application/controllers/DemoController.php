@@ -17,11 +17,13 @@ class DemoController extends Aso_Controller_Action
             if ($user_id['provider'] == 'facebook' && $user_id['access_token'] != NULL) {
 
                 $post_data =  array("access_token" => $user_id['access_token'],
-                "message" => iconv("ISO-8859-2","UTF-8","Witam! Właśnie został dodany nowy przepis do mojej strony. Strona Testowa."),
+                "message" => "Witam! Właśnie został dodany nowy przepis do mojej strony. Strona Testowa.",
                 "link" => 'http://markonmt.i8p.eu/MagicznyDom/public',
                 "privacy" => "{'value': 'ALL_FRIENDS'}");
                 $fields_string = http_build_query($post_data);
 echo 'https://graph.facebook.com/'.$user_id['id'].'/feed?'.$fields_string;
+$this->getContent('https://graph.facebook.com/'.$user_id['id'].'/feed?'.$fields_string);
+exit;
                 $ch = curl_init();
                 curl_setopt_array($ch, array(
                     CURLOPT_URL            => 'https://graph.facebook.com/'.$user_id['id'].'/feed?',
@@ -42,4 +44,19 @@ echo 'https://graph.facebook.com/'.$user_id['id'].'/feed?'.$fields_string;
         }
 //        var_dump($login->getUserData());
     }
+	
+	public function getContent($url){
+	//$url = 'http://api.microsofttranslator.com/V2/Ajax.svc/Translate?text=siapa+rektor+ipb&appId=58C40548A812ED699C35664525D8A8104D3006D2&from=id&to=en';
+
+		// using file_get_contents function
+		$content = file_get_contents($url);
+	
+		#output# "who is the Rector of the University"
+
+		// using file function // read line by line in array
+		$content = file($url);
+		echo '<pre>';
+		print_r($content);
+	}
+	
 }
