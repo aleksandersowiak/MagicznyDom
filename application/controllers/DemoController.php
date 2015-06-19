@@ -19,11 +19,13 @@ class DemoController extends Aso_Controller_Action
                 $post_data =  array("access_token" => $user_id['access_token'],
                 "message" => "Witam! Właśnie został dodany nowy przepis do mojej strony. Strona Testowa.",
                 "link" => 'http://markonmt.i8p.eu/MagicznyDom/public',
-                "privacy" => "{'value': 'ALL_FRIENDS'}");
+//                "privacy" => "{'value': 'ALL_FRIENDS'}"
+                );
                 $fields_string = http_build_query($post_data);
-echo 'https://graph.facebook.com/'.$user_id['id'].'/feed?'.$fields_string;
-$this->getContent('https://graph.facebook.com/'.$user_id['id'].'/feed?'.$fields_string);
-exit;
+//                echo 'https://graph.facebook.com/'.$user_id['id'].'/feed?'.$fields_string;
+//                $this->getContent('https://graph.facebook.com/'.$user_id['id'].'/feed?'.$fields_string);
+
+                
                 $ch = curl_init();
                 curl_setopt_array($ch, array(
                     CURLOPT_URL            => 'https://graph.facebook.com/'.$user_id['id'].'/feed?',
@@ -39,7 +41,11 @@ exit;
                 $response = curl_exec($ch);
                 curl_close($ch);
 
-                var_dump($response);
+                if (!is_array($response))
+                $error = (json_decode($response, true));
+                if (isset($error['error'])){
+                    print_r($error['error']['message']);
+                }
             }
         }
 //        var_dump($login->getUserData());
@@ -56,7 +62,8 @@ exit;
 		// using file function // read line by line in array
 		$content = file($url);
 		echo '<pre>';
-		print_r($content);
+		if (!is_array($content))
+		print_r(str_split($content));
 	}
 	
 }
