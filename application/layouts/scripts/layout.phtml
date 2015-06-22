@@ -29,6 +29,17 @@
         </div>
     </div>
 <?php endif;?>
+<?php if (isset($this->message_about_share)) : ?>
+    <div class="box-message-provider">
+        <div class="alert-info pop-up alert" role="alert">
+            Podczas próby wykonania skryptu udostępniającego post na Twoje tablicy.<br>
+            Zauważuliśmy że masz wyłączoną możliwość publikowania.<br>
+            Swoje ustawienia możesz zmienić <a href="https://www.facebook.com/settings?tab=applications">Tutaj</a><br>
+            <br>
+            <button class="btn btn-mini">Nie pokazuj tego więcej</button><button class="btn btn-mini">Później</button>
+        </div>
+    </div>
+<?php endif; ?>
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="container">
         <div class="navbar-header">

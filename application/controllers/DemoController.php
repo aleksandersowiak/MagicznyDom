@@ -10,9 +10,9 @@ class DemoController extends Aso_Controller_Action
     {
         $this->_helper->viewRenderer->setNoRender(true);
         $this->_helper->layout()->disableLayout();
-        $post_data = array();
+
         $login = new Application_Model_Login();
-//        $url = new Zend_Controller_Front();
+
         foreach ($login->getUserData() as $user_id){
             if ($user_id['provider'] == 'facebook' && $user_id['access_token'] != NULL) {
 
@@ -22,48 +22,12 @@ class DemoController extends Aso_Controller_Action
 //                "privacy" => "{'value': 'ALL_FRIENDS'}"
                 );
                 $fields_string = http_build_query($post_data);
-//                echo 'https://graph.facebook.com/'.$user_id['id'].'/feed?'.$fields_string;
-//                $this->getContent('https://graph.facebook.com/'.$user_id['id'].'/feed?'.$fields_string);
+                $url = 'https://graph.facebook.com/'.$user_id['id'].'/feed?';
+                $this->curl($url, $user_id, $fields_string);
 
-                
-                $ch = curl_init();
-                curl_setopt_array($ch, array(
-                    CURLOPT_URL            => 'https://graph.facebook.com/'.$user_id['id'].'/feed?',
-                    CURLOPT_HEADER			=> 0,
-                    CURLOPT_POST			=>1,
-                    CURLOPT_POSTFIELDS 		=> $fields_string,
-                    CURLOPT_RETURNTRANSFER => 1,
-                    CURLOPT_FOLLOWLOCATION => 1,
-                    CURLOPT_VERBOSE        => 1,
-                    CURLOPT_SSL_VERIFYHOST=> 0,
-                    CURLOPT_SSL_VERIFYPEER=> 0,
-                ));
-                $response = curl_exec($ch);
-                curl_close($ch);
-
-                if (!is_array($response))
-                $error = (json_decode($response, true));
-                if (isset($error['error'])){
-                    print_r($error['error']['message']);
-                }
             }
         }
-//        var_dump($login->getUserData());
+
     }
-	
-	public function getContent($url){
-	//$url = 'http://api.microsofttranslator.com/V2/Ajax.svc/Translate?text=siapa+rektor+ipb&appId=58C40548A812ED699C35664525D8A8104D3006D2&from=id&to=en';
 
-		// using file_get_contents function
-		$content = file_get_contents($url);
-	
-		#output# "who is the Rector of the University"
-
-		// using file function // read line by line in array
-		$content = file($url);
-		echo '<pre>';
-		if (!is_array($content))
-		print_r(str_split($content));
-	}
-	
 }

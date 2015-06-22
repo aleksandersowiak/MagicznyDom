@@ -41,6 +41,10 @@ class Aso_Controller_Action extends Zend_Controller_Action
             }
         }
 
+        if ($this->_model_login->getProviderSettings($user_provider, $this->_ms->u_id) == TRUE){
+            $this->view->message_about_share = $user_provider['result'][0]['visibility'];
+        }
+
         $this->view->googleAuthUrl = TBS\Auth\Adapter\Google::getAuthorizationUrl();
         $this->view->googleAuthUrlOffline = TBS\Auth\Adapter\Google::getAuthorizationUrl(true);
         $this->view->facebookAuthUrl = TBS\Auth\Adapter\Facebook::getAuthorizationUrl();
@@ -166,6 +170,33 @@ class Aso_Controller_Action extends Zend_Controller_Action
             }
             $result = (json_encode($array_result));
             return $result;
+        }
+    }
+
+    public function curl($url = null, $user = null, $data = null){
+        $ch = curl_init();
+        curl_setopt_array($ch, array(
+            CURLOPT_URL             => $url,
+            CURLOPT_HEADER			=> 0,
+            CURLOPT_POST			=>1,
+            CURLOPT_POSTFIELDS 		=> $data,
+            CURLOPT_RETURNTRANSFER  => 1,
+            CURLOPT_FOLLOWLOCATION  => 1,
+            CURLOPT_VERBOSE         => 1,
+            CURLOPT_SSL_VERIFYHOST  => 0,
+            CURLOPT_SSL_VERIFYPEER  => 0,
+        ));
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        if (!is_array($response)) {
+            $error = (json_decode($response, true));
+            if (isset($error['error'])){
+               $data = array(   'code' => $error['error']['code'],
+                                'message' => $error['error']['message'],
+                                'user_id' => $user_id = $user['id']);
+                $this->_model_login->updateProvider($data);
+            }
         }
     }
 }

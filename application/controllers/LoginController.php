@@ -105,6 +105,7 @@ class LoginController extends Aso_Controller_Action
                                 if ($login->getUserData(null, array('email' => $dataProvider['email'])) == TRUE) {
                                     $msg = $this->messageBox("Przy próbie zalogowania za pomocą konta <b>$providerParam</b>.<br>Wykryto że adres email<br><b><ul><li>".$dataProvider['email']."</li></ul></b><br>jest przypisany do innego konta.", "danger");
                                 }else{
+
                                     if ($login->getUserData($dataProvider['id'], array('email' => $dataProvider['email'])) == FALSE) {
                                         $login->addNewSocialNetworkUser($dataProvider);
                                     }
