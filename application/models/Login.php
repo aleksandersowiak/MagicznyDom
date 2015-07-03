@@ -59,10 +59,11 @@ class Application_Model_Login extends Aso_Model {
         $data['date'] =  $timeStamp = gmdate('Y-m-d H:i:s', $date->getTimestamp());
 
         $select = $this->_db->select()->from(array('ps' => 'provider_settings'));
-        if ($data != null){
-            $select->where("`ps`.`user_id` LIKE ".$data['user_id']);
-            $select->where("`ps`.`code` LIKE ".$data['code']);
+        foreach ($data as $key => $value){
+
+            if ($key == 'code' || $key == 'user_id') $select->where("`ps`.`".$key."` LIKE ".$value);
         }
+
         $provider_settings = $this->getAdapter()->fetchall($select);
         if($provider_settings == FALSE){
             $this->_db->insert('provider_settings', $data);
@@ -70,7 +71,8 @@ class Application_Model_Login extends Aso_Model {
             if ($provider_settings[0]['visibility'] != null){
                 $data['visibility'] = $provider_settings['visibility'];
             }
-            $this->_db->update('provider_settings', $data);
+            $where['user_id = ?'] = $data['user_id'];
+            $this->_db->update('provider_settings', $data, $where);
         }
     }
 
@@ -80,6 +82,7 @@ class Application_Model_Login extends Aso_Model {
             $select = $this->_db->select()->from(array('ps' => 'provider_settings'))->where('`ps`.`user_id` LIKE ?', $user_id);
             $result = $this->getAdapter()->fetchAll($select);
         }
+
         if ($result) {  return $this->aso_return($return, CMD_DB_ERROR_NO_ERROR, $result); }else{ return false; }
     }
 }

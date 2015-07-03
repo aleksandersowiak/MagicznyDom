@@ -50,6 +50,11 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                 'action' => 'getComments'
             )
         ));
+        $router->addRoute('provider', new Zend_Controller_Router_Route('/login/provider/:value', array(
+                'controller' => 'login',
+                'action' => 'provider'
+            )
+        ));
 //        $router->addRoute('turnOffSetting', new Zend_Controller_Router_Route('/:app', array(
 //                'controller' => 'Index',
 //                'action' => 'index'

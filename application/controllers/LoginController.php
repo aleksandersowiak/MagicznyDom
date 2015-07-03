@@ -8,9 +8,12 @@
 
 class LoginController extends Aso_Controller_Action
 {
+    private $_model_login;
+    private $_ms;
     public function init() {
         parent::init();
-
+        $this->_model_login = $this->setModel(new Application_Model_Login(), "Model_Login");
+        $this->_ms = new Zend_Session_Namespace(SESSION_NAMESPACE);
     }
     public function accessProtected($obj, $prop) {
         $reflection = new ReflectionClass($obj);
@@ -198,4 +201,20 @@ class LoginController extends Aso_Controller_Action
 
         return array_combine( $keys, $array );
     }
+
+    public function providerAction(){
+        $request = $this->getRequest();
+        $params = $request->getParams();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $this->_helper->layout()->disableLayout();
+        $visibility = $params['value'];
+        $data = array(  'user_id'   => $this->_ms->u_id,
+                        'visibility' => $visibility);
+        if ($data['visibility'] == 0){
+            setcookie('provider_visibility', '1', time()+3600*24*7, $this->view->baseUrl());
+        }
+
+        $this->_model_login->updateProvider($data);
+    }
+
 } 
