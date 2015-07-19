@@ -28,7 +28,11 @@
         </div>
     </div>
 <?php endif; ?>
-<?php if (isset($this->message_share) && $this->message_share != null && $this->message_share['visibility'] != 1 && isset($_COOKIE['provider_visibility']) != 1) : ?>
+<?php if (isset($this->message_share)
+    && ($this->message_share != null)
+    && ($this->message_share['visibility'] != 1)
+    && (isset($_COOKIE['provider_visibility']) != 1)) :
+?>
     <script type="text/javascript">
         $(function() {
             $(".provider").click(function(){
