@@ -122,7 +122,12 @@ class LoginController extends Aso_Controller_Action
                         }
                         $this->_helper->FlashMessenger($msg);
                         $dataProvider = null;
-                        $this->_redirect(($this->getRequest()->getPost('redirurl') != NULL) ? $this->getRequest()->getPost('redirurl') : '/');
+                        ?>
+                            <script>
+                                window.opener.location.href= '<?php echo  $this->view->serverUrl() . $this->view->baseUrl() ?>';
+                                self.close();
+                            </script>
+                        <?php
                     }
                 }
 
@@ -158,9 +163,10 @@ class LoginController extends Aso_Controller_Action
                         $msg = $this->messageBox("Uzytkownik nie istnieje. Bądź podane dane są nie prawidłowe.","danger");
                     }
                 }
+                $this->_helper->FlashMessenger($msg);
+                $this->_redirect(($this->getRequest()->getPost('redirurl') != NULL) ? $this->getRequest()->getPost('redirurl') : '/');
             }
-            $this->_helper->FlashMessenger($msg);
-            $this->_redirect(($this->getRequest()->getPost('redirurl') != NULL) ? $this->getRequest()->getPost('redirurl') : '/');
+
         } catch(exception $e) {
 //            $this->logError("indexAction() exception: ".$e->getMessage());
             $this->_helper->FlashMessenger($this->messageBox($e,'danger'));

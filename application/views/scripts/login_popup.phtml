@@ -1,20 +1,21 @@
 <?php
 $form = $this->form;
 $pn = 'login_view'; ?>
+<?php
+header('X-Frame-Options: GOFORIT');
+?>
 <script type="text/javascript">
     $(function() {
         $(".btn-social").click(function(){
             $(this).button('loading').delay(1000).queue(function() {
-                var url=$(this).attr('data-target');
-window.open(url, "_self");
-                $(".modal-content").load(url);
+                var url=$(this).attr('data-target')+ "&output=embed";
+                window.open(url, 'mywin', 'left=50%,top=50%,width=500,height=500,toolbar=1,resizable=0');
                 $(this).button('reset');
             });
         });
     });
 </script>
 <div class="<?=$pn?> modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-
     <div class="modal-dialog">
         <div class="modal-content">
             <form class="form-horizontal" role="form" id="form" method="post" action="<?=$this->baseUrl().'/'.DEF_CONTROLER__LOGIN?>" >
