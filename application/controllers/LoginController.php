@@ -120,15 +120,16 @@ class LoginController extends Aso_Controller_Action
                                 }
                             }
                         }
-                        $this->_helper->FlashMessenger($msg);
-                        $dataProvider = null;
-                        ?>
-                            <script>
-                                window.opener.location.href= '<?php echo  $this->view->serverUrl() . $this->view->baseUrl() ?>';
-                                self.close();
-                            </script>
-                        <?php
                     }
+                    $this->_helper->FlashMessenger($msg);
+                    $dataProvider = null;
+
+                    ?>
+                        <script>
+                            window.opener.location.href= '<?php echo  $this->view->serverUrl() . $this->view->baseUrl() ?>';
+                            self.close();
+                        </script>
+                    <?php
                 }
 
             } elseif ($this->getRequest()->isPost()) {

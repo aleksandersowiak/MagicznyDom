@@ -39,7 +39,7 @@
                 $(this).button('loading').delay(1000).queue(function() {
                     var url='<?=$this->url(array("controller" => "login", "action" => "provider"),"default",true);?>/' + $(this).attr('data-target');
                     $('.box-message-provider').load(url);
-                    $(this).button('reset');
+                    $(this).button('');
                     $(".box-message-provider").hide(0);
                 });
             });
