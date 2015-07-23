@@ -23,6 +23,25 @@ class CommentsController extends Aso_Controller_Action {
         $this->_helper->layout()->disableLayout();
     }
 
+    public function getReplyCommentsAction(){
+        $request = $this->getRequest();
+        $params = $request->getParams();
+        $id = $params['id'];
+        $limit = (isset($params['limit'])) ? $params['limit'] : null;
+        $this->getModel('Model_Read')->getReplyComment($replyComment, $id, $limit);
+
+        if (count($replyComment["result"]) > 0 ){
+            echo '<div class="div-reply-result"><hr>';
+            echo '<ul class="list-group">';
+            foreach ($replyComment["result"] as $data){
+                    $view = '<li class="list-group-item"><b>'.$data['userName'].'</b>: '.$data['comment'].'</li>';
+                    echo $view;
+            }
+            echo '</ul></div>';
+        }
+        $this->_helper->viewRenderer->setNoRender(true);
+        $this->_helper->layout()->disableLayout();
+    }
     public function getCommentAction(){
         $this->_helper->viewRenderer->setNoRender(true);
         $this->_helper->layout()->disableLayout();
@@ -71,7 +90,8 @@ class CommentsController extends Aso_Controller_Action {
             $data = array('userName' => $params['name'],
             'comment' => $params['message'],
             'id_recipe' => $params['id'],
-            'user_id' => $this->getSession()->u_id);
+            'user_id' => $this->getSession()->u_id,
+            'reply' => ($params['reply'] === 'true'));
 
             if ($this->getModel('Model_Read')->insertComment($return, $data)==FALSE){
                 $this->_helper->redirector('index','index');

@@ -112,6 +112,33 @@ class Application_Model_Read extends Aso_Model
 
         return $this->aso_return($return, CMD_DB_ERROR_NO_ERROR, $result);
     }
+
+    public function getReplyComment(&$return,$params = null, $limit = null){
+
+        $select_reply =  $this->_db ->select()
+                        ->from( array('c' => 'comments'))
+                        ->joinInner(array(  'u' => 'user'),
+                            '`c`.user_id = `u`.id' ,
+                            array('name',
+                                'given_name',
+                                'family_name',
+                                'link',
+                                'picture',
+                                'gender',
+                                'locale',
+                                'email',
+                                'provider'))
+                        ->where('`c`.`reply_id` LIKE ?', $params)
+                        ->where('`c`.`reply_id` IS NOT NULL')
+                        ->where('`c`.`moderate` != FALSE')
+                        ->order('c.created DESC');
+        if ($limit != NULL){
+            $select_reply ->limit($limit);
+        }
+        $result = $this->getAdapter()->fetchAll($select_reply);
+        return $this->aso_return($return, CMD_DB_ERROR_NO_ERROR, $result);
+    }
+
     public function getCountComments(&$return, $params){
 
         $data = $this->getDataRecipe($params);

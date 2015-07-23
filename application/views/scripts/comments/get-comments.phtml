@@ -8,6 +8,7 @@
                 var url='<?=$this->url(array("controller" => "comments", "action" => "get-comment"),"default",true);?>/id/' + $(this).attr('data-main');
                 $("#"+$(this).attr('data-target')).load(url);
                 $(this).button('reset');
+                $(this).fadeOut();
                 $(this).dequeue();
                 $($(this)).html("");
             });
@@ -29,7 +30,7 @@
 </script>
 <div class="list-group">
 
-    <?php if ($this->comments != null) : ?>
+    <?php if (isset($this->comments) != null) : ?>
         <?php $idBox = 0; ?>
         <?php foreach ($this->comments as $data_comment) : ?>
             <div class="well">
@@ -51,10 +52,37 @@
                 <p id="box<?=$idBox?>" class="list-group-item-text"><?=$this->restrictText($data_comment['comment'],100)?></p>
                 <?php if (strlen($data_comment['comment']) > 100):?>
                 <p class="pull-right pull<?=$idBox?>">
-                    <button type="button" class="btn<?=$idBox?> btn-link read-more" data-target="box<?=$idBox?>" data-main="<?=$data_comment['id']?>" data-loading-text="Ładowanie..." >Czytaj całość <span class="glyphicon glyphicon-chevron-right btn-sm"></span></button>
-                    <div style="padding-bottom: 5px"></div>
+                    <button type="button" class="btn<?=$idBox?> aso-read-more read-more" data-target="box<?=$idBox?>" data-main="<?=$data_comment['id']?>" data-loading-text="Ładowanie..." >Czytaj całość <span class="glyphicon glyphicon-chevron-right btn-sm"></span></button>
+                    <div style="clear: both"></div>
                 </p>
                 <?php endif; ?>
+                <?php if ($data_comment['reply'] == false) : ?>
+                    <button class="btn-link pull-left reply"  data-toggle="modal" data-target="#reply" data-main="<?=$data_comment['id']?>">Odpowiedz</button>
+                    <button class="btn-link pull-right reply-comments-view" data-target="reply-comments<?=$idBox?>" data-main="<?=$data_comment['id']?>">Pokaż Odpowiedzi</button>
+                    <div style="clear: both"></div>
+                <?php endif; ?>
+                <script>
+                    $(function() {
+                        $(document).ready(function(){
+                            var url='<?=$this->url(array("controller" => "comments", "action" => "get-reply-comments"),"default",true);?>/id/<?=$data_comment['id']?>/limit/3';
+                            $("#reply-comments<?=$idBox?>").load(url).fadeIn();
+                        });
+                        $(".reply-comments-view").click(function(){
+                            $(this).button('loading').delay(1000).queue(function() {
+                                $("#reply-comments<?=$idBox?>").html("");
+                                var url='<?=$this->url(array("controller" => "comments", "action" => "get-reply-comments"),"default",true);?>/id/' + $(this).attr('data-main');
+                                $("#"+$(this).attr('data-target')).load(url).fadeIn();
+                                $(this).button('reset');
+                                $(this).fadeOut();
+                                $(this).dequeue();
+                                $($(this)).html("");
+                            });
+                        });
+
+                    });
+                </script>
+                <div id="reply-comments<?=$idBox?>">
+                </div>
             </div>
             <?php $idBox ++ ?>
         <?php endforeach; ?>
@@ -62,3 +90,49 @@
     </div>
 </div>
 <?php //endif; ?>
+<?php if ($data_comment['reply'] == false) : ?>
+<script>
+    $(document).on("click", ".reply", function () {
+        var rep_Id = $(this).attr('data-main');
+        var url='<?=$this->url(array("controller" => "comments", "action" => "get-comment"),"default",true);?>/id/' + rep_Id;
+        $( ".panel-body" ).load(url);
+    });
+    $(document).ready(function() {
+        $('#message-text').summernote(
+            {   height: 100,
+                toolbar: [['style', ['bold', 'italic', 'underline']]]
+            }
+        );
+    });
+</script>
+<div class="modal fade" id="reply" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel">Odpowiedź do komentarza</h4>
+            </div>
+
+            <form role="form" novalidate action="<?=$this->url(array("controller" => "comments", "action" => "addComment"),"default",true);?>" id="addCommentForm">
+                <div class="modal-body">
+                    <div class="panel panel-default">
+                        <div class="panel-body"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="control-label">Nazwa:</label>
+                        <input type="text" class="form-control" required="required" readonly value="<?=$this->u_name?>">
+                        <input type="hidden" class="form-control" id="recipient-name" required="required" value="<?=$this->u_name?>">
+                    </div>
+                    <div class="form-group">
+                        <label for="message-text" class="control-label">Komentarz:</label>
+                        <textarea class="form-control" id="message-text" name="message-text" required="required" ></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
+                    <button type="submit" class="btn btn-primary">Dodaj</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<?php endif; ?>

@@ -79,7 +79,16 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
+                            <script>
+                                $(function () {
+                                    $('[data-toggle="tooltip"]').tooltip()
+                                })
+                            </script>
+                            <span>
+                                <label>
+                                    <input type="checkbox" data-toggle="tooltip" id="disable-reply" data-placement="top" title="Wyłącz możliwość odpowiadania na ten komentarz.">
+                                </label>
+                            </span> <button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
                             <button type="submit" class="btn btn-primary">Dodaj</button>
                         </div>
                     </form>
@@ -90,9 +99,10 @@
                     event.preventDefault();
                     var $form = $( this ),
                         name = $form.find( "input[id='recipient-name']" ).val(),
+                        reply = $form.find( "input[id='disable-reply']" ).is(':checked'),
                         message = $form.find( "textarea[id='message-text']" ).code(),
                         id = '<?=$this->replaceOnLink($this->title)?>',
-                        url = $form.attr( "action" )
+                        url = $form.attr( "action" );
                     <?php if(!isset($this->u_name) && $this->u_name == '') : ?>
                         $( "input[id='recipient-name']" ).val('');
                     <?php endif; ?>
@@ -105,7 +115,7 @@
                         $(".alert-danger").hide(0);
                         return;
                     }
-                    $.post( url, { name: name, message: message, id: id} );
+                    $.post( url, { name: name, message: message, id: id, reply: reply} );
                     $('#add-new-comment').modal('hide');
                     $('body').prepend(' <div class="box-message">'+
                                             '<div class="alert alert-success" role="alert">'+
