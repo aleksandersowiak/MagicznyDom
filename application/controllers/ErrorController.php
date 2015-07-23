@@ -1,8 +1,10 @@
 <?php
+
 class ErrorController extends Aso_Controller_Action
 {
 
-    public function errorAction() {
+    public function errorAction()
+    {
         $errors = $this->_getParam('error_handler');
         if (!$errors || !$errors instanceof ArrayObject) {
             $this->view->message = 'You have reached the error page';
@@ -34,7 +36,7 @@ class ErrorController extends Aso_Controller_Action
 
         $this->view->exception = $errors->exception;
 
-        $this->view->request   = $errors->request;
+        $this->view->request = $errors->request;
         $this->renderScript('error/error.phtml');
     }
 
@@ -53,4 +55,5 @@ class ErrorController extends Aso_Controller_Action
         return $log;
     }
 }
+
 ?>

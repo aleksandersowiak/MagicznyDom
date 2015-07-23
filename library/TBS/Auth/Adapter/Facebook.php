@@ -1,10 +1,10 @@
 <?php
 namespace TBS\Auth\Adapter;
-use \TBS\Auth\Identity\Facebook as Identity;
-use \TBS\OAuth2\Consumer;
 
-use \Zend_Auth_Result as Result;
-use \Zend_Registry as Registry;
+use TBS\Auth\Identity\Facebook as Identity;
+use TBS\OAuth2\Consumer;
+use Zend_Auth_Result as Result;
+use Zend_Registry as Registry;
 
 class Facebook implements \Zend_Auth_Adapter_Interface
 {
@@ -31,7 +31,7 @@ class Facebook implements \Zend_Auth_Adapter_Interface
         }
 
         return new Result($result['code'], $result['identity'],
-                          $result['messages']);
+            $result['messages']);
     }
 
     public static function getAuthorizationUrl()
@@ -43,7 +43,7 @@ class Facebook implements \Zend_Auth_Adapter_Interface
 
     protected function _setRequestToken($requestToken)
     {
-        if(NULL === $requestToken) return;
+        if (NULL === $requestToken) return;
         $this->_options['code'] = $requestToken;
 
         $accesstoken = Consumer::getAccessToken($this->_options);
@@ -51,8 +51,9 @@ class Facebook implements \Zend_Auth_Adapter_Interface
         $accesstoken['timestamp'] = time();
         $this->_accessToken = $accesstoken;
     }
-    
-    public function setAccessToken($token) {
+
+    public function setAccessToken($token)
+    {
         $accesstoken['timestamp'] = time();
         $accesstoken['access_token'] = $token;
         $this->_accessToken = $token;
@@ -60,9 +61,9 @@ class Facebook implements \Zend_Auth_Adapter_Interface
 
     protected function _setOptions($options = null)
     {
-        
-      $config = Registry::get('config');
-      $options = is_object($config) ? $config->toArray() : $config;
+
+        $config = Registry::get('config');
+        $options = is_object($config) ? $config->toArray() : $config;
         $this->_options = $options['facebook'];
     }
 }

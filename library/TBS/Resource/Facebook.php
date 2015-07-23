@@ -1,7 +1,7 @@
 <?php
 namespace TBS\Resource;
 
-use \TBS\OAuth2\Consumer as Consumer;
+use TBS\OAuth2\Consumer as Consumer;
 
 class Facebook
 {
@@ -18,7 +18,7 @@ class Facebook
     {
         $endpoint = 'https://graph.facebook.com/me?fields=id';
         $id = json_decode($this->_getData('id', $endpoint));
-        if(isset($id->error)) {
+        if (isset($id->error)) {
             return NULL;
         }
         return $id->id;
@@ -27,7 +27,7 @@ class Facebook
     public function getProfile()
     {
         $endpoint = 'https://graph.facebook.com/me';
-        return (array) json_decode($this->_getData('profile', $endpoint));
+        return (array)json_decode($this->_getData('profile', $endpoint));
     }
 
     public function getFriends()
@@ -50,9 +50,9 @@ class Facebook
     protected function _getData($label, $url, $redirects = true)
     {
         if (!$this->_hasData($label)) {
-            $value = Consumer::getData($url, 
-                                       $this->_accessToken['access_token'],
-                                       $redirects);
+            $value = Consumer::getData($url,
+                $this->_accessToken['access_token'],
+                $redirects);
             $this->_setData($label, $value);
         }
         return $this->data[$label];
@@ -67,7 +67,9 @@ class Facebook
     {
         return isset($this->data[$label]) && (NULL !== $this->data[$label]);
     }
-    public function getAccessToken(){
+
+    public function getAccessToken()
+    {
         return $this->_accessToken['access_token'];
     }
 }

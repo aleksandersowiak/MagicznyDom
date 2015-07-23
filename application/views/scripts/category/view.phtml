@@ -1,13 +1,15 @@
-<div  role="main">
-<div class="col-sm-8 blog-main">
-    <div class="row">
-        <?=$this->partialLoop('category/get/get-view-category.phtml',$this->SelectedCategory); ?>
-    </div><!--/row-->
-</div><!--/.col-xs-12.col-sm-9-->
-<div class="col-sm-4 aso-col-sm-nav" id="sidebar" role="navigation">
-    <div class="list-group">
-        <?=$this->partialLoop('category/get/get-category.phtml',$this->Category); ?>
+<div role="main">
+    <div class="col-sm-8 blog-main">
+        <div class="row">
+            <?= $this->partialLoop('category/get/get-view-category.phtml', $this->SelectedCategory); ?>
+        </div>
+        <!--/row-->
     </div>
-</div>
+    <!--/.col-xs-12.col-sm-9-->
+    <div class="col-sm-4 aso-col-sm-nav" id="sidebar" role="navigation">
+        <div class="list-group">
+            <?= $this->partialLoop('category/get/get-category.phtml', $this->Category); ?>
+        </div>
+    </div>
 
 </div>

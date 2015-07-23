@@ -1,6 +1,7 @@
 <?php
 namespace TBS\Auth\Storage;
-use \Zend_Session_Namespace as SessionNameSpace;
+
+use Zend_Session_Namespace as SessionNameSpace;
 
 class MultipleIdentities implements \Zend_Auth_Storage_Interface
 {

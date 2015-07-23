@@ -14,41 +14,42 @@
         endswitch;
     else: ?>
         <script>
-            $(document).ready( function() {
-                var url='<?=$this->url(array("controller" => "index", "action" => "turn-off-setting"),"default",true);?>/app/facebook';
+            $(document).ready(function () {
+                var url = '<?=$this->url(array("controller" => "index", "action" => "turn-off-setting"),"default",true);?>/app/facebook';
                 $('body').load(url);
             });
         </script>
     <?php endif;
-}else{
+} else {
     $type = $this->facebook['data'];
     $view = 'fb-page';
 }
 ?>
-<?php if($type != NULL) : ?>
-        <div id="fb-root"></div>
-        <script>(function(d, s, id) {
-                var js, fjs = d.getElementsByTagName(s)[0];
-                if (d.getElementById(id)) return;
-                js = d.createElement(s); js.id = id;
-                js.src = "//connect.facebook.net/pl_PL/sdk.js#xfbml=1&version=v2.3";
-                fjs.parentNode.insertBefore(js, fjs);
-            }(document, 'script', 'facebook-jssdk'));
-        </script>
-        <div class="<?=$view?>"
-             data-href="<?=$type?>"
-             <?php
-             if (isset($fb_data) != NULL) :
-                 foreach ($fb_data as $key => $value) :
-                     echo "$key=\"$value\" ";
-                 endforeach;
-             endif;
-            ?>
+<?php if ($type != NULL) : ?>
+    <div id="fb-root"></div>
+    <script>(function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "//connect.facebook.net/pl_PL/sdk.js#xfbml=1&version=v2.3";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+    <div class="<?= $view ?>"
+         data-href="<?= $type ?>"
+        <?php
+        if (isset($fb_data) != NULL) :
+            foreach ($fb_data as $key => $value) :
+                echo "$key=\"$value\" ";
+            endforeach;
+        endif;
+        ?>
         >
-            <div class="fb-xfbml-parse-ignore">
-                <blockquote cite="<?=$type?>">
-                    <a href="<?=$type?>"><?=$this->headTitle($this->title)?></a>
-                </blockquote>
-            </div>
+        <div class="fb-xfbml-parse-ignore">
+            <blockquote cite="<?= $type ?>">
+                <a href="<?= $type ?>"><?= $this->headTitle($this->title) ?></a>
+            </blockquote>
         </div>
+    </div>
 <?php endif; ?>

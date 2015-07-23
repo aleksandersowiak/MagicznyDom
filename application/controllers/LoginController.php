@@ -1,27 +1,33 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: aso@ccp
  * Date: 2014-11-10
  * Time: 08:28
  */
-
 class LoginController extends Aso_Controller_Action
 {
     private $_model_login;
     private $_ms;
-    public function init() {
+
+    public function init()
+    {
         parent::init();
         $this->_model_login = $this->setModel(new Application_Model_Login(), "Model_Login");
         $this->_ms = new Zend_Session_Namespace(SESSION_NAMESPACE);
     }
-    public function accessProtected($obj, $prop) {
+
+    public function accessProtected($obj, $prop)
+    {
         $reflection = new ReflectionClass($obj);
         $property = $reflection->getProperty($prop);
         $property->setAccessible(true);
         return $property->getValue($obj);
     }
-    public function indexAction(){
+
+    public function indexAction()
+    {
         try {
 
             $this->_helper->viewRenderer->setNoRender(true);
@@ -30,7 +36,7 @@ class LoginController extends Aso_Controller_Action
             $accessToken = null;
             $db = $this->_getParam('db');
             $msg = null;
-            $dataProvider =null;
+            $dataProvider = null;
             $auth = TBS\Auth::getInstance();
 
             $providers = $auth->getIdentity();
@@ -47,8 +53,8 @@ class LoginController extends Aso_Controller_Action
                             $result = $auth->authenticate($adapter);
 
                         }
-                        if($this->_hasParam('error')) {
-                            $msg = $this->messageBox("$providerParam login failed. <b>".$this->_getParam('error')."</b>","danger");
+                        if ($this->_hasParam('error')) {
+                            $msg = $this->messageBox("$providerParam login failed. <b>" . $this->_getParam('error') . "</b>", "danger");
                         }
                         break;
                     case "twitter":
@@ -65,8 +71,8 @@ class LoginController extends Aso_Controller_Action
                             $result = $auth->authenticate($adapter);
 
                         }
-                        if($this->_hasParam('error')) {
-                            $msg = $this->messageBox("$providerParam login failed. <b>".$this->_getParam('error')."</b>","danger");
+                        if ($this->_hasParam('error')) {
+                            $msg = $this->messageBox("$providerParam login failed. <b>" . $this->_getParam('error') . "</b>", "danger");
                         }
                         break;
                 }
@@ -89,9 +95,9 @@ class LoginController extends Aso_Controller_Action
                                 $dataProvider = $this->change_key($dataProvider, "first_name", "given_name");
                                 $dataProvider = $this->change_key($dataProvider, "last_name", "family_name");
                                 $dataProvider = $this->change_key($dataProvider, "verified", "verified_email");
-                                $dataProvider["picture"] = "http://graph.facebook.com/".$dataProvider['id']."/picture?type=large";
+                                $dataProvider["picture"] = "http://graph.facebook.com/" . $dataProvider['id'] . "/picture?type=large";
 
-                                if ($login->upateAccessToken($dataProvider['id'], $data = array('access_token' => $provider->getApi()->getAccessToken())) != NULL){
+                                if ($login->upateAccessToken($dataProvider['id'], $data = array('access_token' => $provider->getApi()->getAccessToken())) != NULL) {
                                     unset($dataProvider['access_token']);
                                 }
                             }
@@ -103,11 +109,11 @@ class LoginController extends Aso_Controller_Action
 //                                role 0 becouse, google user can not modify pages
                                 $this->getSession()->u_role = 0;
                                 $msg = $this->messageBox("Zostałeś zalogowany(a) prawidłowo.<br>Używając konta <b>$providerParam</b>", "success");
-                            }else{
+                            } else {
 
                                 if ($login->getUserData(null, array('email' => $dataProvider['email'])) == TRUE) {
-                                    $msg = $this->messageBox("Przy próbie zalogowania za pomocą konta <b>$providerParam</b>.<br>Wykryto że adres email<br><b><ul><li>".$dataProvider['email']."</li></ul></b><br>jest przypisany do innego konta.", "danger");
-                                }else{
+                                    $msg = $this->messageBox("Przy próbie zalogowania za pomocą konta <b>$providerParam</b>.<br>Wykryto że adres email<br><b><ul><li>" . $dataProvider['email'] . "</li></ul></b><br>jest przypisany do innego konta.", "danger");
+                                } else {
 
                                     if ($login->getUserData($dataProvider['id'], array('email' => $dataProvider['email'])) == FALSE) {
                                         $login->addNewSocialNetworkUser($dataProvider);
@@ -125,11 +131,11 @@ class LoginController extends Aso_Controller_Action
                     $dataProvider = null;
 
                     ?>
-                        <script>
-                            window.opener.location.href= '<?php echo  $this->view->serverUrl() . $this->view->baseUrl() ?>';
-                            self.close();
-                        </script>
-                    <?php
+                    <script>
+                        window.opener.location.href = '<?php echo  $this->view->serverUrl() . $this->view->baseUrl() ?>';
+                        self.close();
+                    </script>
+                <?php
                 }
 
             } elseif ($this->getRequest()->isPost()) {
@@ -157,31 +163,32 @@ class LoginController extends Aso_Controller_Action
                             $this->getSession()->u_role = $loginRow->role;
 
                             $msg = $this->messageBox("Zostałeś zalogowany(a) prawidłowo.", "success");
-                        }else {
+                        } else {
                             $msg = $this->messageBox("Podany użytkownik nie został aktywowany. Skontaktuj się z administratorem w celu dokończenia aktywacji konta. <a href=\"mailto:aleksander.sowiak@gmail.com\">Pod tym adresem email</a>", "warning");
                         }
-                    }else {
-                        $msg = $this->messageBox("Uzytkownik nie istnieje. Bądź podane dane są nie prawidłowe.","danger");
+                    } else {
+                        $msg = $this->messageBox("Uzytkownik nie istnieje. Bądź podane dane są nie prawidłowe.", "danger");
                     }
                 }
                 $this->_helper->FlashMessenger($msg);
                 $this->_redirect(($this->getRequest()->getPost('redirurl') != NULL) ? $this->getRequest()->getPost('redirurl') : '/');
             }
 
-        } catch(exception $e) {
+        } catch (exception $e) {
 //            $this->logError("indexAction() exception: ".$e->getMessage());
-            $this->_helper->FlashMessenger($this->messageBox($e,'danger'));
+            $this->_helper->FlashMessenger($this->messageBox($e, 'danger'));
             $this->redirect('/');
         }
     }
 
-    public function logoutAction() {
+    public function logoutAction()
+    {
 
         try {
             $this->_helper->viewRenderer->setNoRender(true);
             $this->_helper->layout()->disableLayout();
 
-            $msg = $this->messageBox("Zostałeś prawidołwo wylogowany(a).","success");
+            $msg = $this->messageBox("Zostałeś prawidołwo wylogowany(a).", "success");
 
             \TBS\Auth::getInstance()->clearIdentity();
 
@@ -192,33 +199,35 @@ class LoginController extends Aso_Controller_Action
 
             $this->_helper->FlashMessenger($msg);
             $this->_redirect('/');
-        } catch(exception $e) {
-            $this->_helper->FlashMessenger($this->messageBox($e,'danger'));
+        } catch (exception $e) {
+            $this->_helper->FlashMessenger($this->messageBox($e, 'danger'));
             $this->redirect('/');
         }
     }
 
-    public function change_key( $array, $old_key, $new_key) {
+    public function change_key($array, $old_key, $new_key)
+    {
 
-        if( ! array_key_exists( $old_key, $array ) )
+        if (!array_key_exists($old_key, $array))
             return $array;
 
-        $keys = array_keys( $array );
-        $keys[ array_search( $old_key, $keys ) ] = $new_key;
+        $keys = array_keys($array);
+        $keys[array_search($old_key, $keys)] = $new_key;
 
-        return array_combine( $keys, $array );
+        return array_combine($keys, $array);
     }
 
-    public function providerAction(){
+    public function providerAction()
+    {
         $request = $this->getRequest();
         $params = $request->getParams();
         $this->_helper->viewRenderer->setNoRender(true);
         $this->_helper->layout()->disableLayout();
         $visibility = $params['value'];
-        $data = array(  'user_id'   => $this->_ms->u_id,
-                        'visibility' => $visibility);
-        if ($data['visibility'] == 0){
-            setcookie('provider_visibility', '1', time()+3600*24*7, $this->view->baseUrl());
+        $data = array('user_id' => $this->_ms->u_id,
+            'visibility' => $visibility);
+        if ($data['visibility'] == 0) {
+            setcookie('provider_visibility', '1', time() + 3600 * 24 * 7, $this->view->baseUrl());
         }
 
         $this->_model_login->updateProvider($data);

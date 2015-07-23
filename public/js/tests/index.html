@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8">
     <title>Bootstrap Plugin Test Suite</title>
 
@@ -11,44 +11,44 @@
     <link rel="stylesheet" href="vendor/qunit.css" media="screen">
     <script src="vendor/qunit.js"></script>
     <style>
-      #qunit-tests > li.pass {
-        display: none;/* Make it easier to see failing tests is Sauce screencasts */
-      }
+        #qunit-tests > li.pass {
+            display: none; /* Make it easier to see failing tests is Sauce screencasts */
+        }
     </style>
     <script>
-      // See https://github.com/axemclion/grunt-saucelabs#test-result-details-with-qunit
-      var log = []
-      QUnit.done(function (testResults) {
-        var tests = []
-        for (var i = 0, len = log.length; i < len; i++) {
-          var details = log[i]
-          tests.push({
-            name: details.name,
-            result: details.result,
-            expected: details.expected,
-            actual: details.actual,
-            source: details.source
-          })
-        }
-        testResults.tests = tests
+        // See https://github.com/axemclion/grunt-saucelabs#test-result-details-with-qunit
+        var log = []
+        QUnit.done(function (testResults) {
+            var tests = []
+            for (var i = 0, len = log.length; i < len; i++) {
+                var details = log[i]
+                tests.push({
+                    name: details.name,
+                    result: details.result,
+                    expected: details.expected,
+                    actual: details.actual,
+                    source: details.source
+                })
+            }
+            testResults.tests = tests
 
-        window.global_test_results = testResults
-      })
+            window.global_test_results = testResults
+        })
 
-      QUnit.testStart(function (testDetails) {
-        QUnit.log = function (details) {
-          if (!details.result) {
-            details.name = testDetails.name
-            log.push(details)
-          }
-        }
-      })
+        QUnit.testStart(function (testDetails) {
+            QUnit.log = function (details) {
+                if (!details.result) {
+                    details.name = testDetails.name
+                    log.push(details)
+                }
+            }
+        })
 
-      // Cleanup
-      QUnit.testDone(function () {
-        $('#qunit-fixture').empty()
-        $('#modal-test, .modal-backdrop').remove()
-      })
+        // Cleanup
+        QUnit.testDone(function () {
+            $('#qunit-fixture').empty()
+            $('#modal-test, .modal-backdrop').remove()
+        })
     </script>
 
     <!-- Plugin sources -->
@@ -78,11 +78,11 @@
     <script src="unit/popover.js"></script>
     <script src="unit/affix.js"></script>
 
-  </head>
-  <body>
-    <div id="qunit-container">
-      <div id="qunit"></div>
-      <div id="qunit-fixture"></div>
-    </div>
-  </body>
+</head>
+<body>
+<div id="qunit-container">
+    <div id="qunit"></div>
+    <div id="qunit-fixture"></div>
+</div>
+</body>
 </html>

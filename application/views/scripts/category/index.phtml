@@ -3,29 +3,35 @@
         <?php if ($this->Category != NULL) : ?>
         <div class="row">
             <?php foreach ($this->Category as $allCategory) : ?>
-            <div class="col-xs-6 col-lg-4">
-                <h3><?=$allCategory['category']?>
-                <span class="badge"><?=$allCategory['category_count']?></span></h3>
-                <p><a class="btn btn-default" href="<?=$this->baseUrl()?>/category/<?=$this->replaceOnLink($allCategory['category'])?>" role="button">Wyświetl »</a></p>
-            </div><!--/.col-xs-6.col-lg-4-->
+                <div class="col-xs-6 col-lg-4">
+                    <h3><?= $allCategory['category'] ?>
+                        <span class="badge"><?= $allCategory['category_count'] ?></span></h3>
+
+                    <p><a class="btn btn-default"
+                          href="<?= $this->baseUrl() ?>/category/<?= $this->replaceOnLink($allCategory['category']) ?>"
+                          role="button">Wyświetl »</a></p>
+                </div><!--/.col-xs-6.col-lg-4-->
             <?php endforeach; ?>
-        </div><!--/row-->
-    </div><!--/.col-xs-12.col-sm-9-->
+        </div>
+        <!--/row-->
+    </div>
+    <!--/.col-xs-12.col-sm-9-->
     <div class="col-sm-4 aso-col-sm-nav" id="sidebar" role="navigation">
         <ul class="list-group">
-            <?=$this->partialLoop('category/get/get-category.phtml',$this->Category); ?>
+            <?= $this->partialLoop('category/get/get-category.phtml', $this->Category); ?>
         </ul>
-    <?php else: ?>
-        <div class="row">
-            <div class="alert alert-info" role="alert">
-                <p>Nie znaleniono żadnych kategori.</p>
-                <?php if ($this->facebook['data'] != null) : ?>
-                    <p>Zapraszamy później, bądź na naszego Facebook'a.</p>
-                <?php endif; ?>
+        <?php else: ?>
+            <div class="row">
+                <div class="alert alert-info" role="alert">
+                    <p>Nie znaleniono żadnych kategori.</p>
+                    <?php if ($this->facebook['data'] != null) : ?>
+                        <p>Zapraszamy później, bądź na naszego Facebook'a.</p>
+                    <?php endif; ?>
+                </div>
+                <?= $this->render('facebook.phtml'); ?>
             </div>
-            <?=$this->render('facebook.phtml'); ?>
-        </div>
-    <?php endif; ?>
+        <?php
+        endif; ?>
     </div>
 </div>
 

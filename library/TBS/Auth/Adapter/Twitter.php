@@ -1,11 +1,11 @@
 <?php
 namespace TBS\Auth\Adapter;
-use \TBS\Auth\Identity\Twitter as Identity;
 
-use \Zend_Oauth_Consumer as Consumer;
-use \Zend_Auth_Result as Result;
-use \Zend_Session_Namespace as SessionNameSpace;
-use \Zend_Registry as Registry;
+use TBS\Auth\Identity\Twitter as Identity;
+use Zend_Auth_Result as Result;
+use Zend_Oauth_Consumer as Consumer;
+use Zend_Registry as Registry;
+use Zend_Session_Namespace as SessionNameSpace;
 
 class Twitter implements \Zend_Auth_Adapter_Interface
 {
@@ -36,7 +36,7 @@ class Twitter implements \Zend_Auth_Adapter_Interface
         $result['identity'] = $identity;
 
         return new Result($result['code'], $result['identity'],
-                          $result['messages']);
+            $result['messages']);
     }
 
     public static function getAuthorizationUrl()

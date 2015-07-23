@@ -82,10 +82,10 @@ class ZF
     public function bootstrap()
     {
         // detect settings
-        $this->_mode             = $this->_detectMode();
-        $this->_homeDirectory    = $this->_detectHomeDirectory();
+        $this->_mode = $this->_detectMode();
+        $this->_homeDirectory = $this->_detectHomeDirectory();
         $this->_storageDirectory = $this->_detectStorageDirectory();
-        $this->_configFile       = $this->_detectConfigFile();
+        $this->_configFile = $this->_detectConfigFile();
 
         // setup
         $this->_setupPHPRuntime();
@@ -437,8 +437,8 @@ EOS;
     protected function _runInfo()
     {
         echo 'Zend_Tool & CLI Setup Information' . PHP_EOL
-           . '(available via the command line "zf --info")'
-           . PHP_EOL;
+            . '(available via the command line "zf --info")'
+            . PHP_EOL;
 
         echo '   * ' . implode(PHP_EOL . '   * ', $this->_messages) . PHP_EOL;
 
@@ -483,7 +483,7 @@ EOS;
 
         if (file_exists($storageDirectory)) {
             echo 'Directory already exists at ' . $storageDirectory . PHP_EOL
-               . 'Cannot create storage directory.';
+                . 'Cannot create storage directory.';
             return;
         }
 
@@ -503,7 +503,7 @@ EOS;
 
         if (file_exists($configFile)) {
             echo 'File already exists at ' . $configFile . PHP_EOL
-               . 'Cannot write new config file.';
+                . 'Cannot write new config file.';
             return;
         }
 
@@ -516,8 +516,8 @@ EOS;
         $iniValues = ini_get_all();
         if ($iniValues['include_path']['global_value'] != $iniValues['include_path']['local_value']) {
             echo 'NOTE: the php include_path to be used with the tool has been written' . PHP_EOL
-               . 'to the config file, using ZEND_TOOL_INCLUDE_PATH (or other include_path setters)' . PHP_EOL
-               . 'is no longer necessary.' . PHP_EOL . PHP_EOL;
+                . 'to the config file, using ZEND_TOOL_INCLUDE_PATH (or other include_path setters)' . PHP_EOL
+                . 'is no longer necessary.' . PHP_EOL . PHP_EOL;
         }
 
         echo 'Config file written to ' . $configFile . PHP_EOL;
@@ -530,9 +530,9 @@ EOS;
      */
     protected function _runSetupMoreInfo()
     {
-        $homeDirectory    = $this->_detectHomeDirectory(false, false);
+        $homeDirectory = $this->_detectHomeDirectory(false, false);
         $storageDirectory = $this->_detectStorageDirectory(false, false);
-        $configFile       = $this->_detectConfigFile(false, false);
+        $configFile = $this->_detectConfigFile(false, false);
 
         echo <<<EOS
 
@@ -604,7 +604,7 @@ EOS;
      * _logMessage() - Internal method used to log setup and information messages.
      *
      * @param string $message
-     * @param bool   $storeMessage
+     * @param bool $storeMessage
      * @return void
      */
     protected function _logMessage($message, $storeMessage = true)

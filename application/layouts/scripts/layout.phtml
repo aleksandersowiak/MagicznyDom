@@ -1,43 +1,53 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <?php echo $this->headTitle($this->web_title['data'])."\n" ?>
-    <?php echo $this->headMeta()."\n" ?>
-    <?php echo $this->headLink()."\n" ?>
-    <?php echo $this->headStyle()."\n" ?>
-    <?php echo $this->headScript()."\n" ?>
+    <?php echo $this->headTitle($this->web_title['data']) . "\n" ?>
+    <?php echo $this->headMeta() . "\n" ?>
+    <?php echo $this->headLink() . "\n" ?>
+    <?php echo $this->headStyle() . "\n" ?>
+    <?php echo $this->headScript() . "\n" ?>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-<?=$this->render('login_popup.phtml')?>
-<?php if(isset($this->message)) :?>
+<?= $this->render('login_popup.phtml') ?>
+<?php if (isset($this->message)) : ?>
     <?php $message = $this->message; ?>
-    <?php   if (isset($message["message"])) { $text   = $message["message"]; }else{ $text   = ''; };
-    if (isset($message["style"])) { $style   = $message["style"]; }else{ $style   = ''; };
+    <?php   if (isset($message["message"])) {
+        $text = $message["message"];
+    } else {
+        $text = '';
+    };
+    if (isset($message["style"])) {
+        $style = $message["style"];
+    } else {
+        $style = '';
+    };
     ?>
     <script>
-        $(document).ready(function(){
-            $(".alert-<?=$style?>").delay(5000).fadeTo("slow",0);
+        $(document).ready(function () {
+            $(".alert-<?=$style?>").delay(5000).fadeTo("slow", 0);
             $(".alert-<?=$style?>").hide(0);
         });
     </script>
     <div class="box-message">
-        <div class="alert alert-<?=$style?> pop-up" role="alert">
-            <?=$text?>
+        <div class="alert alert-<?= $style ?> pop-up" role="alert">
+            <?= $text ?>
         </div>
     </div>
 <?php endif; ?>
 <?php if (isset($this->message_share)
     && ($this->message_share != null)
     && ($this->message_share['visibility'] != 1)
-    && (isset($_COOKIE['provider_visibility']) != 1)) :
-?>
+    && (isset($_COOKIE['provider_visibility']) != 1)
+) :
+    ?>
     <script type="text/javascript">
-        $(function() {
-            $(".provider").click(function(){
-                $(this).button('loading').delay(1000).queue(function() {
-                    var url='<?=$this->url(array("controller" => "login", "action" => "provider"),"default",true);?>/' + $(this).attr('data-target');
+        $(function () {
+            $(".provider").click(function () {
+                $(this).button('loading').delay(1000).queue(function () {
+                    var url = '<?=$this->url(array("controller" => "login", "action" => "provider"),"default",true);?>/' + $(this).attr('data-target');
                     $('.box-message-provider').load(url);
                     $(this).button('');
                     $(".box-message-provider").hide(0);
@@ -45,18 +55,22 @@
             });
         });
     </script>
-    <div class="box-message-provider" data-toogle="provider" >
+    <div class="box-message-provider" data-toogle="provider">
         <div class="alert-info pop-up alert" role="alert">
-            <b>Error Code: <?=$this->message_share['code']?></b>
+            <b>Error Code: <?= $this->message_share['code'] ?></b>
+
             <p>
-                <?=$this->message_share['message']?>
+                <?= $this->message_share['message'] ?>
             </p>
+
             <p>
-                Swoje ustawienia możesz zmienić <a href="https://www.facebook.com/settings?tab=applications" target="_blank">Tutaj</a>
+                Swoje ustawienia możesz zmienić <a href="https://www.facebook.com/settings?tab=applications"
+                                                   target="_blank">Tutaj</a>
             </p>
+
             <p></p>
-                <button type="button" data-target="1" class="btn btn-danger provider">Nie pokazuj tego więcej</button>
-                <button type="button" data-target="0" class="btn btn-primary provider">Później</button>
+            <button type="button" data-target="1" class="btn btn-danger provider">Nie pokazuj tego więcej</button>
+            <button type="button" data-target="0" class="btn btn-primary provider">Później</button>
         </div>
     </div>
 <?php endif; ?>
@@ -69,21 +83,22 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="<?=$this->baseUrl()?>"><?=$this->web_title['data']?></a>
+            <a class="navbar-brand" href="<?= $this->baseUrl() ?>"><?= $this->web_title['data'] ?></a>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li><a href="<?=$this->baseUrl()?>">Główna</a></li>
-                <?php if(!empty($this->Category)) : ?>
+                <li><a href="<?= $this->baseUrl() ?>">Główna</a></li>
+                <?php if (!empty($this->Category)) : ?>
                     <li class="dropdown">
-                        <a href="<?=$this->baseUrl()?>/category" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">Kategorie <span class="caret"></span></a>
+                        <a href="<?= $this->baseUrl() ?>/category" class="dropdown-toggle" data-toggle="dropdown"
+                           role="button" aria-expanded="true">Kategorie <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            <?=$this->partialLoop('index/menu-category.phtml',$this->Category); ?>
+                            <?= $this->partialLoop('index/menu-category.phtml', $this->Category); ?>
                         </ul>
                     </li>
                 <?php endif; ?>
                 <?php if ($this->about == TRUE) { ?>
-                    <li><a href="<?=$this->baseUrl()?>/about">O mnie</a> </li>
+                    <li><a href="<?= $this->baseUrl() ?>/about">O mnie</a></li>
                 <?php } ?>
             </ul>
             <div class="nav navbar-nav navbar-right">
@@ -95,8 +110,12 @@
                 </form>
                 <ul class="nav navbar-nav">
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?=(isset($this->u_name)) ? $this->u_name : 'Konto'?> <span class="caret"></span>
-                            <?php if (isset($this->u_picture) && $this->u_picture != '') : ?><img class="img-circle aso-img-menu" src="<?=$this->u_picture?>" alt="Generic placeholder image" width="20" height="20"> <?php endif; ?>
+                        <a href="#" class="dropdown-toggle"
+                           data-toggle="dropdown"><?= (isset($this->u_name)) ? $this->u_name : 'Konto' ?> <span
+                                class="caret"></span>
+                            <?php if (isset($this->u_picture) && $this->u_picture != '') : ?><img
+                                class="img-circle aso-img-menu" src="<?= $this->u_picture ?>"
+                                alt="Generic placeholder image" width="20" height="20"> <?php endif; ?>
                             <span class="badge aso-badge">123</span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
@@ -105,8 +124,9 @@
                                     <li><a href="/">Dodaj nowy wpis</a></li>
                                     <li><a href="/">Ustawienia</a></li>
                                 <?php endif; ?>
-                                <li><a href="<?=$this->baseUrl()?>/notice">Powiadomienia <span class="badge">42</span></a></li>
-                                <li><a href="<?=$this->baseUrl()?>/login/logout">Wyloguj</a></li>
+                                <li><a href="<?= $this->baseUrl() ?>/notice">Powiadomienia <span class="badge">42</span></a>
+                                </li>
+                                <li><a href="<?= $this->baseUrl() ?>/login/logout">Wyloguj</a></li>
                             <?php else: ?>
                                 <li><a href="#" data-toggle="modal" data-target="#login">Zaloguj</a></li>
                             <?php endif; ?>
@@ -114,7 +134,8 @@
                     </li>
                 </ul>
             </div>
-        </div><!--/.nav-collapse -->
+        </div>
+        <!--/.nav-collapse -->
     </div>
 </nav>
 <?php echo $this->placeholder('hotIndex') ?>
@@ -131,9 +152,11 @@
     <hr class="featurette-divider"/>
     <footer>
         <p class="pull-right"><a href="#">&#8593; Wróć na Górę.</a></p>
-        <p><?=$this->web_title['data']?> &#8226; <a href="#">Privacy</a> &#8226; <a href="#">Terms</a></p>
-        <p class="pull-right">&nbsp;ver. <?=APP_VER?>-2014 </p>
-        <?=(APPLICATION_ENV == '<p class="pull-right">development</p>') ? APPLICATION_ENV : ''?>
+
+        <p><?= $this->web_title['data'] ?> &#8226; <a href="#">Privacy</a> &#8226; <a href="#">Terms</a></p>
+
+        <p class="pull-right">&nbsp;ver. <?= APP_VER ?>-2014 </p>
+        <?= (APPLICATION_ENV == '<p class="pull-right">development</p>') ? APPLICATION_ENV : '' ?>
     </footer>
 </div>
 </body>

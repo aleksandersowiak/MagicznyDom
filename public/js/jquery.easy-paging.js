@@ -6,9 +6,9 @@
  * Dual licensed under the MIT or GPL Version 2 licenses.
  **/
 
-(function($) {
+(function ($) {
 
-    $["fn"]["easyPaging"] = function(num, o, per_page) {
+    $["fn"]["easyPaging"] = function (num, o, per_page) {
 
         if (!$["fn"]["paging"]) {
             return this;
@@ -21,7 +21,7 @@
             "page": 1,
             "format": "",
             "lapping": 0,
-            "onSelect": function() {
+            "onSelect": function () {
             }
         };
 
@@ -31,7 +31,7 @@
 
         var masks = {};
 
-        $li.each(function(i) {
+        $li.each(function (i) {
 
             if (0 === i) {
                 masks.prev = this.innerHTML;
@@ -40,14 +40,14 @@
                 masks.next = this.innerHTML;
                 opts.format += ">";
             } else {
-                masks[i] = this.innerHTML.replace(/#[nc]/, function(str) {
+                masks[i] = this.innerHTML.replace(/#[nc]/, function (str) {
                     opts["format"] += str.replace("#", "");
                     return "([...])";
                 });
             }
         });
 
-        opts["onFormat"] = function(type) {
+        opts["onFormat"] = function (type) {
 
             var value = "";
 
@@ -71,7 +71,7 @@
         };
 
         $(this)["paging"](num, opts);
-        
+
         return this;
     };
 

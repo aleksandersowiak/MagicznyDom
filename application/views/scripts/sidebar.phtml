@@ -1,24 +1,25 @@
 <?php $this->placeholder('sidebar')->captureStart() ?>
-<!--    --><?php //if ($this->about  != NULL) : ?>
-<!--        --><?php //$type = $this->about['data'];
+    <!--    --><?php //if ($this->about  != NULL) : ?>
+    <!--        --><?php //$type = $this->about['data'];
 //        $additional_settings = $this->about['additional_settings'];
 //        if ($this->isJson($additional_settings)) :
-//            $about_data = json_decode($additional_settings, true);  else: ?>
-<!--            <script>-->
-<!--                $(document).ready( function() {-->
-<!--                    var url='--><?//=$this->url(array("controller" => "index", "action" => "turn-off-setting"),"default",true);?><!--/app/about';-->
-<!--                    $('body').load(url);-->
-<!--                });-->
-<!--            </script>-->
-<!--        --><?php //endif; ?>
-<!--        <div class="sidebar-module sidebar-module-inset blog-sidebar aso-about">-->
-<!--            <h4>--><?php //if (isset($about_data) != NULL) : echo $about_data['title_about']; else: echo 'Troszeczkę o mnie...'; endif; ?><!--</h4>-->
-<!--            <p >--><?//=$this->restrictText($type, 100)?><!--</p>-->
-<!--        </div>-->
-<!--    --><?php //endif; ?>
-    <?php if ($this->commentsCount > 0) : ?>
+//            $about_data = json_decode($additional_settings, true);  else:
+?>
+    <!--            <script>-->
+    <!--                $(document).ready( function() {-->
+    <!--                    var url='--><? //=$this->url(array("controller" => "index", "action" => "turn-off-setting"),"default",true);?><!--/app/about';-->
+    <!--                    $('body').load(url);-->
+    <!--                });-->
+    <!--            </script>-->
+    <!--        --><?php //endif; ?>
+    <!--        <div class="sidebar-module sidebar-module-inset blog-sidebar aso-about">-->
+    <!--            <h4>--><?php //if (isset($about_data) != NULL) : echo $about_data['title_about']; else: echo 'Troszeczkę o mnie...'; endif; ?><!--</h4>-->
+    <!--            <p >--><? //=$this->restrictText($type, 100)?><!--</p>-->
+    <!--        </div>-->
+    <!--    --><?php //endif; ?>
+<?php if ($this->commentsCount > 0) : ?>
     <h2>
-       <span class="glyphicon glyphicon-comment btn-lg"></span>Komentarze
+        <span class="glyphicon glyphicon-comment btn-lg"></span>Komentarze
     </h2>
     <nav>
         <ul class="pagination" style="text-align: center">
@@ -29,7 +30,7 @@
             <li>#n</li>
             <li>#n</li>
             <li>#n</li>
-<!--            <li>#n</li>-->
+            <!--            <li>#n</li>-->
             <li>&raquo;</li>
         </ul>
     </nav>
@@ -37,21 +38,23 @@
     <div id="output"></div>
     <script>
         $(".pagination").easyPaging(<?=($this->commentsCount)?>, {
-            onSelect: function(page) {
-                var url='<?=$this->url(array("controller" => "comments", "action" => "getComments"),"default",true);?>/id/<?=$this->replaceOnLink($this->title)?>/page/'+page;
+            onSelect: function (page) {
+                var url = '<?=$this->url(array("controller" => "comments", "action" => "getComments"),"default",true);?>/id/<?=$this->replaceOnLink($this->title)?>/page/' + page;
                 $("#output").load(url);
             }
         }, <?=($this->per_page)?>);
     </script>
 
-    <?php endif; ?>
-    <?php if ($this->issCommentToAdd == true) : ?>
+<?php endif; ?>
+<?php if ($this->issCommentToAdd == true) : ?>
     <?php if ($this->u_id != NULL) : ?>
         <script>
-            $(document).ready(function() {
+            $(document).ready(function () {
                 $('#message-text').summernote(
                     {   height: 100,
-                        toolbar: [['style', ['bold', 'italic', 'underline']]]
+                        toolbar: [
+                            ['style', ['bold', 'italic', 'underline']]
+                        ]
                     }
                 );
             });
@@ -60,22 +63,28 @@
         <button type="button" class="btn btn-default" data-toggle="modal" data-target="#add-new-comment">
             <span class="glyphicon glyphicon-comment"></span> Dodaj komentarz
         </button>
-        <div class="modal fade" id="add-new-comment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="add-new-comment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title" id="exampleModalLabel">Dodaj nowy komentarz</h4>
                     </div>
-                    <form role="form" novalidate action="<?=$this->url(array("controller" => "comments", "action" => "addComment"),"default",true);?>" id="addCommentForm">
+                    <form role="form" novalidate
+                          action="<?= $this->url(array("controller" => "comments", "action" => "addComment"), "default", true); ?>"
+                          id="addCommentForm">
                         <div class="modal-body">
                             <div class="form-group">
                                 <label for="recipient-name" class="control-label">Nazwa:</label>
-                                <input type="text" class="form-control" required="required" readonly value="<?=$this->u_name?>">
-                                <input type="hidden" class="form-control" id="recipient-name" required="required" value="<?=$this->u_name?>">
+                                <input type="text" class="form-control" required="required" readonly
+                                       value="<?= $this->u_name ?>">
+                                <input type="hidden" class="form-control" id="recipient-name" required="required"
+                                       value="<?= $this->u_name ?>">
                             </div>
                             <div class="form-group">
                                 <label for="message-text" class="control-label">Komentarz:</label>
-                                <textarea class="form-control" id="message-text" name="message-text" required="required" ></textarea>
+                                <textarea class="form-control" id="message-text" name="message-text"
+                                          required="required"></textarea>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -86,68 +95,70 @@
                             </script>
                             <span>
                                 <label>
-                                    <input type="checkbox" data-toggle="tooltip" id="disable-reply" data-placement="top" title="Wyłącz możliwość odpowiadania na ten komentarz.">
+                                    <input type="checkbox" data-toggle="tooltip" id="disable-reply" data-placement="top"
+                                           title="Wyłącz możliwość odpowiadania na ten komentarz.">
                                 </label>
-                            </span> <button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
+                            </span>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
                             <button type="submit" class="btn btn-primary">Dodaj</button>
                         </div>
                     </form>
                 </div>
             </div>
             <script>
-                $( "#addCommentForm" ).submit(function( event ) {
+                $("#addCommentForm").submit(function (event) {
                     event.preventDefault();
-                    var $form = $( this ),
-                        name = $form.find( "input[id='recipient-name']" ).val(),
-                        reply = $form.find( "input[id='disable-reply']" ).is(':checked'),
-                        message = $form.find( "textarea[id='message-text']" ).code(),
+                    var $form = $(this),
+                        name = $form.find("input[id='recipient-name']").val(),
+                        reply = $form.find("input[id='disable-reply']").is(':checked'),
+                        message = $form.find("textarea[id='message-text']").code(),
                         id = '<?=$this->replaceOnLink($this->title)?>',
-                        url = $form.attr( "action" );
+                        url = $form.attr("action");
                     <?php if(!isset($this->u_name) && $this->u_name == '') : ?>
-                        $( "input[id='recipient-name']" ).val('');
+                    $("input[id='recipient-name']").val('');
                     <?php endif; ?>
-                    if (message == '' || message == '<p><br></p>' ) {
+                    if (message == '' || message == '<p><br></p>') {
                         $("label[for='message-text']").prepend(
-                            '<div class="alert-danger" role="alert">'+
-                            'Pole komentarza jest wymagane, i nie może być pozostawione puste.'+
-                            '</div>');
-                        $(".alert-danger").delay(5000).fadeTo("slow",0);
+                            '<div class="alert-danger" role="alert">' +
+                                'Pole komentarza jest wymagane, i nie może być pozostawione puste.' +
+                                '</div>');
+                        $(".alert-danger").delay(5000).fadeTo("slow", 0);
                         $(".alert-danger").hide(0);
                         return;
                     }
-                    $.post( url, { name: name, message: message, id: id, reply: reply} );
+                    $.post(url, { name: name, message: message, id: id, reply: reply});
                     $('#add-new-comment').modal('hide');
-                    $('body').prepend(' <div class="box-message">'+
-                                            '<div class="alert alert-success" role="alert">'+
-                                            'Komentarz został dodany'+
-                                            '</div>'+
-                                            '<div class="alert alert-warning" role="alert">'+
-                                            'Lecz z uwagi na możliwość dodawania obraźliwych komentarzy. Wybrany komentarz zostanie wyświetlony po moderacji przez właściciela strony.'+
-                    '</div>'+
-                    '</div>');
-                    $(".alert-success").delay(5000).fadeTo("slow",0);
+                    $('body').prepend(' <div class="box-message">' +
+                        '<div class="alert alert-success" role="alert">' +
+                        'Komentarz został dodany' +
+                        '</div>' +
+                        '<div class="alert alert-warning" role="alert">' +
+                        'Lecz z uwagi na możliwość dodawania obraźliwych komentarzy. Wybrany komentarz zostanie wyświetlony po moderacji przez właściciela strony.' +
+                        '</div>' +
+                        '</div>');
+                    $(".alert-success").delay(5000).fadeTo("slow", 0);
                     $(".alert-success").hide(0);
-                    $(".alert-warning").delay(7000).fadeTo("slow",0);
+                    $(".alert-warning").delay(7000).fadeTo("slow", 0);
                     $(".alert-warning").hide(0);
 
-                    var url='<?=$this->url(array("controller" => "comments", "action" => "getComments"),"default",true);?>/id/<?=$this->replaceOnLink($this->title)?>/page/1'
+                    var url = '<?=$this->url(array("controller" => "comments", "action" => "getComments"),"default",true);?>/id/<?=$this->replaceOnLink($this->title)?>/page/1'
                     $("#output").load(url);
-                    $( "textarea[id='message-text']" ).val('');
+                    $("textarea[id='message-text']").val('');
                     $("div[class='note-editable']").empty();
                 });
             </script>
         </div>
-        <?php endif; ?>
     <?php endif; ?>
+<?php endif; ?>
 <?php if (count($this->Category) > 0) : ?>
     <div>
         <h2>
             <span class="glyphicon glyphicon glyphicon-th-list btn-lg"></span>Kategorie
         </h2>
-    <ul class="list-group">
-        <?=$this->partialLoop('category/get/get-category.phtml',$this->Category); ?>
-    </ul>
+        <ul class="list-group">
+            <?= $this->partialLoop('category/get/get-category.phtml', $this->Category); ?>
+        </ul>
     </div>
 <?php endif; ?>
-</div>
+    </div>
 <?php $this->placeholder('sidebar')->captureEnd() ?>

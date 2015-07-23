@@ -1,5 +1,5 @@
 {
-  "extends" : "../../.jshintrc",
-  "devel"   : true,
-  "qunit"   : true
+    "extends": "../../.jshintrc",
+    "devel": true,
+    "qunit": true
 }

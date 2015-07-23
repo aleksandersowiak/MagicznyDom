@@ -1,22 +1,24 @@
 <?php $this->placeholder('navigation')->captureStart() ?>
-<ul class="pager">
-    <?php
-    $nextRecipe = $this->replaceOnLink($this->nextRecipe);
-    $prevRecipe = $this->replaceOnLink($this->prevRecipe);
-    ?>
-    <li class="next <?=($this->nextRecipe == null) ? "disabled" : "" ?>">
-        <?php if(($this->nextRecipe == null)) : ?>
-            <a href="#">Starszy Wpisy &#187;</a>
-        <?php else : ?>
-            <a href="<?=$this->baseUrl()?><?=($this->nextRecipe == null) ? null : "/read/$nextRecipe" ?>">Starszy Wpisy &#187;</a>
-        <?php endif; ?>
-    </li>
-    <li class="previous <?=($this->prevRecipe == null) ? "disabled" : "" ?> ">
-        <?php if(($this->prevRecipe == null)) : ?>
-            <a href="#">&#171; Nowszy Wpisy</a>
-        <?php else : ?>
-            <a href="<?=$this->baseUrl()?><?=($this->prevRecipe == null) ? null : "/read/$prevRecipe" ?>">&#171; Nowszy Wpisy</a>
-        <?php endif; ?>
-    </li>
-</ul>
+    <ul class="pager">
+        <?php
+        $nextRecipe = $this->replaceOnLink($this->nextRecipe);
+        $prevRecipe = $this->replaceOnLink($this->prevRecipe);
+        ?>
+        <li class="next <?= ($this->nextRecipe == null) ? "disabled" : "" ?>">
+            <?php if (($this->nextRecipe == null)) : ?>
+                <a href="#">Starszy Wpisy &#187;</a>
+            <?php else : ?>
+                <a href="<?= $this->baseUrl() ?><?= ($this->nextRecipe == null) ? null : "/read/$nextRecipe" ?>">Starszy
+                    Wpisy &#187;</a>
+            <?php endif; ?>
+        </li>
+        <li class="previous <?= ($this->prevRecipe == null) ? "disabled" : "" ?> ">
+            <?php if (($this->prevRecipe == null)) : ?>
+                <a href="#">&#171; Nowszy Wpisy</a>
+            <?php else : ?>
+                <a href="<?= $this->baseUrl() ?><?= ($this->prevRecipe == null) ? null : "/read/$prevRecipe" ?>">&#171;
+                    Nowszy Wpisy</a>
+            <?php endif; ?>
+        </li>
+    </ul>
 <?php $this->placeholder('navigation')->captureEnd() ?>

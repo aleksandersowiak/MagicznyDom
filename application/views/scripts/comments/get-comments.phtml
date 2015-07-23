@@ -1,12 +1,14 @@
 <style>
-    span.glyphicon-thumbs-up, span.glyphicon-thumbs-down:hover {cursor: pointer}
+    span.glyphicon-thumbs-up, span.glyphicon-thumbs-down:hover {
+        cursor: pointer
+    }
 </style>
 <script type="text/javascript">
-    $(function() {
-        $(".read-more").click(function(){
-            $(this).button('loading').delay(1000).queue(function() {
-                var url='<?=$this->url(array("controller" => "comments", "action" => "get-comment"),"default",true);?>/id/' + $(this).attr('data-main');
-                $("#"+$(this).attr('data-target')).load(url);
+    $(function () {
+        $(".read-more").click(function () {
+            $(this).button('loading').delay(1000).queue(function () {
+                var url = '<?=$this->url(array("controller" => "comments", "action" => "get-comment"),"default",true);?>/id/' + $(this).attr('data-main');
+                $("#" + $(this).attr('data-target')).load(url);
                 $(this).button('reset');
                 $(this).fadeOut();
                 $(this).dequeue();
@@ -14,17 +16,17 @@
             });
         });
     });
-    $('.vote-plus').click(function() {
-        var url='<?=$this->url(array("controller" => "comments", "action" => "vote"),"default",true);?>/plus/' + $(this).attr('data-main');
-        $("#"+$(this).attr('id')+" .small").load(url);
+    $('.vote-plus').click(function () {
+        var url = '<?=$this->url(array("controller" => "comments", "action" => "vote"),"default",true);?>/plus/' + $(this).attr('data-main');
+        $("#" + $(this).attr('id') + " .small").load(url);
     });
-    $('.vote-minus').click(function() {
-        var url='<?=$this->url(array("controller" => "comments", "action" => "vote"),"default",true);?>/minus/' + $(this).attr('data-main');
-        $("#"+$(this).attr('id')+" .small").load(url);
+    $('.vote-minus').click(function () {
+        var url = '<?=$this->url(array("controller" => "comments", "action" => "vote"),"default",true);?>/minus/' + $(this).attr('data-main');
+        $("#" + $(this).attr('id') + " .small").load(url);
     });
 
-    $(document).ready(function(){
-        $('[data-toggle="popover"]').popover({ html : true, delay: { "show": 500, "hide": 100 }});
+    $(document).ready(function () {
+        $('[data-toggle="popover"]').popover({ html: true, delay: { "show": 500, "hide": 100 }});
 
     });
 </script>
@@ -34,105 +36,168 @@
         <?php $idBox = 0; ?>
         <?php foreach ($this->comments as $data_comment) : ?>
             <div class="well">
-                <h4 class="list-group-item-heading"><span class="aso-comment-popover" data-placement="top" data-toggle="popover" data-trigger="click" data-content='
+                <h4 class="list-group-item-heading"><span class="aso-comment-popover" data-placement="top"
+                                                          data-toggle="popover" data-trigger="click" data-content='
                 <div class="row">
                     <div class="col-md-3">
-                        <?php if (isset($data_comment['picture']) && $data_comment['picture'] != '') : ?><img class="" src="<?=$data_comment['picture']?>" width="100%" height="100%"> <?php endif; ?>
+                        <?php if (isset($data_comment['picture']) && $data_comment['picture'] != '') : ?><img class="" src="<?= $data_comment['picture'] ?>" width="40px" height="40px"> <?php endif; ?>
                     </div>
                     <div class="col-md-8">
-                        <?php if (isset($data_comment['picture']) && $data_comment['picture'] != '') : ?>Profil na <a href="<?=$data_comment['link']?>" taget="_blank"><?=ucfirst($data_comment['provider'])?></a><?php endif; ?>
+                        <?php if (isset($data_comment['picture']) && $data_comment['picture'] != '') : ?>Profil na <a href="<?= $data_comment['link'] ?>" taget="_blank"><?= ucfirst($data_comment['provider']) ?></a><?php endif; ?>
                     </div>
-                </div>' data-title="<?=$data_comment['userName']?>"><?=$data_comment['userName']?></span>
-                    <?php if (isset($data_comment['picture']) && $data_comment['picture'] != '') : ?><img class="img-circle aso-img-menu" src="<?=$data_comment['picture']?>" width="20" height="20"> <?php endif; ?>
-                <p class="pull-right btn-sm">
-                    <span class="glyphicon glyphicon-thumbs-up vote-plus" id="plus<?=$idBox?>" data-main="<?=$data_comment['id']?>" style="color: forestgreen"><span class="small" style="color: forestgreen"><?=$data_comment['plus']?></span></span>
-                    <span class="glyphicon glyphicon-thumbs-down vote-minus" id="minus<?=$idBox?>" data-main="<?=$data_comment['id']?>" style="color: red"><span class="small" style="color: red"><?=$data_comment['minus']?></span></span>
-                </p></h4>
-                <p><?=$data_comment['created']?></p>
-                <p id="box<?=$idBox?>" class="list-group-item-text"><?=$this->restrictText($data_comment['comment'],100)?></p>
-                <?php if (strlen($data_comment['comment']) > 100):?>
-                <p class="pull-right pull<?=$idBox?>">
-                    <button type="button" class="btn<?=$idBox?> aso-read-more read-more" data-target="box<?=$idBox?>" data-main="<?=$data_comment['id']?>" data-loading-text="Ładowanie..." >Czytaj całość <span class="glyphicon glyphicon-chevron-right btn-sm"></span></button>
+                </div>' data-title="<?= $data_comment['userName'] ?>"><?= $data_comment['userName'] ?></span>
+                    <?php if (isset($data_comment['picture']) && $data_comment['picture'] != '') : ?><img
+                        class="img-circle aso-img-menu" src="<?= $data_comment['picture'] ?>" width="20"
+                        height="20"> <?php endif; ?>
+                    <p class="pull-right btn-sm">
+                        <span class="glyphicon glyphicon-thumbs-up vote-plus" id="plus<?= $idBox ?>"
+                              data-main="<?= $data_comment['id'] ?>" style="color: forestgreen"><span class="small"
+                                                                                                      style="color: forestgreen"><?= $data_comment['plus'] ?></span></span>
+                        <span class="glyphicon glyphicon-thumbs-down vote-minus" id="minus<?= $idBox ?>"
+                              data-main="<?= $data_comment['id'] ?>" style="color: red"><span class="small"
+                                                                                              style="color: red"><?= $data_comment['minus'] ?></span></span>
+                    </p></h4>
+                <p><?= $data_comment['created'] ?></p>
+
+                <p id="box<?= $idBox ?>"
+                   class="list-group-item-text"><?= $this->restrictText($data_comment['comment'], 100) ?></p>
+                <?php if (strlen($data_comment['comment']) > 100): ?>
+                    <p class="pull-right pull<?= $idBox ?>">
+                        <button type="button" class="btn<?= $idBox ?> aso-read-more read-more"
+                                data-target="box<?= $idBox ?>" data-main="<?= $data_comment['id'] ?>"
+                                data-loading-text="Ładowanie...">Czytaj całość <span
+                                class="glyphicon glyphicon-chevron-right btn-sm"></span></button>
                     <div style="clear: both"></div>
-                </p>
+                    </p>
                 <?php endif; ?>
                 <?php if ($data_comment['reply'] == false) : ?>
-                    <button class="btn-link pull-left reply"  data-toggle="modal" data-target="#reply" data-main="<?=$data_comment['id']?>">Odpowiedz</button>
-                    <button class="btn-link pull-right reply-comments-view" data-target="reply-comments<?=$idBox?>" data-main="<?=$data_comment['id']?>">Pokaż Odpowiedzi</button>
+                    <button class="btn-link pull-left reply" data-toggle="modal" data-target="#reply"
+                            data-main="<?= $data_comment['id'] ?>">Odpowiedz
+                    </button>
+                    <button class="btn-link pull-right reply-comments-view" data-target="reply-comments<?= $idBox ?>"
+                            data-main="<?= $data_comment['id'] ?>">Pokaż Odpowiedzi
+                    </button>
                     <div style="clear: both"></div>
-                <?php endif; ?>
-                <script>
-                    $(function() {
-                        $(document).ready(function(){
-                            var url='<?=$this->url(array("controller" => "comments", "action" => "get-reply-comments"),"default",true);?>/id/<?=$data_comment['id']?>/limit/3';
-                            $("#reply-comments<?=$idBox?>").load(url).fadeIn();
-                        });
-                        $(".reply-comments-view").click(function(){
-                            $(this).button('loading').delay(1000).queue(function() {
-                                $("#reply-comments<?=$idBox?>").html("");
-                                var url='<?=$this->url(array("controller" => "comments", "action" => "get-reply-comments"),"default",true);?>/id/' + $(this).attr('data-main');
-                                $("#"+$(this).attr('data-target')).load(url).fadeIn();
-                                $(this).button('reset');
-                                $(this).fadeOut();
-                                $(this).dequeue();
-                                $($(this)).html("");
+                    <script>
+                        $(function () {
+                            $(document).ready(function () {
+                                var url = '<?=$this->url(array("controller" => "comments", "action" => "get-reply-comments"),"default",true);?>/id/<?=$data_comment['id']?>/limit/3';
+                                $("#reply-comments<?=$idBox?>").load(url).fadeIn();
                             });
-                        });
+                            $(".reply-comments-view").click(function () {
+                                $(this).button('loading').delay(1000).queue(function () {
+                                    var url = '<?=$this->url(array("controller" => "comments", "action" => "get-reply-comments"),"default",true);?>/id/' + $(this).attr('data-main');
+                                    $("#" + $(this).attr('data-target')).load(url).fadeIn();
+                                    $(this).button('reset');
+                                    $(this).fadeOut();
+                                    $(this).dequeue();
+                                    $($(this)).html("");
+                                });
+                            });
 
-                    });
-                </script>
-                <div id="reply-comments<?=$idBox?>">
-                </div>
+                        });
+                    </script>
+                    <div id="reply-comments<?= $idBox ?>">
+                    </div>
+                <?php endif; ?>
             </div>
-            <?php $idBox ++ ?>
+            <?php $idBox++ ?>
         <?php endforeach; ?>
     <?php endif; ?>
-    </div>
+</div>
 </div>
 <?php //endif; ?>
 <?php if ($data_comment['reply'] == false) : ?>
-<script>
-    $(document).on("click", ".reply", function () {
-        var rep_Id = $(this).attr('data-main');
-        var url='<?=$this->url(array("controller" => "comments", "action" => "get-comment"),"default",true);?>/id/' + rep_Id;
-        $( ".panel-body" ).load(url);
-    });
-    $(document).ready(function() {
-        $('#message-text').summernote(
-            {   height: 100,
-                toolbar: [['style', ['bold', 'italic', 'underline']]]
-            }
-        );
-    });
-</script>
-<div class="modal fade" id="reply" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="exampleModalLabel">Odpowiedź do komentarza</h4>
-            </div>
+    <script>
+        $(document).on("click", ".reply", function () {
+            var rep_Id = $(this).attr('data-main');
+            var url = '<?=$this->url(array("controller" => "comments", "action" => "get-comment"),"default",true);?>/id/' + rep_Id;
+            $(".panel-body").load(url);
+            $("#reply-id").val(rep_Id);
+        });
+        $(document).ready(function () {
+            $('#message-text').summernote(
+                {   height: 100,
+                    toolbar: [
+                        ['style', ['bold', 'italic', 'underline']]
+                    ]
+                }
+            );
+        });
+    </script>
+    <div class="modal fade" id="reply" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLabel">Odpowiedź do komentarza</h4>
+                </div>
 
-            <form role="form" novalidate action="<?=$this->url(array("controller" => "comments", "action" => "addComment"),"default",true);?>" id="addCommentForm">
-                <div class="modal-body">
-                    <div class="panel panel-default">
-                        <div class="panel-body"></div>
+                <form role="form" novalidate
+                      action="<?= $this->url(array("controller" => "comments", "action" => "addComment"), "default", true); ?>"
+                      id="addReplyCommentForm">
+                    <div class="modal-body">
+                        <div class="panel panel-default">
+                            <div class="panel-body"></div>
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" id="reply-id">
+                            <label for="recipient-name" class="control-label">Nazwa:</label>
+                            <input type="text" class="form-control" required="required" readonly
+                                   value="<?= $this->u_name ?>">
+                            <input type="hidden" class="form-control" id="recipient-name" required="required"
+                                   value="<?= $this->u_name ?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="control-label">Komentarz:</label>
+                            <textarea class="form-control" id="message-text" name="message-text"
+                                      required="required"></textarea>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="recipient-name" class="control-label">Nazwa:</label>
-                        <input type="text" class="form-control" required="required" readonly value="<?=$this->u_name?>">
-                        <input type="hidden" class="form-control" id="recipient-name" required="required" value="<?=$this->u_name?>">
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
+                        <button type="submit" class="btn btn-primary">Dodaj</button>
                     </div>
-                    <div class="form-group">
-                        <label for="message-text" class="control-label">Komentarz:</label>
-                        <textarea class="form-control" id="message-text" name="message-text" required="required" ></textarea>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
-                    <button type="submit" class="btn btn-primary">Dodaj</button>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
-</div>
+    <script>
+        $("#addReplyCommentForm").submit(function (event) {
+            event.preventDefault();
+            var $form = $(this),
+                name = $form.find("input[id='recipient-name']").val(),
+                reply_id = $form.find("input[id='reply-id']").val(),
+                message = $form.find("textarea[id='message-text']").code(),
+                url = $form.attr("action");
+            <?php if(!isset($this->u_name) && $this->u_name == '') : ?>
+            $("input[id='recipient-name']").val('');
+            <?php endif; ?>
+            if (message == '' || message == '<p><br></p>') {
+                $("label[for='message-text']").prepend(
+                    '<div class="alert-danger" role="alert">' +
+                        'Pole komentarza jest wymagane, i nie może być pozostawione puste.' +
+                        '</div>');
+                $(".alert-danger").delay(5000).fadeTo("slow", 0);
+                $(".alert-danger").hide(0);
+                return;
+            }
+            $.post(url, { name: name, message: message, reply_id: reply_id});
+            $('#reply').modal('hide');
+            $('body').prepend(' <div class="box-message">' +
+                '<div class="alert alert-success" role="alert">' +
+                'Komentarz został dodany' +
+                '</div>' +
+                '<div class="alert alert-warning" role="alert">' +
+                'Lecz z uwagi na możliwość dodawania obraźliwych komentarzy. Wybrany komentarz zostanie wyświetlony po moderacji przez właściciela strony.' +
+                '</div>' +
+                '</div>');
+            $(".alert-success").delay(5000).fadeTo("slow", 0);
+            $(".alert-success").hide(0);
+            $(".alert-warning").delay(7000).fadeTo("slow", 0);
+            $(".alert-warning").hide(0);
+            $("textarea[id='message-text']").val('');
+            $("div[class='note-editable']").empty();
+        });
+    </script>
 <?php endif; ?>
