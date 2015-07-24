@@ -9,6 +9,7 @@
         <p class="pull-right"><a href="<?= $this->baseUrl() ?>/read/<?= $this->replaceOnLink($this->title) ?>">Czytaj
                 całość...</a></p>
     </div>
+    <div style="clear: both"></div>
     <div class="col-md-4">
         <?php preg_match_all('/<img.*src=\"(.*)\".*>/iU', $this->recipe, $images);
         if (empty($images[1][0]) == false) :
