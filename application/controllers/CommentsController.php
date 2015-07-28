@@ -39,13 +39,32 @@ class CommentsController extends Aso_Controller_Action
         $this->getModel('Model_Read')->getReplyComment($replyComment, $id, $limit);
 
         if (count($replyComment["result"]) > 0) {
-            echo '<div class="div-reply-result"><hr>';
-            echo '<ul class="list-group">';
             foreach ($replyComment["result"] as $data) {
-                $view = '<li class="list-group-item"><b>' . $data['userName'] . '</b>: ' . $data['comment'] . '</li>';
+                $view = '<div class="media small">
+                            <div class="pull-left media-top">
+                                <span>';
+                if (isset($data['picture']) && $data['picture'] != '') {
+                    $view .= '<img class="" src="'.$data['picture'].'" width="30px" height="30px">';
+                }else{
+                    $view .= '<span class="glyphicon glyphicon-user" style="font-size: 30px"></span>';
+                }
+                $view .= '<span>
+                        </div>
+                        <div class="media-body">
+                        <h4 class="media-heading user">
+                        <div class="btn-group small">
+                            <span aria-haspopup="true" aria-expanded="false" data-toggle="dropdown">
+                                '.$data['userName'].'</span>
+                            </span>
+                        </h4>
+                        <p class="small">'.$data['created'].'</p>
+                        <p style="width: 100%"
+                           class="list-group-item-text">'.$data['comment'].'</p>
+                        </div>
+                </div>';
+
                 echo $view;
             }
-            echo '</ul></div>';
         }
         $this->_helper->viewRenderer->setNoRender(true);
         $this->_helper->layout()->disableLayout();
