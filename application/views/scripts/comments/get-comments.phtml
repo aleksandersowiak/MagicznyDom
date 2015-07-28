@@ -77,22 +77,25 @@
                            class="list-group-item-text"><?= $this->restrictText($data_comment['comment'], 100) ?></p>
                         <?php if (strlen($data_comment['comment']) > 100): ?>
                             <p class="pull<?= $idBox ?>">
-                                <span type="button" class="btn<?= $idBox ?> aso-read-more read-more pull-right"
+                                <span class="btn<?= $idBox ?> aso-read-more read-more pull-right"
                                         data-target="box<?= $idBox ?>" data-main="<?= $data_comment['id'] ?>"
                                         data-loading-text="Ładowanie...">Czytaj całość <span
                                         class="glyphicon glyphicon-chevron-right btn-sm"></span></span>
                             <div style="clear: both"></div>
                             </p>
                         <?php endif; ?>
-                        <div id="reply-comments<?= $idBox ?>">
+                        <div id="reply-comments-<?= $idBox ?>">
                         </div>
+                        <span class=" pull-right reply-comments-view user small" data-target="reply-comments-<?= $idBox ?>"
+                                                data-main="<?= $data_comment['id'] ?>">Pokaż Odpowiedzi
+                        </span>
                 </div>
             </div>
             <script>
                 $(function () {
                     $(document).ready(function () {
                         var url = '<?=$this->url(array("controller" => "comments", "action" => "get-reply-comments"),"default",true);?>/id/<?=$data_comment['id']?>/limit/3';
-                        $("#reply-comments<?=$idBox?>").load(url).fadeIn();
+                        $("#reply-comments-<?=$idBox?>").load(url).fadeIn();
                     });
                     $(".reply-comments-view").click(function () {
                         $(this).button('loading').delay(1000).queue(function () {
@@ -103,7 +106,6 @@
                             $(this).dequeue();
                         });
                     });
-
                 });
             </script>
         <?php $idBox++ ?>

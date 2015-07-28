@@ -44,8 +44,8 @@ class CommentsController extends Aso_Controller_Action
                             <div class="pull-left media-top">
                                 <span>';
                 if (isset($data['picture']) && $data['picture'] != '') {
-                    $view .= '<img class="" src="'.$data['picture'].'" width="30px" height="30px">';
-                }else{
+                    $view .= '<img class="" src="' . $data['picture'] . '" width="30px" height="30px">';
+                } else {
                     $view .= '<span class="glyphicon glyphicon-user" style="font-size: 30px"></span>';
                 }
                 $view .= '<span>
@@ -54,12 +54,16 @@ class CommentsController extends Aso_Controller_Action
                         <h4 class="media-heading user">
                         <div class="btn-group small">
                             <span aria-haspopup="true" aria-expanded="false" data-toggle="dropdown">
-                                '.$data['userName'].'</span>
+                                ' . $data['userName'] . '</span>
                             </span>
                         </h4>
-                        <p class="small">'.$data['created'].'</p>
+                        <p class="small">' . $data['created'] . '</p>
                         <p style="width: 100%"
-                           class="list-group-item-text">'.$data['comment'].'</p>
+                           class="list-group-item-text">';
+                $regex = '#<img([^>]*) src="([^"/]*/?[^".]*\.[^"]*)"([^>]*)>((?!</a>))#';
+                $replace = '<a rel="group" class="fancybox fancy" title="" href="$2">$2</a>';
+                $view .= preg_replace($regex, $replace, $data['comment']);
+                $view .= '</p>
                         </div>
                 </div>';
 
