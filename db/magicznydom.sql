@@ -9,13 +9,22 @@ SET autocommit=0;
 SET foreign_key_checks = 0;
 START TRANSACTION;
 
--- Zrzut struktury bazy danych markonmt_magiczny
-DROP DATABASE IF EXISTS `markonmt_magiczny`;
-CREATE DATABASE IF NOT EXISTS `markonmt_magiczny` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_polish_ci */;
-USE `markonmt_magiczny`;
+TRUNCATE `comments`;
+TRUNCATE `notice`;
+TRUNCATE `privileges`;
+TRUNCATE `provider_settings`;
+TRUNCATE `recipe`;
+TRUNCATE `setings`;
+TRUNCATE `tags`;
+TRUNCATE `user`;
+
+-- Zrzut struktury bazy danych magicznydom
+DROP DATABASE IF EXISTS `magicznydom`;
+CREATE DATABASE IF NOT EXISTS `magicznydom` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_polish_ci */;
+USE `magicznydom`;
 
 
--- Zrzut struktury tabela markonmt_magiczny.comments
+-- Zrzut struktury tabela magicznydom.comments
 DROP TABLE IF EXISTS `comments`;
 CREATE TABLE IF NOT EXISTS `comments` (
   `id` bigint(11) NOT NULL AUTO_INCREMENT,
@@ -36,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `comments` (
   KEY `comments_ibfk_2` (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
--- Zrzucanie danych dla tabeli markonmt_magiczny.comments: ~3 rows (około)
+-- Zrzucanie danych dla tabeli magicznydom.comments: ~3 rows (około)
 DELETE FROM `comments`;
 /*!40000 ALTER TABLE `comments` DISABLE KEYS */;
 INSERT INTO `comments` (`id`, `id_recipe`, `reply`, `user_id`, `userName`, `comment`, `created`, `ips`, `plus`, `minus`, `moderate`, `reply_id`) VALUES
@@ -45,7 +54,7 @@ INSERT INTO `comments` (`id`, `id_recipe`, `reply`, `user_id`, `userName`, `comm
 /*!40000 ALTER TABLE `comments` ENABLE KEYS */;
 
 
--- Zrzut struktury tabela markonmt_magiczny.notice
+-- Zrzut struktury tabela magicznydom.notice
 DROP TABLE IF EXISTS `notice`;
 CREATE TABLE IF NOT EXISTS `notice` (
   `id` int(11) DEFAULT NULL,
@@ -54,13 +63,13 @@ CREATE TABLE IF NOT EXISTS `notice` (
   `visibility` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
--- Zrzucanie danych dla tabeli markonmt_magiczny.notice: ~0 rows (około)
+-- Zrzucanie danych dla tabeli magicznydom.notice: ~0 rows (około)
 DELETE FROM `notice`;
 /*!40000 ALTER TABLE `notice` DISABLE KEYS */;
 /*!40000 ALTER TABLE `notice` ENABLE KEYS */;
 
 
--- Zrzut struktury tabela markonmt_magiczny.privileges
+-- Zrzut struktury tabela magicznydom.privileges
 DROP TABLE IF EXISTS `privileges`;
 CREATE TABLE IF NOT EXISTS `privileges` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -72,13 +81,13 @@ CREATE TABLE IF NOT EXISTS `privileges` (
   KEY `user_id_2` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
--- Zrzucanie danych dla tabeli markonmt_magiczny.privileges: ~0 rows (około)
+-- Zrzucanie danych dla tabeli magicznydom.privileges: ~0 rows (około)
 DELETE FROM `privileges`;
 /*!40000 ALTER TABLE `privileges` DISABLE KEYS */;
 /*!40000 ALTER TABLE `privileges` ENABLE KEYS */;
 
 
--- Zrzut struktury tabela markonmt_magiczny.provider_settings
+-- Zrzut struktury tabela magicznydom.provider_settings
 DROP TABLE IF EXISTS `provider_settings`;
 CREATE TABLE IF NOT EXISTS `provider_settings` (
   `user_id` varchar(50) DEFAULT NULL,
@@ -88,11 +97,11 @@ CREATE TABLE IF NOT EXISTS `provider_settings` (
   `visibility` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Zrzucanie danych dla tabeli markonmt_magiczny.provider_settings: ~1 rows (około)
+-- Zrzucanie danych dla tabeli magicznydom.provider_settings: ~1 rows (około)
 DELETE FROM `provider_settings`;
 /*!40000 ALTER TABLE `provider_settings` DISABLE KEYS */;
 
--- Zrzut struktury tabela markonmt_magiczny.recipe
+-- Zrzut struktury tabela magicznydom.recipe
 DROP TABLE IF EXISTS `recipe`;
 CREATE TABLE IF NOT EXISTS `recipe` (
   `id` bigint(11) NOT NULL AUTO_INCREMENT,
@@ -115,7 +124,7 @@ CREATE TABLE IF NOT EXISTS `recipe` (
   CONSTRAINT `recipe_ibfk_2` FOREIGN KEY (`autor_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
--- Zrzucanie danych dla tabeli markonmt_magiczny.recipe: ~1 rows (około)
+-- Zrzucanie danych dla tabeli magicznydom.recipe: ~1 rows (około)
 DELETE FROM `recipe`;
 /*!40000 ALTER TABLE `recipe` DISABLE KEYS */;
 INSERT INTO `recipe` (`id`, `category`, `autor`, `autor_id`, `title`, `recipe`, `plus`, `minus`, `created`, `updated`, `edited`, `hits`, `active`) VALUES
@@ -123,7 +132,7 @@ INSERT INTO `recipe` (`id`, `category`, `autor`, `autor_id`, `title`, `recipe`, 
 /*!40000 ALTER TABLE `recipe` ENABLE KEYS */;
 
 
--- Zrzut struktury tabela markonmt_magiczny.setings
+-- Zrzut struktury tabela magicznydom.setings
 DROP TABLE IF EXISTS `setings`;
 CREATE TABLE IF NOT EXISTS `setings` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
@@ -137,7 +146,7 @@ CREATE TABLE IF NOT EXISTS `setings` (
   CONSTRAINT `setings_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
--- Zrzucanie danych dla tabeli markonmt_magiczny.setings: ~5 rows (około)
+-- Zrzucanie danych dla tabeli magicznydom.setings: ~5 rows (około)
 DELETE FROM `setings`;
 /*!40000 ALTER TABLE `setings` DISABLE KEYS */;
 INSERT INTO `setings` (`id`, `user_id`, `type`, `additional_settings`, `active`, `data`) VALUES
@@ -149,7 +158,7 @@ INSERT INTO `setings` (`id`, `user_id`, `type`, `additional_settings`, `active`,
 /*!40000 ALTER TABLE `setings` ENABLE KEYS */;
 
 
--- Zrzut struktury tabela markonmt_magiczny.tags
+-- Zrzut struktury tabela magicznydom.tags
 DROP TABLE IF EXISTS `tags`;
 CREATE TABLE IF NOT EXISTS `tags` (
   `id` bigint(11) NOT NULL AUTO_INCREMENT,
@@ -163,7 +172,7 @@ CREATE TABLE IF NOT EXISTS `tags` (
   CONSTRAINT `tags_ibfk_2` FOREIGN KEY (`autor_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
--- Zrzucanie danych dla tabeli markonmt_magiczny.tags: ~5 rows (około)
+-- Zrzucanie danych dla tabeli magicznydom.tags: ~5 rows (około)
 DELETE FROM `tags`;
 /*!40000 ALTER TABLE `tags` DISABLE KEYS */;
 INSERT INTO `tags` (`id`, `id_recipe`, `autor_id`, `tags`) VALUES
@@ -175,7 +184,7 @@ INSERT INTO `tags` (`id`, `id_recipe`, `autor_id`, `tags`) VALUES
 /*!40000 ALTER TABLE `tags` ENABLE KEYS */;
 
 
--- Zrzut struktury tabela markonmt_magiczny.user
+-- Zrzut struktury tabela magicznydom.user
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
   `id` varchar(30) COLLATE utf8_polish_ci NOT NULL,
@@ -200,7 +209,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   KEY `name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
--- Zrzucanie danych dla tabeli markonmt_magiczny.user: ~2 rows (około)
+-- Zrzucanie danych dla tabeli magicznydom.user: ~2 rows (około)
 DELETE FROM `user`;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`id`, `name`, `given_name`, `family_name`, `link`, `picture`, `gender`, `locale`, `password`, `email`, `verified_email`, `created`, `updated`, `active`, `role`, `provider`, `access_token`) VALUES
