@@ -89,16 +89,18 @@
                     </h4>
                     <p class="small pull-left"><?= $data_comment['created'] ?></p>
                     <div style="clear: both"></div>
-                    <p id="box<?= $idBox ?>"  style="width: 100%"
-                           class="list-group-item-text"><?= $this->restrictText($data_comment['comment'], 100) ?></p>
+                    <div id="box<?= $idBox ?>" class="list-group-item-text">
+                        <?= $this->restrictText($data_comment['comment'], 100) ?>
+                    </div>
                         <?php if (strlen($data_comment['comment']) > 100): ?>
                             <p class="pull<?= $idBox ?>">
                                 <span class="btn<?= $idBox ?> aso-read-more read-more pull-right"
                                         data-target="box<?= $idBox ?>" data-main="<?= $data_comment['id'] ?>"
-                                        data-loading-text="Ładowanie...">Czytaj całość <span
-                                        class="glyphicon glyphicon-chevron-right"></span></span>
-                            <div style="clear: both"></div>
+                                        data-loading-text="Ładowanie...">Czytaj całość
+                                    <span class="glyphicon glyphicon-chevron-right"></span>
+                                </span>
                             </p>
+                            <div style="clear: both"></div>
                         <?php endif; ?>
                         <script>
                             $(document).ready(function () {
