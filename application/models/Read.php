@@ -162,6 +162,17 @@ class Application_Model_Read extends Aso_Model
         return $this->aso_return($return, CMD_DB_ERROR_NO_ERROR, $result);
     }
 
+    public function getCountReplyComments(&$return, $params)
+    {
+        $select_comment = $this->_db->select()
+            ->from(array('c' => 'comments'),array('reply_comments_count' => 'COUNT(`id`)'))
+            ->where('reply_id LIKE ?', $params)
+            ->where('moderate !=  FALSE');
+
+        $result = $this->getAdapter()->fetchAll($select_comment);
+        return $this->aso_return($return, CMD_DB_ERROR_NO_ERROR, $result);
+    }
+
     public function updateVote(&$return, $table = null, $data = null, $where = null, $ip = null)
     {
 

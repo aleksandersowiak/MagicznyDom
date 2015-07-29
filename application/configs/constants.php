@@ -31,6 +31,7 @@ define("DATE_INDEX_FORMAT", 'j F, Y, g:i');
 define("MAX_LIMIT_INDEX", 5);
 define("MAX_LIMIT_HOT_INDEX", 5);
 define("COM_PER_PAGE", 10);
+define("LIMIT_REPLY_COMMENT", 3);
 /*
 |--------------------------------------------------------------------------
 | Database error codes
