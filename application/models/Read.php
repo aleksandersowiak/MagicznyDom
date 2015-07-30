@@ -165,7 +165,7 @@ class Application_Model_Read extends Aso_Model
     public function getCountReplyComments(&$return, $params)
     {
         $select_comment = $this->_db->select()
-            ->from(array('c' => 'comments'),array('reply_comments_count' => 'COUNT(`id`)'))
+            ->from(array('c' => 'comments'), array('reply_comments_count' => 'COUNT(`id`)'))
             ->where('reply_id LIKE ?', $params)
             ->where('moderate !=  FALSE');
 
@@ -197,12 +197,12 @@ class Application_Model_Read extends Aso_Model
     {
         $date = Zend_Date::now();
         $timeStamp = gmdate('Y-m-d H:i:s', $date->getTimestamp());
-        if (isset($data["reply_id"])){
+        if (isset($data["reply_id"])) {
             $_data = array(
                 'created' => $timeStamp
             );
             $data = array_replace($data, $_data);
-        }else{
+        } else {
             $data_id_recipe = $this->getDataRecipe($data['id_recipe']);
             $id_recipe = $data_id_recipe['id_recipe'];
 

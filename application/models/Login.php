@@ -36,13 +36,13 @@ class Application_Model_Login extends Aso_Model
             $getPrivilegesGroup->where('`up`.`id` LIKE ?', $id);
             $result_group = $this->getAdapter()->fetchAll($getPrivilegesGroup);
             if ($result_group != NULL) {
-            $table_group = json_decode($result_group[0]['privileges']);
+                $table_group = json_decode($result_group[0]['privileges']);
                 foreach ($table_group as $privilege) {
                     $privileges = $this->_db->select()->from(array('pr' => 'privileges'), array('action', 'value'))->where('`pr`.`privilege` LIKE ?', $privilege)->where('`pr`.`value` = 1');
                     $result_p = $this->getAdapter()->fetchAll($privileges);
-                    if($result_p != NULL) {
+                    if ($result_p != NULL) {
                         $data = array('action' => $result_p[0]['action'],
-                        'value' => $result_p[0]['value']);
+                            'value' => $result_p[0]['value']);
                         array_push($result[0], $data);
                     }
                 }

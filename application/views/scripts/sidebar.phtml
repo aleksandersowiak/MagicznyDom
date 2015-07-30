@@ -60,7 +60,8 @@
             });
         </script>
         <h2></h2>
-        <button type="button" class="btn btn-default" style="width: 100%" data-toggle="modal" data-target="#add-new-comment">
+        <button type="button" class="btn btn-default" style="width: 100%" data-toggle="modal"
+                data-target="#add-new-comment">
             <span class="glyphicon glyphicon-comment"></span> Dodaj komentarz
         </button>
         <div class="modal fade" id="add-new-comment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -136,8 +137,7 @@
                         +
                         '<div class=\"alert alert-warning\" role=\"alert\">' +
                         'Lecz z uwagi na możliwość dodawania obraźliwych komentarzy. Wybrany komentarz zostanie wyświetlony po moderacji przez właściciela strony.' +
-                        '</div>' " : "" ?>
-                        +
+                        '</div>' " : "" ?> +
                         '</div>');
                     $(".alert-success").delay(5000).fadeTo("slow", 0);
                     $(".alert-success").hide(0);
