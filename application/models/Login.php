@@ -5,6 +5,7 @@ class Application_Model_Login extends Aso_Model
 
     private $_sql_fields = array('id',
         'name',
+        'privileges',
         'given_name',
         'family_name',
         'link',
@@ -30,20 +31,23 @@ class Application_Model_Login extends Aso_Model
             }
         }
         $result = $this->getAdapter()->fetchAll($select_count);
-
-        $getPrivilegesGroup = $this->_db->select()->from(array('u' => 'user'), array('privileges'))->where('`u`.`id` LIKE ?', $id);
-        $result_group = $this->getAdapter()->fetchAll($getPrivilegesGroup);
-        $table_group = json_decode($result_group[0]['privileges']);
-        foreach ($table_group as $privilege) {
-            $privileges = $this->_db->select()->from(array('pr' => 'privileges'), array('action', 'value'))->where('`pr`.`privilege` LIKE ?', $privilege)->where('`pr`.`value` = 1');
-            $result_p = $this->getAdapter()->fetchAll($privileges);
-            if($result_p != NULL) {
-                $data = array('action' => $result_p[0]['action'],
-                'value' => $result_p[0]['value']);
-                array_push($result[0], $data);
+        if ($id != null) {
+            $getPrivilegesGroup = $this->_db->select()->from(array('up' => 'user'), array('privileges'));
+            $getPrivilegesGroup->where('`up`.`id` LIKE ?', $id);
+            $result_group = $this->getAdapter()->fetchAll($getPrivilegesGroup);
+            if ($result_group != NULL) {
+            $table_group = json_decode($result_group[0]['privileges']);
+                foreach ($table_group as $privilege) {
+                    $privileges = $this->_db->select()->from(array('pr' => 'privileges'), array('action', 'value'))->where('`pr`.`privilege` LIKE ?', $privilege)->where('`pr`.`value` = 1');
+                    $result_p = $this->getAdapter()->fetchAll($privileges);
+                    if($result_p != NULL) {
+                        $data = array('action' => $result_p[0]['action'],
+                        'value' => $result_p[0]['value']);
+                        array_push($result[0], $data);
+                    }
+                }
             }
         }
-//        var_dump($result);
         if ($result) {
             return $result;
         } else {
@@ -61,6 +65,8 @@ class Application_Model_Login extends Aso_Model
             }
             $array['created'] = $timeStamp = gmdate('Y-m-d H:i:s', $date->getTimestamp());
             $array['updated'] = $timeStamp = gmdate('Y-m-d H:i:s', $date->getTimestamp());
+            $array['privileges'] = json_encode(array("1" => $array['provider']), true);
+
             $this->_db->insert('user', $array);
         }
     }

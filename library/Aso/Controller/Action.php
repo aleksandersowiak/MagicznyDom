@@ -48,6 +48,7 @@ class Aso_Controller_Action extends Zend_Controller_Action
                 }
             }
         }
+
         if ($this->_model_login->getProviderSettings($user_provider, $this->_ms->u_id) == TRUE) {
             $this->view->message_share = $user_provider['result'][0];
         }
