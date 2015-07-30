@@ -212,7 +212,7 @@ class Application_Model_Read extends Aso_Model
             );
             $data = array_replace($data, $_data);
         }
-
+var_dump($data);
         $this->_db->insert('comments', $data);
         return $this->aso_return($return, CMD_DB_ERROR_NO_ERROR, $data);
     }

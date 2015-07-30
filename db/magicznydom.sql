@@ -43,9 +43,9 @@ CREATE TABLE IF NOT EXISTS `comments` (
   KEY `id` (`id`),
   KEY `id_recipe` (`id_recipe`),
   KEY `comments_ibfk_2` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
--- Zrzucanie danych dla tabeli magicznydom.comments: ~3 rows (około)
+-- Zrzucanie danych dla tabeli magicznydom.comments: ~2 rows (około)
 DELETE FROM `comments`;
 /*!40000 ALTER TABLE `comments` DISABLE KEYS */;
 INSERT INTO `comments` (`id`, `id_recipe`, `reply`, `user_id`, `userName`, `comment`, `created`, `ips`, `plus`, `minus`, `moderate`, `reply_id`) VALUES
@@ -73,17 +73,21 @@ DELETE FROM `notice`;
 DROP TABLE IF EXISTS `privileges`;
 CREATE TABLE IF NOT EXISTS `privileges` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` varchar(30) COLLATE utf8_polish_ci DEFAULT NULL,
-  `action` int(11) DEFAULT NULL,
+  `privilege` varchar(50) COLLATE utf8_polish_ci DEFAULT NULL,
+  `action` varchar(50) COLLATE utf8_polish_ci DEFAULT NULL,
   `description` varchar(50) COLLATE utf8_polish_ci DEFAULT NULL,
+  `value` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`),
-  KEY `user_id_2` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+  KEY `user_id` (`privilege`),
+  KEY `user_id_2` (`privilege`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
--- Zrzucanie danych dla tabeli magicznydom.privileges: ~0 rows (około)
+-- Zrzucanie danych dla tabeli magicznydom.privileges: ~2 rows (około)
 DELETE FROM `privileges`;
 /*!40000 ALTER TABLE `privileges` DISABLE KEYS */;
+INSERT INTO `privileges` (`id`, `privilege`, `action`, `description`, `value`) VALUES
+	(2, 'facebook', 'add_comment', 'Dodawanie komentarzy do wpisów udostępnionych na s', 1),
+	(3, 'administrator', 'add_comment_moderate', 'Nie wymagana jest moderacja przez Administratora d', 1);
 /*!40000 ALTER TABLE `privileges` ENABLE KEYS */;
 
 
@@ -97,9 +101,11 @@ CREATE TABLE IF NOT EXISTS `provider_settings` (
   `visibility` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Zrzucanie danych dla tabeli magicznydom.provider_settings: ~1 rows (około)
+-- Zrzucanie danych dla tabeli magicznydom.provider_settings: ~0 rows (około)
 DELETE FROM `provider_settings`;
 /*!40000 ALTER TABLE `provider_settings` DISABLE KEYS */;
+/*!40000 ALTER TABLE `provider_settings` ENABLE KEYS */;
+
 
 -- Zrzut struktury tabela magicznydom.recipe
 DROP TABLE IF EXISTS `recipe`;
@@ -189,6 +195,7 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
   `id` varchar(30) COLLATE utf8_polish_ci NOT NULL,
   `name` varchar(50) COLLATE utf8_polish_ci NOT NULL,
+  `privileges` text COLLATE utf8_polish_ci NOT NULL,
   `given_name` varchar(50) COLLATE utf8_polish_ci NOT NULL,
   `family_name` varchar(50) COLLATE utf8_polish_ci NOT NULL,
   `link` varchar(250) COLLATE utf8_polish_ci NOT NULL,

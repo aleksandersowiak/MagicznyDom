@@ -38,6 +38,12 @@ class Aso_Controller_Action extends Zend_Controller_Action
             if ($user_data != false) {
                 foreach ($user_data[0] as $key => $value) {
                     $view_key = 'u_' . $key;
+                    if (is_array($value)){
+                        foreach ($value as $key_p => $value_p) {
+                            $view_key_p = 'u_' . $value_p;
+                            $this->view->$view_key_p = 1;
+                        }
+                    }
                     $this->view->$view_key = $value;
                 }
             }

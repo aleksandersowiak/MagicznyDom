@@ -134,6 +134,8 @@ class CommentsController extends Aso_Controller_Action
                     'user_id' => $this->getSession()->u_id,
                     'reply' => ($params['reply'] === 'true'));
             }
+
+            if (isset($params['moderate'])) { $data['moderate'] = $params['moderate']; }
             if ($this->getModel('Model_Read')->insertComment($return, $data) == FALSE) {
                 $this->_helper->redirector('index', 'index');
                 $this->aso_sendCommand('Dodanie nowego komentarza nie powiodło się, błąd...', 'danger');
