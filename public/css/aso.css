@@ -907,3 +907,7 @@ a.site-wrapper:hover {
 .btn-link:hover {
     cursor: pointer;
 }
+
+.pagination {
+    margin: 0 0 5px 0 !important;
+}

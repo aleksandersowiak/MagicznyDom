@@ -15,19 +15,26 @@ class CommentsController extends Aso_Controller_Action
 
     public function getcommentsAction()
     {
-        $request = $this->getRequest();
-        $params = $request->getParams();
-        $id = $params['id'];
-        $page = $params['page'];
-        if ($this->getModel('Model_Read')->getComments($resultComments, $id, $page) != FALSE) {
-
-            if ($resultComments['result']) {
-                $this->view->comments = $resultComments['result']['comments'];
-//                    $this->view->commentsCount = $resultComments['result']['count'][0]['comments_count'];
+        try {
+            $request = $this->getRequest();
+            $params = $request->getParams();
+            $id = $params['id'];
+            $page = $params['page'];
+            $resultComments = NULL;
+            if ($this->getModel('Model_Read')->getComments($resultComments, $id, $page) != FALSE) {
+                if ($resultComments['result']) {
+                    $this->view->comments = $resultComments['result']['comments'];
+                    //                    $this->view->commentsCount = $resultComments['result']['count'][0]['comments_count'];
+                }
             }
+            $this->view->issCommentToAdd = true;
+            $this->_helper->layout()->disableLayout();
+
+        } catch (exception $e) {
+            //            $this->logError("indexAction() exception: ".$e->getMessage());
+            $this->_helper->FlashMessenger($this->messageBox($e, 'danger'));
+            $this->redirect('/');
         }
-        $this->view->issCommentToAdd = true;
-        $this->_helper->layout()->disableLayout();
     }
 
     public function getReplyCommentsAction()
@@ -76,18 +83,25 @@ class CommentsController extends Aso_Controller_Action
 
     public function getCommentAction()
     {
-        $this->_helper->viewRenderer->setNoRender(true);
-        $this->_helper->layout()->disableLayout();
-        $request = $this->getRequest();
-        $params = $request->getParams();
-        $id = $params['id'];
-        if ($this->getModel('Model_Read')->getCommentData($resultComments, $id) != FALSE) {
-            $regex = '#<img([^>]*) src="([^"/]*/?[^".]*\.[^"]*)"([^>]*)>((?!</a>))#';
-            $replace = '<a rel="group" class="fancybox fancy" title="" href="$2">$2</a>';
-            $ret = preg_replace($regex, $replace, $resultComments['result'][0]['comment']);
-            echo($ret);
+        try {
+            $resultComments =null;
+            $this->_helper->viewRenderer->setNoRender(true);
+            $this->_helper->layout()->disableLayout();
+            $request = $this->getRequest();
+            $params = $request->getParams();
+            $id = $params['id'];
+            if ($this->getModel('Model_Read')->getCommentData($resultComments, $id) != FALSE) {
+                $regex = '#<img([^>]*) src="([^"/]*/?[^".]*\.[^"]*)"([^>]*)>((?!</a>))#';
+                $replace = '<a rel="group" class="fancybox fancy" title="" href="$2">$2</a>';
+                $ret = preg_replace($regex, $replace, $resultComments['result'][0]['comment']);
+                echo($ret);
+            }
+            $this->_helper->layout()->disableLayout();
+        } catch (exception $e) {
+            //            $this->logError("indexAction() exception: ".$e->getMessage());
+            $this->_helper->FlashMessenger($this->messageBox($e, 'danger'));
+            $this->redirect('/');
         }
-        $this->_helper->layout()->disableLayout();
     }
 
     public function voteAction()

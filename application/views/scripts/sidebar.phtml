@@ -1,40 +1,43 @@
 <?php $this->placeholder('sidebar')->captureStart() ?>
-    <!--    --><?php //if ($this->about  != NULL) : ?>
-    <!--        --><?php //$type = $this->about['data'];
-//        $additional_settings = $this->about['additional_settings'];
-//        if ($this->isJson($additional_settings)) :
-//            $about_data = json_decode($additional_settings, true);  else:
-?>
-    <!--            <script>-->
-    <!--                $(document).ready( function() {-->
-    <!--                    var url='--><? //=$this->url(array("controller" => "index", "action" => "turn-off-setting"),"default",true);?><!--/app/about';-->
-    <!--                    $('body').load(url);-->
-    <!--                });-->
-    <!--            </script>-->
-    <!--        --><?php //endif; ?>
-    <!--        <div class="sidebar-module sidebar-module-inset blog-sidebar aso-about">-->
-    <!--            <h4>--><?php //if (isset($about_data) != NULL) : echo $about_data['title_about']; else: echo 'Troszeczkę o mnie...'; endif; ?><!--</h4>-->
-    <!--            <p >--><? //=$this->restrictText($type, 100)?><!--</p>-->
-    <!--        </div>-->
-    <!--    --><?php //endif; ?>
+<?php if ($this->about != NULL) : ?>
+    <?php   $type = $this->about['data'];
+    $additional_settings = $this->about['additional_settings'];
+    if ($this->isJson($additional_settings)) :
+        $about_data = json_decode($additional_settings, true);
+    else: ?>
+        <script>
+            $(document).ready(function () {
+                var url = '<?=$this->url(array("controller" => "index", "action" => "turn-off-setting"),"default",true);?>/app/about';
+                $('body').load(url);
+            });
+        </script>
+    <?php endif; ?>
+    <div class="sidebar-module sidebar-module-inset blog-sidebar">
+        <h4><?= (isset($about_data) != NULL) ? $about_data['title_about'] : '' ?></h4>
+
+        <p><?= (isset($type) != NULL) ? $this->restrictText($type, 100) : '' ?></p>
+    </div>
+<?php endif; ?>
 <?php if ($this->commentsCount > 0) : ?>
     <h2>
         <span class="glyphicon glyphicon-comment btn-lg"></span>Komentarze
     </h2>
+
     <nav>
-        <ul class="pagination" style="text-align: center">
-            <li>&laquo;</li>
-            <li>#n</li>
-            <li>#n</li>
-            <li>#n</li>
-            <li>#n</li>
-            <li>#n</li>
-            <li>#n</li>
-            <!--            <li>#n</li>-->
-            <li>&raquo;</li>
+        <ul class="pagination small" style="text-align: center">
+            <?php if ($this->commentsCount > $this->per_page) : ?>
+                <li>&laquo;</li>
+                <li>#n</li>
+                <li>#n</li>
+                <li>#n</li>
+                <li>#n</li>
+                <li>#n</li>
+                <li>#n</li>
+                <!--            <li>#n</li>-->
+                <li>&raquo;</li>
+            <?php endif; ?>
         </ul>
     </nav>
-
     <div id="output"></div>
     <script>
         $(".pagination").easyPaging(<?=($this->commentsCount)?>, {
@@ -44,7 +47,6 @@
             }
         }, <?=($this->per_page)?>);
     </script>
-
 <?php endif; ?>
 <?php if ($this->u_add_comment == 1 && isset($this->title)) : ?>
     <?php if ($this->u_id != NULL) : ?>

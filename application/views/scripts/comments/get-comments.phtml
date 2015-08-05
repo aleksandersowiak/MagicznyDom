@@ -49,7 +49,8 @@
 <?php if (isset($this->comments) != null) : ?>
     <?php $idBox = 0; ?>
     <?php foreach ($this->comments as $data_comment) : ?>
-        <div class="media" style="background-color: <?= ($idBox % 2) ? '#FFFAFA' : '#fff' ?>;">
+
+        <div class="media">
             <div class="pull-left media-top">
                     <span>
                         <?php if (isset($data_comment['picture']) && $data_comment['picture'] != '') : ?>
@@ -74,18 +75,22 @@
                                 <?= $data_comment['userName'] ?><span
                                     class="glyphicon glyphicon-chevron-down btn-xs"></span>
                             </span>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="<?= $data_comment['link'] ?>">Zobacz profil na
-                                    <?= ($data_comment['provider'] != null) ? ucfirst($data_comment['provider']) : '' ?>
-                                </a>
-                            </li>
-                            <?php if ($data_comment['reply'] == false) : ?>
-                                <?php if ($this->u_action == 'add_comment' && $this->u_value == 1) : ?>
-                                    <li>
-                                        <a href="#" class="reply" data-toggle="modal" data-target="#reply"
-                                           data-main="<?= $data_comment['id'] ?>">Odpowiedz na ten komentarz</a>
-                                    </li>
+
+                        <?php if (($data_comment['provider'] != null) || ($data_comment['reply'] != false) || ($this->u_add_comment == 1)): ?>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <?= ($data_comment['provider'] != null) ?
+                                    '<a href="'.$data_comment['link'].'" target="_blank">Zobacz profil na '.ucfirst($data_comment['provider'])
+                                        : '' ?>
+                                    </a>
+                                </li>
+                                <?php if ($data_comment['reply'] == false) : ?>
+                                    <?php if ($this->u_add_comment == 1) : ?>
+                                        <li>
+                                            <a href="#" class="reply" data-toggle="modal" data-target="#reply"
+                                               data-main="<?= $data_comment['id'] ?>">Odpowiedz na ten komentarz</a>
+                                        </li>
+                                    <?php endif; ?>
                                 <?php endif; ?>
                             <?php endif; ?>
                         </ul>
@@ -105,8 +110,9 @@
                                     <span class="glyphicon glyphicon-chevron-right"></span>
                                 </span>
                     </p>
-                    <div style="clear: both"></div>
+
                 <?php endif; ?>
+                <div style="clear: both"></div>
                 <script>
                     $(document).ready(function () {
                         var url = '<?=$this->url(array("controller" => "comments", "action" => "get-reply-comments"),"default",true);?>/id/<?=$data_comment['id']?>/limit/<?=LIMIT_REPLY_COMMENT?>';
@@ -125,87 +131,6 @@
             </div>
         </div>
         <?php $idBox++ ?>
-    <?php endforeach; ?>
-<?php endif; ?>
-<!--<div class="list-group">-->
-<!---->
-<!--    --><?php //if (isset($this->comments) != null) : ?>
-<!--        --><?php //$idBox = 0; ?>
-<!--        --><?php //foreach ($this->comments as $data_comment) : ?>
-<!--            <div class="well">-->
-<!--                <h4 class="list-group-item-heading"><span class="aso-comment-popover" data-placement="top"-->
-<!--                                                          data-toggle="popover" data-trigger="click" data-content='-->
-<!--                <div class="row">-->
-<!--                    <div class="col-md-3">-->
-<!--                        --><?php //if (isset($data_comment['picture']) && $data_comment['picture'] != '') : ?>
-<!--                        <img class="" src="--><? //= $data_comment['picture'] ?><!--" width="40px" height="40px">-->
-<!--                        --><?php //endif; ?>
-<!--                    </div>-->
-<!--                    <div class="col-md-8">-->
-<!--                        --><?php //if (isset($data_comment['picture']) && $data_comment['picture'] != '') : ?>
-<!--                        Profil na <a href="--><? //= $data_comment['link'] ?><!--" taget="_blank">--><? //= ucfirst($data_comment['provider']) ?><!--</a>-->
-<!--                        --><?php //endif; ?>
-<!--                    </div>-->
-<!--                </div>' data-title="--><? //= $data_comment['userName'] ?><!--">--><? //= $data_comment['userName'] ?><!--</span>-->
-<!--                    --><?php //if (isset($data_comment['picture']) && $data_comment['picture'] != '') : ?><!--<img-->
-<!--                        class="img-circle aso-img-menu" src="--><? //= $data_comment['picture'] ?><!--" width="20"-->
-<!--                        height="20"> --><?php //endif; ?>
-<!--                    <p class="pull-right btn-sm">-->
-<!--                        <span class="glyphicon glyphicon-thumbs-up vote-plus" id="plus--><? //= $idBox ?><!--"-->
-<!--                              data-main="--><? //= $data_comment['id'] ?><!--" style="color: forestgreen"><span class="small"-->
-<!--                                                                                                      style="color: forestgreen">--><? //= $data_comment['plus'] ?><!--</span></span>-->
-<!--                        <span class="glyphicon glyphicon-thumbs-down vote-minus" id="minus--><? //= $idBox ?><!--"-->
-<!--                              data-main="--><? //= $data_comment['id'] ?><!--" style="color: red"><span class="small"-->
-<!--                                                                                              style="color: red">--><? //= $data_comment['minus'] ?><!--</span></span>-->
-<!--                    </p></h4>-->
-<!--                <p>--><? //= $data_comment['created'] ?><!--</p>-->
-<!---->
-<!--                <p id="box--><? //= $idBox ?><!--"-->
-<!--                   class="list-group-item-text">--><? //= $this->restrictText($data_comment['comment'], 100) ?><!--</p>-->
-<!--                --><?php //if (strlen($data_comment['comment']) > 100): ?>
-<!--                    <p class="pull--><? //= $idBox ?><!--">-->
-<!--                        <button type="button" class="btn--><? //= $idBox ?><!-- aso-read-more read-more"-->
-<!--                                data-target="box--><? //= $idBox ?><!--" data-main="--><? //= $data_comment['id'] ?><!--"-->
-<!--                                data-loading-text="Ładowanie...">Czytaj całość <span-->
-<!--                                class="glyphicon glyphicon-chevron-right btn-sm"></span></button>-->
-<!--                    <div style="clear: both"></div>-->
-<!--                    </p>-->
-<!--                --><?php //endif; ?>
-<!--                --><?php //if ($data_comment['reply'] == false) : ?>
-<!--                    <button class="btn-link pull-left reply" data-toggle="modal" data-target="#reply"-->
-<!--                            data-main="--><? //= $data_comment['id'] ?><!--">Odpowiedz-->
-<!--                    </button>-->
-<!--                    <button class="btn-link pull-right reply-comments-view" data-target="reply-comments--><? //= $idBox ?><!--"-->
-<!--                            data-main="--><? //= $data_comment['id'] ?><!--">Pokaż Odpowiedzi-->
-<!--                    </button>-->
-<!--                    <div style="clear: both"></div>-->
-<!--                    <script>-->
-<!--                        $(function () {-->
-<!--                            $(document).ready(function () {-->
-<!--                                var url = '--><? //=$this->url(array("controller" => "comments", "action" => "get-reply-comments"),"default",true);?><!--/id/--><? //=$data_comment['id']?><!--/limit/3';-->
-<!--                                $("#reply-comments--><? //=$idBox?><!--").load(url).fadeIn();-->
-<!--                            });-->
-<!--                            $(".reply-comments-view").click(function () {-->
-<!--                                $(this).button('loading').delay(1000).queue(function () {-->
-<!--                                    var url = '--><? //=$this->url(array("controller" => "comments", "action" => "get-reply-comments"),"default",true);?><!--/id/' + $(this).attr('data-main');-->
-<!--                                    $("#" + $(this).attr('data-target')).load(url).fadeIn();-->
-<!--                                    $(this).button('reset');-->
-<!--                                    $(this).fadeOut();-->
-<!--                                    $(this).dequeue();-->
-<!--                                });-->
-<!--                            });-->
-<!---->
-<!--                        });-->
-<!--                    </script>-->
-<!--                    <div id="reply-comments--><? //= $idBox ?><!--">-->
-<!--                    </div>-->
-<!--                --><?php //endif; ?>
-<!--            </div>-->
-<!--            --><?php //$idBox++ ?>
-<!--        --><?php //endforeach; ?>
-<!--    --><?php //endif; ?>
-<!--</div>-->
-<?php //endif; ?>
 <?php if ($data_comment['reply'] == false) : ?>
     <?php if ($this->u_add_comment == 1) : ?>
         <script>
@@ -303,5 +228,8 @@
                 $("div[class='note-editable']").empty();
             });
         </script>
+
+        <?php endif; ?>
     <?php endif; ?>
+    <?php endforeach; ?>
 <?php endif; ?>
