@@ -1,10 +1,3 @@
--- --------------------------------------------------------
--- Host:                         127.0.0.1
--- Wersja serwera:               5.5.21-log - MySQL Community Server (GPL)
--- Serwer OS:                    Win32
--- HeidiSQL Wersja:              9.1.0.4867
--- --------------------------------------------------------
-
 SET autocommit=0;
 SET foreign_key_checks = 0;
 START TRANSACTION;
@@ -17,15 +10,12 @@ TRUNCATE `recipe`;
 TRUNCATE `setings`;
 TRUNCATE `tags`;
 TRUNCATE `user`;
-
 -- Zrzut struktury bazy danych magicznydom
-DROP DATABASE IF EXISTS `magicznydom`;
 CREATE DATABASE IF NOT EXISTS `magicznydom` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_polish_ci */;
 USE `magicznydom`;
 
 
 -- Zrzut struktury tabela magicznydom.comments
-DROP TABLE IF EXISTS `comments`;
 CREATE TABLE IF NOT EXISTS `comments` (
   `id` bigint(11) NOT NULL AUTO_INCREMENT,
   `id_recipe` bigint(11) DEFAULT NULL,
@@ -43,24 +33,24 @@ CREATE TABLE IF NOT EXISTS `comments` (
   KEY `id` (`id`),
   KEY `id_recipe` (`id_recipe`),
   KEY `comments_ibfk_2` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
--- Zrzucanie danych dla tabeli magicznydom.comments: ~2 rows (około)
+-- Zrzucanie danych dla tabeli magicznydom.comments: ~23 rows (około)
 DELETE FROM `comments`;
 /*!40000 ALTER TABLE `comments` DISABLE KEYS */;
 INSERT INTO `comments` (`id`, `id_recipe`, `reply`, `user_id`, `userName`, `comment`, `created`, `ips`, `plus`, `minus`, `moderate`, `reply_id`) VALUES
 	(8, 7, 0, '100000000000000000000', 'Kamila Łucyk', '<p>Krótki wpis</p>', '2015-07-29 06:41:28', NULL, 0, 0, 1, NULL),
-	(9, NULL, 0, '100000000000000000000', 'Kamila Łucyk', '<p>Odpowiedź na krótki wpis.</p>', '2015-07-29 06:42:06', NULL, 0, 0, 1, 8);
+	(9, NULL, 0, '100000000000000000000', 'Kamila Łucyk', '<p>Odpowiedź na krótki wpis.</p>', '2015-07-29 06:42:06', NULL, 0, 0, 1, 8)
 /*!40000 ALTER TABLE `comments` ENABLE KEYS */;
 
 
 -- Zrzut struktury tabela magicznydom.notice
-DROP TABLE IF EXISTS `notice`;
 CREATE TABLE IF NOT EXISTS `notice` (
   `id` int(11) DEFAULT NULL,
   `link` text COLLATE utf8_polish_ci,
   `text` text COLLATE utf8_polish_ci,
-  `visibility` int(11) DEFAULT NULL
+  `visibility` int(11) DEFAULT NULL,
+  `created` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 -- Zrzucanie danych dla tabeli magicznydom.notice: ~0 rows (około)
@@ -70,7 +60,6 @@ DELETE FROM `notice`;
 
 
 -- Zrzut struktury tabela magicznydom.privileges
-DROP TABLE IF EXISTS `privileges`;
 CREATE TABLE IF NOT EXISTS `privileges` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `privilege` varchar(50) COLLATE utf8_polish_ci DEFAULT NULL,
@@ -80,19 +69,21 @@ CREATE TABLE IF NOT EXISTS `privileges` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`privilege`),
   KEY `user_id_2` (`privilege`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
--- Zrzucanie danych dla tabeli magicznydom.privileges: ~2 rows (około)
+-- Zrzucanie danych dla tabeli magicznydom.privileges: ~5 rows (około)
 DELETE FROM `privileges`;
 /*!40000 ALTER TABLE `privileges` DISABLE KEYS */;
 INSERT INTO `privileges` (`id`, `privilege`, `action`, `description`, `value`) VALUES
-	(2, 'facebook', 'add_comment', 'Dodawanie komentarzy do wpisów udostępnionych na s', 1),
-	(3, 'administrator', 'add_comment_moderate', 'Nie wymagana jest moderacja przez Administratora d', 1);
+	(2, 'facebook, google, administrator', 'add_comment', 'Dodawanie komentarzy do wpisów udostępnionych', 1),
+	(3, 'administrator', 'add_comment_moderate', 'Nie wymagana jest moderacja przez Administratora', 1),
+	(5, 'administrator, facebook, google', 'read_notice', 'Opis', 1),
+	(7, NULL, 'read_all_notice', NULL, 1),
+	(8, NULL, 'comment_notice', NULL, NULL);
 /*!40000 ALTER TABLE `privileges` ENABLE KEYS */;
 
 
 -- Zrzut struktury tabela magicznydom.provider_settings
-DROP TABLE IF EXISTS `provider_settings`;
 CREATE TABLE IF NOT EXISTS `provider_settings` (
   `user_id` varchar(50) DEFAULT NULL,
   `date` timestamp NULL DEFAULT NULL,
@@ -108,7 +99,6 @@ DELETE FROM `provider_settings`;
 
 
 -- Zrzut struktury tabela magicznydom.recipe
-DROP TABLE IF EXISTS `recipe`;
 CREATE TABLE IF NOT EXISTS `recipe` (
   `id` bigint(11) NOT NULL AUTO_INCREMENT,
   `category` varchar(50) COLLATE utf8_polish_ci NOT NULL,
@@ -139,7 +129,6 @@ INSERT INTO `recipe` (`id`, `category`, `autor`, `autor_id`, `title`, `recipe`, 
 
 
 -- Zrzut struktury tabela magicznydom.setings
-DROP TABLE IF EXISTS `setings`;
 CREATE TABLE IF NOT EXISTS `setings` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `user_id` varchar(30) COLLATE utf8_polish_ci NOT NULL,
@@ -165,7 +154,6 @@ INSERT INTO `setings` (`id`, `user_id`, `type`, `additional_settings`, `active`,
 
 
 -- Zrzut struktury tabela magicznydom.tags
-DROP TABLE IF EXISTS `tags`;
 CREATE TABLE IF NOT EXISTS `tags` (
   `id` bigint(11) NOT NULL AUTO_INCREMENT,
   `id_recipe` bigint(11) NOT NULL,
@@ -191,7 +179,6 @@ INSERT INTO `tags` (`id`, `id_recipe`, `autor_id`, `tags`) VALUES
 
 
 -- Zrzut struktury tabela magicznydom.user
-DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
   `id` varchar(30) COLLATE utf8_polish_ci NOT NULL,
   `name` varchar(50) COLLATE utf8_polish_ci NOT NULL,
@@ -216,12 +203,11 @@ CREATE TABLE IF NOT EXISTS `user` (
   KEY `name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
--- Zrzucanie danych dla tabeli magicznydom.user: ~2 rows (około)
+-- Zrzucanie danych dla tabeli magicznydom.user: ~3 rows (około)
 DELETE FROM `user`;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` (`id`, `name`, `given_name`, `family_name`, `link`, `picture`, `gender`, `locale`, `password`, `email`, `verified_email`, `created`, `updated`, `active`, `role`, `provider`, `access_token`) VALUES
-	('100000000000000000000', 'Kamila Łucyk', 'Kamila', 'Łucyk', '', '', 'female', 'pl', '07b4d5416b25a7ac291daacaa18409a4b27f6375', 'kamira90@gmail.com', '1', '2015-06-09 14:51:50', '2015-06-09 14:51:50', 1, 1, NULL, NULL);
-
+INSERT INTO `user` (`id`, `name`, `privileges`, `given_name`, `family_name`, `link`, `picture`, `gender`, `locale`, `password`, `email`, `verified_email`, `created`, `updated`, `active`, `role`, `provider`, `access_token`) VALUES
+	('100000000000000000000', 'Kamila Łucyk', '{"1":"administartor","2":"facebook","3":"google"}', 'Kamila', 'Łucyk', '', '', 'female', 'pl', '07b4d5416b25a7ac291daacaa18409a4b27f6375', 'kamira90@gmail.com', '1', '2015-06-09 14:51:50', '2015-06-09 14:51:50', 1, 1, '', NULL)
 COMMIT;
 SET foreign_key_checks = 1;
-SET autocommit=1;
+SET autocommit=1

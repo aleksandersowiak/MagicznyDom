@@ -130,7 +130,6 @@
                 <?php endif; ?>
             </div>
         </div>
-        <?php $idBox++ ?>
 <?php if ($data_comment['reply'] == false) : ?>
     <?php if ($this->u_add_comment == 1) : ?>
         <script>
@@ -220,6 +219,8 @@
                     '</div>' " : "" ?>
                     +
                     '</div>');
+                var url_reply = '<?=$this->url(array("controller" => "comments", "action" => "get-reply-comments"),"default",true);?>/id/'+reply_id+'/limit/<?=LIMIT_REPLY_COMMENT?>';
+                $("#reply-comments-<?= $idBox ?>").load(url_reply).fadeIn();
                 $(".alert-success").delay(5000).fadeTo("slow", 0);
                 $(".alert-success").hide(0);
                 $(".alert-warning").delay(7000).fadeTo("slow", 0);
@@ -231,5 +232,6 @@
 
         <?php endif; ?>
     <?php endif; ?>
+        <?php $idBox++ ?>
     <?php endforeach; ?>
 <?php endif; ?>
